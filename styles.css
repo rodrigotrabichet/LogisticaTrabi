@@ -1,76 +1,6 @@
 html {
     scroll-behavior: smooth;
 }
-.locations-section {
-            padding: 4rem 0;
-            overflow: hidden;
-            margin-top: 6rem;
-        }
-
-        h5{
-            text-align: center;
-            font-size: 1.5rem;
-            color: #ffffff;
-            font-family:'shippori antique b1', sans-serif;  
-        }
-
-        .trabajo{
-            font-size: 2rem;
-            text-align: center;
-            color: #ffffff;
-            font-family:'shippori antique b1', sans-serif;  
-        }
-        
-
-        .infinite-wrapper {
-            position: relative;
-            width: 100%;
-            height: auto;
-            overflow: hidden;
-            /* Máscara para suavizar bordes */
-            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-            cursor: grab; /* Manito para agarrar */
-        }
-
-        .infinite-wrapper:active {
-            cursor: grabbing;
-        }
-
-        .infinite-track {
-            display: flex;
-            width: max-content;
-            /* Importante: will-change avisa al navegador que esto se va a mover mucho */
-            will-change: transform; 
-            gap: 2rem; /* Espacio entre tarjetas */
-            padding: 1rem 0;
-            
-        }
-
-        .location-card {
-            background: linear-gradient(to bottom, #ffffff, #797979);
-            border-radius: 20px;
-            padding: 1.5rem 2rem;
-            min-width: 180px;
-            text-align: center;
-            cursor: pointer;
-            user-select: none;
-            -webkit-user-drag: none;
-        }
-
-        .location-icon { 
-            font-size: 1.5rem; margin-bottom: 0.5rem; 
-        }
-
-        .location-card h3 { font-family:'shippori antique b1', sans-serif;  
-        font-size: 1.2rem;
-        margin: 0; 
-        color: #000000; 
-    }
-        .location-card span { font-family: 'shippori antique b1', sans-serif; 
-        font-size: 0.8rem; 
-        color: #000000b7; 
-        }
 
 body {
     background-color: rgb(31, 31, 32);
@@ -187,7 +117,7 @@ main {
         to bottom,
         rgba(0,0,0,0.5) 20%,
         rgba(0,0,0,0.8) 100%
-    ), url('assets/images/ImagenHero.png');
+    ), url('assets/images/ImagenHero-desktop.webp');
     background-size: cover;
     background-position: center 20%;
     background-repeat: no-repeat;
@@ -590,8 +520,76 @@ p.description {
     text-wrap: pretty;
 }
 
+/* localidades */
+.locations-section {
+    padding: 4rem 0;
+    overflow: hidden;
+    margin-top: 6rem;
+    }
 
-/* Contacto */
+    h5{
+    text-align: center;
+    font-size: 1.5rem;
+    color: #ffffff;
+    font-family:'shippori antique b1', sans-serif;  
+    }
+
+    .trabajo{
+    font-size: 2rem;
+    text-align: center;
+    color: #ffffff;
+    font-family:'shippori antique b1', sans-serif;  
+    }
+
+    .infinite-wrapper {
+    position: relative;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    cursor: grab;
+    }
+
+    .infinite-wrapper:active {
+    cursor: grabbing;
+    }
+
+    .infinite-track {
+    display: flex;
+    width: max-content;
+    will-change: transform; 
+    gap: 2rem;
+    padding: 1rem 0;
+    }
+
+    .location-card {
+    background: linear-gradient(to bottom, #ffffff, #797979);
+    border-radius: 20px;
+    padding: 1.5rem 2rem;
+    min-width: 180px;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-drag: none;
+    }
+
+    .location-icon { 
+    font-size: 1.5rem; 
+    margin-bottom: 0.5rem; 
+    }
+
+    .location-card h3 { font-family:'shippori antique b1', sans-serif;  
+    font-size: 1.2rem;
+    margin: 0; 
+    color: #000000; 
+    }
+    
+    .location-card span { font-family: 'shippori antique b1', sans-serif; 
+    font-size: 0.8rem; 
+    color: #000000b7; 
+    }
+/* Contcto */
 
 :root {
     --color-primary: #dd830d;
@@ -974,7 +972,16 @@ footer {
 
 /* TABLETS Y MÓVILES  */
 @media (max-width: 768px) {
-    /* Ajustes Menú */
+
+    .hero {
+        background-image: linear-gradient(
+            to bottom,
+            rgba(0,0,0,0.5) 20%,
+            rgba(0,0,0,0.8) 100%
+        ), url('assets/images/ImagenHero-mobile.webp');
+    }
+    
+
     .nav-links {
         font-size: small;
         position: fixed;

@@ -379,37 +379,37 @@ span{
 
 .product-container {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 40px;
-    max-width: 1100px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
 .product-card {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     background: linear-gradient(135deg, #2c2c2e 0%, #232325 100%);
-    border-radius: 22px;
-    width: 100%;
+    border-radius: 18px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
     overflow: hidden;
-    transition: transform 0.5s ease, box-shadow 0.5s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    cursor: pointer;
 }
 
 .product-card:hover {
-    box-shadow: 0px 0px 15px rgba(236, 113, 31, 0.7);
+    transform: translateY(-5px);
+    box-shadow: 0px 0px 20px rgba(236, 113, 31, 0.6);
 }
 
 .product-image-container {
-    flex-shrink: 0;
-    width: 250px;
-    background: linear-gradient(to bottom, #ffffff, #9c9c9c);
+    background: linear-gradient(to bottom, #ffffff, #b8b8b8);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 20px;
-    border-right: 1px solid #444;
+    min-height: 320px;
 }
 
 /* Estilos para la información de disponibilidad */
@@ -417,107 +417,124 @@ span{
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 6px;
 }
 
 .availability-info span {
-    font-size: 1em;
+    font-size: 0.85em;
     font-weight: 600;
     color: #272727;
 }
 
 .availability-logo {
-    width: 4.5rem;
-    height: 4.5rem;
+    width: 4rem;
+    height: 4rem;
+    object-fit: contain;
 }
 
-.product-card img {
+/* Imagen del PRODUCTO - protagonista */
+.product-image-container img[alt^="Alimento"] {
     max-width: 100%;
+    max-height: 300px;
     height: auto;
-    object-fit: cover;
+    object-fit: contain;
     margin: auto;
     transition: transform 0.3s ease-in-out;
+    filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.25));
 }
 
-.product-card img:hover {
-    transform: scale(1.07);
+.product-image-container img[alt^="Alimento"]:hover {
+    transform: scale(1.08);
+}
+
+/* Logo pequeño de disponibilidad */
+.product-image-container img.availability-logo {
+    max-height: 4rem;
+    filter: none;
 }
 
 .product-info-container {
-    padding: 25px 30px;
+    padding: 18px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    align-items: center;
+    text-align: center;
     flex-grow: 1;
-    text-align: left;
+    gap: 12px;
 }
 
 .product-info-container h3 {
     font-family: 'Montserrat', sans-serif; 
-    font-size: 1.9rem; 
+    font-size: 1.15rem; 
     color: #ffffff;
-    margin: 0 0 10px 0;
-    font-weight: 700;
-}
-
-.product-info-container .description {
-    font-family: 'Roboto', sans-serif;
-    font-size: 1.05rem; 
-    color: #b9b6b6;
-    margin-bottom: 20px;
-    line-height: 1.6;
-    text-align: left;
-}
-
-.product-details {
-    margin-top: 25px;
-    padding-top: 20px;
-    border-top: 1px solid #444;
-    width: 100%;
-}
-
-.product-pills {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-
-.product-brand, .product-flavor, .product-presentation {
-    flex: 1;
-}
-
-.product-pills h4 {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1rem;
-    color: #C45D00;
-    margin: 0 0 12px 0;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.pills-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    padding: 0;
     margin: 0;
-    list-style: none;
+    font-weight: 700;
+    line-height: 1.3;
 }
 
-.pill-item {
-    background-color: #3a3a3e;
+/* Quick Pills - Cards compactas */
+.product-quick-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+}
+
+.quick-pill {
+    background: rgba(255, 255, 255, 0.08);
+    color: #c9c9c9;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.quick-pill.brand {
+    background: rgba(196, 93, 0, 0.2);
+    color: #ff9d3d;
+    border-color: rgba(196, 93, 0, 0.4);
+}
+
+.quick-pill.presentation {
+    background: rgba(100, 100, 100, 0.3);
     color: #e0e0e0;
-    padding: 6px 14px;
-    border-radius: 20px;
+}
+
+/* Botón Ver Detalles */
+.btn-ver-detalles {
+    background: linear-gradient(135deg, #C45D00 0%, #e27b21 100%);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
     font-family: 'Roboto', sans-serif;
     font-size: 0.9rem;
-    font-weight: 500;
-    border: 1px solid #555;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: auto;
+    width: 100%;
+    max-width: 180px;
 }
 
-p.description {
-    text-wrap: pretty;
+.btn-ver-detalles:hover {
+    background: linear-gradient(135deg, #e27b21 0%, #ff9d3d 100%);
+    transform: scale(1.03);
+    box-shadow: 0 4px 15px rgba(196, 93, 0, 0.4);
+}
+
+/* Ocultar estilos antiguos que ya no se usan */
+.product-info-container .description,
+.product-details,
+.product-pills,
+.product-brand,
+.product-flavor,
+.product-presentation,
+.pills-list,
+.pill-item {
+    display: none;
 }
 
 /* localidades */
@@ -923,6 +940,9 @@ footer {
         height: 4vw;
     }
 
+    .product-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 @media screen and (min-width: 769px) and (max-width: 1179px) {
@@ -958,6 +978,12 @@ footer {
         text-align: center;
         align-items: center;
         padding: 40px 20px;
+    }
+
+    /* Cards en 2 columnas para tablets */
+    .product-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
     }
     .cta-text {
     font-size: 1.2rem;
@@ -1039,46 +1065,58 @@ footer {
         object-fit: contain;
     }
 
+    /* Cards compactas en móvil - 2 columnas */
+    .product-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
     .product-card {
         flex-direction: column;
         text-align: center;
     }
 
-    .product-image-container img {
-        max-width: 50%;
+    .product-image-container {
+        min-height: 280px;
+        padding: 16px;
     }
 
-    .availability-info, span {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: x-large;
+    .product-image-container img[alt^="Alimento"] {
+        max-height: 190px;
+    }
+
+    .availability-info {
+        gap: 4px;
+        margin-bottom: 5px;
+    }
+
+    .availability-info span {
+        font-size: 0.75em;
     }
 
     .availability-logo {
-        width: 6rem;
-        height: 6rem;
-    }
-
-    .product-image-container {
-        width: auto;
-        border-right: none;
-        border-bottom: 1px solid #444;
-        box-sizing: border-box;
+        width: 2.4rem;
+        height: 2.4rem;
     }
 
     .product-info-container {
-        padding: 20px;
-        align-items: center;
+        padding: 12px;
+        gap: 10px;
     }
 
     .product-info-container h3 {
-        font-size: 1.6rem;
+        font-size: 1rem;
     }
 
-    .product-details {
-        justify-content: center;
-        padding-top: 15px;
+    .quick-pill {
+        font-size: 0.65rem;
+        padding: 3px 8px;
+    }
+
+    .btn-ver-detalles {
+        padding: 8px 15px;
+        font-size: 0.8rem;
+        max-width: 140px;
     }
 
     
@@ -1234,26 +1272,44 @@ footer {
         font-size: 1.8em;
     }
 
-    .product-image-container img {
-        max-width: 70%;
+    /* Cards en 1 columna para móviles pequeños */
+    .product-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 0 15px;
     }
 
     .product-image-container {
-        height: auto; 
+        min-height: 290px;
+        padding: 22px;
+    }
+
+    .product-image-container img[alt^="Alimento"] {
+        max-height: 220px;
     }
 
     .product-info-container h3 {
-        font-size: 1.4rem;
+        font-size: 1.2rem;
+    }
+
+    .quick-pill {
+        font-size: 0.75rem;
+        padding: 5px 12px;
+    }
+
+    .btn-ver-detalles {
+        max-width: 180px;
+        padding: 10px 20px;
+        font-size: 0.9rem;
     }
 
     .availability-info span {
-        font-size: medium;
-        text-wrap: pretty;
+        font-size: 0.8em;
     }
 
     .availability-logo {
-        width: 4.2rem;
-        height: 4.2rem;
+        width: 2.6rem;
+        height: 2.6rem;
     }
 
     .contacto-section {
@@ -1325,5 +1381,370 @@ footer {
 
     .title-container h2 {
         font-size: 1.8rem;
+    }
+}
+
+/* ===============================
+   MODAL DE PRODUCTO
+   =============================== */
+.product-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.product-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    position: relative;
+    background: linear-gradient(145deg, #2a2a2c, #1f1f21);
+    border-radius: 20px;
+    max-width: 1050px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
+    transform: scale(0.9) translateY(20px);
+    transition: transform 0.3s ease;
+    z-index: 1001;
+}
+
+.product-modal.active .modal-content {
+    transform: scale(1) translateY(0);
+}
+
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease, transform 0.2s ease;
+    z-index: 10;
+}
+
+.modal-close:hover {
+    background: rgba(196, 93, 0, 0.8);
+    transform: rotate(90deg);
+}
+
+.modal-close svg {
+    width: 20px;
+    height: 20px;
+    color: white;
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: row;
+}
+
+.modal-image-container {
+    flex: 0 0 40%;
+    background: linear-gradient(to bottom, #ffffff, #d4d4d4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    border-radius: 20px 0 0 20px;
+}
+
+.modal-availability {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.modal-availability.visible {
+    display: flex;
+}
+
+.modal-availability span {
+    color: #272727;
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-style: normal;
+}
+
+.modal-availability .availability-logo {
+    width: 3.8rem;
+    height: 3.8rem;
+}
+
+.modal-image-container img {
+    max-width: 100%;
+    max-height: 25rem;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+}
+
+.modal-info {
+    flex: 1;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.modal-info h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.8rem;
+    color: #ffffff;
+    margin: 0;
+    padding-right: 40px;
+}
+
+.modal-descriptions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.modal-descriptions p {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    color: #b9b6b6;
+    line-height: 1.6;
+    margin: 0;
+    text-align: left;
+}
+
+.modal-descriptions::-webkit-scrollbar {
+    width: 6px;
+}
+
+.modal-descriptions::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+}
+
+.modal-descriptions::-webkit-scrollbar-thumb {
+    background: #C45D00;
+    border-radius: 3px;
+}
+
+.modal-details {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-detail-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+}
+
+.modal-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.8rem;
+    color: #C45D00;
+    font-weight: 700;
+    text-transform: uppercase;
+    min-width: auto;
+}
+
+.modal-pill {
+    background: rgba(255, 255, 255, 0.1);
+    color: #e0e0e0;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.9rem;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.modal-pills-container {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* MODAL - Tablet */
+@media (max-width: 900px) {
+    .modal-content {
+        width: 95%;
+        max-height: 85vh;
+    }
+
+    .modal-image-container {
+        flex: 0 0 35%;
+        padding: 20px;
+    }
+
+    .modal-info {
+        padding: 25px;
+    }
+
+    .modal-info h2 {
+        font-size: 1.5rem;
+    }
+}
+
+/* MODAL - Mobile */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 100%;
+        height: 100%;
+        max-height: 100vh;
+        border-radius: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .modal-body {
+        flex-direction: column;
+        height: 100%;
+        overflow-y: auto;
+    }
+
+    .modal-image-container {
+        flex: 0 0 auto;
+        border-radius: 0;
+        padding: 30px;
+        min-height: 420px;
+    }
+
+    .modal-image-container img {
+        max-height: 360px;
+    }
+
+    .modal-availability span {
+        font-size: 1rem;
+    }
+
+    .modal-availability .availability-logo {
+        width: 3.2rem;
+        height: 3.2rem;
+    }
+
+    .modal-info {
+        flex: 1;
+        padding: 20px;
+        padding-bottom: 100px;
+    }
+
+    .modal-info h2 {
+        font-size: 1.4rem;
+        padding-right: 0;
+        text-align: center;
+    }
+
+    .modal-descriptions {
+        max-height: none;
+        overflow-y: visible;
+    }
+
+    .modal-descriptions p {
+        text-align: center;
+        font-size: 0.95rem;
+    }
+
+    /* Ajustes de tamaño para móvil */
+    .modal-details {
+        gap: 10px;
+        padding-top: 15px;
+    }
+
+    .modal-detail-item {
+        gap: 6px;
+    }
+
+    .modal-label {
+        font-size: 0.7rem;
+    }
+
+    .modal-pill {
+        padding: 4px 10px;
+        font-size: 0.8rem;
+    }
+
+    .modal-close {
+        top: 10px;
+        right: 10px;
+        width: 45px;
+        height: 45px;
+        background: rgba(196, 93, 0, 0.9);
+    }
+
+    .modal-close svg {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+/* MODAL - Small Mobile */
+@media (max-width: 480px) {
+    .modal-info {
+        padding: 15px;
+        padding-bottom: 80px;
+    }
+
+    .modal-info h2 {
+        font-size: 1.2rem;
+    }
+
+    .modal-descriptions p {
+        font-size: 0.85rem;
+    }
+
+    .modal-pill {
+        padding: 4px 10px;
+        font-size: 0.75rem;
+    }
+
+    .modal-image-container {
+        min-height: 460px;
+        padding: 26px;
+    }
+
+    .modal-image-container img {
+        max-height: 400px;
+    }
+
+    .modal-availability {
+        margin-bottom: 16px;
+    }
+
+    .modal-availability span {
+        font-size: 0.95rem;
+    }
+
+    .modal-availability .availability-logo {
+        width: 3.5rem;
+        height: 3.5rem;
     }
 }

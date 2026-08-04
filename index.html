@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Distribución mayorista de alimentos Pro Quality y Sr. Milo. Logística rápida en Colón, Concordia, Uruguay y zona. Potencia tu veterinaria o pet shop con nosotros." />
+    <meta name="description" content="Distribución mayorista de alimentos para mascotas y piedras sanitarias. Logística rápida en Colón, Concordia, Uruguay y zona. Potencia tu veterinaria o pet shop con nosotros." />
     <title>TR Express | Distribuidora de Alimentos para Mascotas en Entre Ríos</title>
     <link rel="stylesheet" href="styles.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -63,7 +63,7 @@
                         <h2 class="titulos">¿Quiénes somos?</h2>
                     </div>
                     <p>
-                        En TR Express sabemos que la felicidad de tus mascotas empieza con una buena alimentación. Por eso nos dedicamos a la logística y reparto de Pro Quality, una marca premium pensada para cuidar su salud y energía día a día.
+                        En TR Express sabemos que la felicidad de tus mascotas empieza con una buena alimentación e higiene. Por eso nos dedicamos al reparto de Pro Quality y Michi Mix. Marcas de Calidad para acompañar el día a día de ellos.
                     </p>
                     <p>
                         Nos ocupamos de que tu pedido llegue fácil, rápido y sin complicaciones, para que vos solo te preocupes por disfrutar más momentos junto a tu mejor amigo.
@@ -76,8 +76,15 @@
             <div class="title-container">
                 <h2 class="titulos">Nuestros Productos</h2>
             </div>
-            <div class="product-container">
-                <div class="product-card" data-descriptions="Este alimento está diseñado para un cuidado integral. Con un 22% de proteína de alta calidad proveniente del pollo y la carne, ayuda a que sus músculos se mantengan fuertes. Además, le da un plus de defensas, ya que refuerza su sistema inmunológico con prebióticos, vitaminas y minerales.|Gracias a su equilibrio de ácidos grasos Omega 3, 6 y 9, contribuye a un pelo notablemente más brillante y a una piel visiblemente más saludable, ayudando a que luzca y se sienta mejor.|Apunta a una nutrición completa pensada para que disfrute una vida más activa, feliz y llena de bienestar.">
+
+            <div class="product-switcher" role="tablist" aria-label="Categorías de productos">
+                <button class="product-tab active" type="button" data-target="alimentos" aria-pressed="true">Alimentos</button>
+                <button class="product-tab" type="button" data-target="piedras" aria-pressed="false">Piedras</button>
+            </div>
+
+            <div class="products-panel active" data-panel="alimentos">
+                <div class="product-container">
+                    <div class="product-card" data-descriptions="Este alimento está diseñado para un cuidado integral. Con un 22% de proteína de alta calidad proveniente del pollo y la carne, ayuda a que sus músculos se mantengan fuertes. Además, le da un plus de defensas, ya que refuerza su sistema inmunológico con prebióticos, vitaminas y minerales.|Gracias a su equilibrio de ácidos grasos Omega 3, 6 y 9, contribuye a un pelo notablemente más brillante y a una piel visiblemente más saludable, ayudando a que luzca y se sienta mejor.|Apunta a una nutrición completa pensada para que disfrute una vida más activa, feliz y llena de bienestar.">
                     <div class="product-image-container">
                         <div class="availability-info">
                             <span>También disponible en</span>
@@ -89,14 +96,14 @@
                         <h3>Criadores Adultos</h3>
                         <div class="product-quick-info">
                             <span class="quick-pill brand">Pro Quality</span>
-                            <span class="quick-pill flavor">Pollo y Carne</span>
-                            <span class="quick-pill presentation">5 kg / 20 kg</span>
+                            <span class="quick-pill flavor">Carne y Pollo</span>
+                            <span class="quick-pill presentation">20 kg</span>
                         </div>
                         <button class="btn-ver-detalles">Ver detalles</button>
                     </div>
                 </div>
 
-                <div class="product-card" data-descriptions="Pensada para brindar una nutrición de excelencia a tu perro adulto.|Con un 26% de proteína de alta calidad, garantiza el desarrollo y mantenimiento de músculos fuertes. Además, ofrece una alta digestibilidad gracias a la inclusión de prebióticos y probióticos, asegurando una óptima absorción de nutrientes.|Pensado para su bienestar integral, ayuda activamente a la salud de las articulaciones mediante el aporte de condroitín sulfato y glucosamina. A su vez, su equilibrio de ácidos grasos Omega 3 y 6 contribuye a mantener una piel sana y un pelo brillante.">
+                    <div class="product-card" data-descriptions="Pensada para brindar una nutrición de excelencia a tu perro adulto.|Con un 26% de proteína de alta calidad, garantiza el desarrollo y mantenimiento de músculos fuertes. Además, ofrece una alta digestibilidad gracias a la inclusión de prebióticos y probióticos, asegurando una óptima absorción de nutrientes.|Pensado para su bienestar integral, ayuda activamente a la salud de las articulaciones mediante el aporte de condroitín sulfato y glucosamina. A su vez, su equilibrio de ácidos grasos Omega 3 y 6 contribuye a mantener una piel sana y un pelo brillante.">
                     <div class="product-image-container">
                         <div class="availability-info">
                             <span>También disponible en</span>
@@ -108,60 +115,19 @@
                         <h3>Super Premium Adultos</h3>
                         <div class="product-quick-info">
                             <span class="quick-pill brand">Pro Quality</span>
-                            <span class="quick-pill flavor">Pollo y Carne</span>
+                            <span class="quick-pill flavor">Carne y Pollo</span>
                             <span class="quick-pill presentation">20 kg</span>
                         </div>
                         <button class="btn-ver-detalles">Ver detalles</button>
                     </div>
                 </div>
 
-                <div class="product-card" data-descriptions="Es un alimento Super Premium diseñado para el cuidado urinario de tu gato adulto.|Su fórmula avanzada ayuda a reducir los trastornos urinarios gracias a un contenido óptimo de minerales. Esto colabora en minimizar la formación de cálculos y a mantener un pH saludable.|Con un 30% de proteína de alta digestibilidad, promueve músculos sanos y fuertes. Además, la inclusión de ácidos grasos esenciales y zinc contribuye a un pelaje más fuerte y brillante.">
+                    <div class="product-card" data-descriptions="Sr. Milo Adultos es la opción ideal si buscás una nutrición completa para tu perro en su etapa adulta. diseñada para ofrecer un alimento balanceado que cubre las necesidades diarias de tu mascota.|Este alimento se destaca por su aporte de más energía, ideal para mantener a tu perro activo y vital. Su fórmula está enriquecida con Vitaminas A, D y E, esenciales para su bienestar general. Además, su irresistible Mix de Sabores a carne, pollo y verdura le encantará.|Con un 21% de proteína, Sr. Milo contribuye a mantener los músculos y la salud de tu perro. Es una solución práctica y nutritiva en una presentación única de gran rendimiento.">
                     <div class="product-image-container">
-                        <img src="assets/images/products/Gato7kgSombra2.png" alt="Alimento Pro Quality Gatos Adultos Urinary cuidado urinario sabor carne y pollo">
-                    </div>
-                    <div class="product-info-container">
-                        <h3>Gatos Adultos Urinary</h3>
-                        <div class="product-quick-info">
-                            <span class="quick-pill brand">Pro Quality</span>
-                            <span class="quick-pill flavor">Carne y Pollo</span>
-                            <span class="quick-pill presentation">7 kg</span>
+                        <div class="availability-info">
+                            <span>También disponible en</span>
+                            <img src="assets/images/LogoMordidaPequeña.png" alt="Logo Pet Shop Mordida Pequeña" class="availability-logo">
                         </div>
-                        <button class="btn-ver-detalles">Ver detalles</button>
-                    </div>
-                </div>
-
-                <div class="product-card" data-descriptions="Brindale a tu gato adulto una nutrición completa con Pro Quality Gatos sabor Pescado. Este alimento premium, con un 30% de proteína de alta calidad, asegura una mayor digestibilidad y un desarrollo saludable.|Su fórmula está diseñada para un cuidado integral, ya que contiene Taurina para ayudar a un corazón y una visión más saludables, también contiene un equilibrio de minerales que colabora con un tracto urinario óptimo. Sus niveles de fibra adecuados ayudan a prevenir la formación de bolas de pelo.">
-                    <div class="product-image-container">
-                        <img src="assets/images/products/GatoAdulto8KgSombra2.png" alt="Alimento para gatos adultos Pro Quality sabor Pescado 30% proteina">
-                    </div>
-                    <div class="product-info-container">
-                        <h3>Alimento Gato Adulto</h3>
-                        <div class="product-quick-info">
-                            <span class="quick-pill brand">Pro Quality</span>
-                            <span class="quick-pill flavor">Pescado</span>
-                            <span class="quick-pill presentation">2 kg / 8 kg</span>
-                        </div>
-                        <button class="btn-ver-detalles">Ver detalles</button>
-                    </div>
-                </div>
-
-                <div class="product-card" data-descriptions="Pro Quality Criadores Cachorros es la nutrición premium ideal para acompañar el crecimiento de tu cachorro. Con un 24% de proteína, este alimento asegura la energía y los nutrientes necesarios para esta etapa tan importante, promoviendo un desarrollo fuerte y saludable desde sus primeros meses.|Su fórmula está pensada para un cuidado completo. Gracias a sus ingredientes de alta digestibilidad, cuida su sensible sistema digestivo y, al mismo tiempo, ayuda a mantener un sistema inmunológico saludable.|No solo lo cuida por dentro, sino que también contribuye a una piel sana y un pelo brillante. Para que crezca activo y sin molestias, su composición también colabora con la salud de sus articulaciones en pleno desarrollo.">
-                    <div class="product-image-container">
-                        <img src="assets/images/products/Cachorros21KgSombra2.png" alt="Alimento balanceado Pro Quality Criadores Cachorros alta digestibilidad">
-                    </div>
-                    <div class="product-info-container">
-                        <h3>Criadores Cachorros</h3>
-                        <div class="product-quick-info">
-                            <span class="quick-pill brand">Pro Quality</span>
-                            <span class="quick-pill flavor">Carne y Pollo</span>
-                            <span class="quick-pill presentation">5 kg / 21 kg</span>
-                        </div>
-                        <button class="btn-ver-detalles">Ver detalles</button>
-                    </div>
-                </div>
-
-                <div class="product-card" data-descriptions="Sr. Milo Adultos es la opción ideal si buscás una nutrición completa para tu perro en su etapa adulta. diseñada para ofrecer un alimento balanceado que cubre las necesidades diarias de tu mascota.|Este alimento se destaca por su aporte de más energía, ideal para mantener a tu perro activo y vital. Su fórmula está enriquecida con Vitaminas A, D y E, esenciales para su bienestar general. Además, su irresistible Mix de Sabores a carne, pollo y verdura le encantará.|Con un 19% de proteína, Sr. Milo contribuye a mantener los músculos y la salud de tu perro. Es una solución práctica y nutritiva en una presentación única de gran rendimiento.">
-                    <div class="product-image-container">
                         <img src="assets/images/products/SrMilo20KgSombra2.png" alt="Alimento económico para perros Sr. Milo Adultos mix carne pollo y verduras 20kg">
                     </div>
                     <div class="product-info-container">
@@ -172,6 +138,117 @@
                             <span class="quick-pill presentation">20 kg</span>
                         </div>
                         <button class="btn-ver-detalles">Ver detalles</button>
+                    </div>
+                </div>
+
+                    <div class="product-card" data-descriptions="Formulada específicamente para potenciar el desarrollo de tu cachorro con una nutrición Super Premium desde sus primeros días.|Su potente receta con un 30% de proteínas de alta digestibilidad impulsa la formación de músculos fuertes y llenos de energía. A su vez, el enriquecimiento con prebióticos y probióticos favorece la máxima absorción de nutrientes, fortaleciendo sus defensas naturales para un sistema inmunológico invencible.|Cuidamos cada detalle de su crecimiento: la acción de la glucosamina y el condroitín sulfato protege sus articulaciones en pleno desarrollo, mientras que el exclusivo balance de Omegas 3 y 6 le asegura una piel saludable y un pelaje resplandeciente.">
+                    <div class="product-image-container">
+                        <img src="assets/images/products/SuperPremiumAdultos.webp" alt="Alimento balanceado Pro Quality Super Premium Cachorro bolsa 15 kg">
+                    </div>
+                    <div class="product-info-container">
+                        <h3>Super Premium Cachorro</h3>
+                        <div class="product-quick-info">
+                            <span class="quick-pill brand">Pro Quality</span>
+                            <span class="quick-pill flavor">Carne y Pollo</span>
+                            <span class="quick-pill presentation">15 kg</span>
+                        </div>
+                        <button class="btn-ver-detalles">Ver detalles</button>
+                    </div>
+                </div>
+
+                    <div class="product-card" data-descriptions="Pro Quality Criadores Cachorros es la nutrición premium ideal para acompañar el crecimiento de tu cachorro. Con un 24% de proteína, este alimento asegura la energía y los nutrientes necesarios para esta etapa tan importante, promoviendo un desarrollo fuerte y saludable desde sus primeros meses.|Su fórmula está pensada para un cuidado completo. Gracias a sus ingredientes de alta digestibilidad, cuida su sensible sistema digestivo y, al mismo tiempo, ayuda a mantener un sistema inmunológico saludable.|No solo lo cuida por dentro, sino que también contribuye a una piel sana y un pelo brillante. Para que crezca activo y sin molestias, su composición también colabora con la salud de sus articulaciones en pleno desarrollo.">
+                    <div class="product-image-container">
+                        <img src="assets/images/products/Cachorros21KgSombra2.png" alt="Alimento balanceado Pro Quality Criadores Cachorros alta digestibilidad">
+                    </div>
+                    <div class="product-info-container">
+                        <h3>Criadores Cachorros</h3>
+                        <div class="product-quick-info">
+                            <span class="quick-pill brand">Pro Quality</span>
+                            <span class="quick-pill flavor">Carne y Pollo</span>
+                            <span class="quick-pill presentation">21 kg</span>
+                        </div>
+                        <button class="btn-ver-detalles">Ver detalles</button>
+                    </div>
+                </div>
+
+                    <div class="product-card" data-descriptions="Es un alimento Super Premium diseñado para el cuidado urinario de tu gato adulto.|Su fórmula avanzada ayuda a reducir los trastornos urinarios gracias a un contenido óptimo de minerales. Esto colabora en minimizar la formación de cálculos y a mantener un pH saludable.|Con un 30% de proteína de alta digestibilidad, promueve músculos sanos y fuertes. Además, la inclusión de ácidos grasos esenciales y zinc contribuye a un pelaje más fuerte y brillante.">
+                    <div class="product-image-container">
+                        <img src="assets/images/products/Gato7kgSombra2.png" alt="Alimento Pro Quality Gatos Adultos Urinary cuidado urinario sabor carne y pollo">
+                    </div>
+                    <div class="product-info-container">
+                        <h3>Gatos Adultos Urinary</h3>
+                        <div class="product-quick-info">
+                            <span class="quick-pill brand">Pro Quality</span>
+                            <span class="quick-pill flavor">Carne, Pollo y Pescado</span>
+                            <span class="quick-pill presentation">7 kg</span>
+                        </div>
+                        <button class="btn-ver-detalles">Ver detalles</button>
+                    </div>
+                </div>
+
+                    <div class="product-card" data-descriptions="Brindale a tu gato adulto una nutrición completa con Pro Quality Gatos sabor Pescado. Este alimento premium, con un 30% de proteína de alta calidad, asegura una mayor digestibilidad y un desarrollo saludable.|Su fórmula está diseñada para un cuidado integral, ya que contiene Taurina para ayudar a un corazón y una visión más saludables, también contiene un equilibrio de minerales que colabora con un tracto urinario óptimo. Sus niveles de fibra adecuados ayudan a prevenir la formación de bolas de pelo.">
+                    <div class="product-image-container">
+                        <img src="assets/images/products/GatosAdultosNuevo.PNG" alt="Alimento para gatos adultos Pro Quality sabor Pescado 30% proteina">
+                    </div>
+                    <div class="product-info-container">
+                        <h3>Alimento Gato Adulto</h3>
+                        <div class="product-quick-info">
+                            <span class="quick-pill brand">Pro Quality</span>
+                            <span class="quick-pill flavor">Pescado</span>
+                            <span class="quick-pill presentation">7 kg</span>
+                        </div>
+                        <button class="btn-ver-detalles">Ver detalles</button>
+                    </div>
+                </div>
+
+            </div>
+            </div>
+
+            <div class="products-panel" data-panel="piedras">
+                <div class="product-container">
+                    <div class="product-card" data-descriptions="MichiMix Piedras Aglomerantes reúne las variantes Clasicas, Aroma Lavanda, Aroma Jazmín y Aroma Madre Selva, todas en presentación de 4kg y 8 kg.|Una línea pensada para ofrecer opciones aglomerantes y aromáticas para la bandeja sanitaria, con cuatro alternativas para tu negocio o mascota.|El envase indica colocar el mineral hasta alcanzar la altura recomendada, reponer el material usado y mantener la bandeja limpia.">
+                        <div class="product-image-container">
+                            <img src="assets/images/products/Aglomerantes.webp" alt="Piedras aglomerantes MichiMix Clasicas, Aroma Lavanda, Aroma Jazmín y Aroma Madre Selva en bolsas de 8 kg">
+                        </div>
+                        <div class="product-info-container">
+                            <h3>Piedras Aglomerantes Clasicas y Aromatizadas</h3>
+                            <div class="product-quick-info">
+                                <span class="quick-pill brand">Michi Mix</span>
+                                <span class="quick-pill aroma">Aromas variados</span>
+                                <span class="quick-pill presentation">4 kg / 8 kg</span>
+                            </div>
+                            <button class="btn-ver-detalles" type="button">Ver detalles</button>
+                        </div>
+                    </div>
+
+                    <div class="product-card" data-descriptions="Michi Mix Piedras Aglomerantes Premium Lavanda combina una presentación de 15 kg con una propuesta aromática para la bandeja sanitaria.|Su formato de mayor capacidad facilita contar con producto para la reposición habitual de la bandeja.|El envase indica colocar el mineral hasta alcanzar 5 cm de altura, reponerlo cuando sea necesario y mantener la bandeja limpia.">
+                        <div class="product-image-container">
+                            <img src="assets/images/products/AglomerantesPremiumLavanda2.webp" alt="Piedras aglomerantes MichiMix Premium Lavanda en bolsa de 15 kg">
+                        </div>
+                        <div class="product-info-container">
+                            <h3>Piedras Aglomerantes Premium Lavanda</h3>
+                            <div class="product-quick-info">
+                                <span class="quick-pill brand">Michi Mix</span>
+                                <span class="quick-pill aroma">Aroma Lavanda</span>
+                                <span class="quick-pill presentation">15 kg</span>
+                            </div>
+                            <button class="btn-ver-detalles" type="button">Ver detalles</button>
+                        </div>
+                    </div>
+
+                    <div class="product-card" data-descriptions="Michi Mix Piedras Aglomerantes Premium ofrece una presentación de 15 kg para el cuidado cotidiano de la bandeja sanitaria.|Su formato de mayor capacidad acompaña la reposición habitual del mineral y permite mantener una propuesta premium en el punto de venta.|El envase indica colocar el mineral hasta alcanzar 6 cm de altura, reponerlo una vez usado y mantener la bandeja limpia.">
+                        <div class="product-image-container">
+                            <img src="assets/images/products/AglomerantesPremium.webp" alt="Piedras aglomerantes MichiMix Premium en bolsa de 15 kg">
+                        </div>
+                        <div class="product-info-container">
+                            <h3>Piedras Aglomerantes Premium</h3>
+                            <div class="product-quick-info">
+                                <span class="quick-pill brand">Michi Mix</span>
+                                <span class="quick-pill aroma">Aroma Premium</span>
+                                <span class="quick-pill presentation">15 kg</span>
+                            </div>
+                            <button class="btn-ver-detalles" type="button">Ver detalles</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -280,7 +357,7 @@
 
     <footer>
         <div class="footer-content">
-            <p class="copyright">&copy; 2025 TRExpress. Todos los derechos reservados.</p>
+            <p class="copyright">&copy; 2026 TRExpress. Todos los derechos reservados.</p>
             <p class="designed-by" onclick="toggleEmail()">
                 Designed by <a href="mailto:edgardodelreal@gmail.com,martinlima127@gmail.com" id="designer-email">
                     edgardodelreal@gmail.com y martinlima127@gmail.com
@@ -316,7 +393,7 @@
                             <span id="modal-brand" class="modal-pill"></span>
                         </div>
                         <div class="modal-detail-item">
-                            <span class="modal-label">Sabor</span>
+                            <span id="modal-flavor-label" class="modal-label">Sabor</span>
                             <span id="modal-flavor" class="modal-pill"></span>
                         </div>
                         <div class="modal-detail-item">
@@ -349,6 +426,25 @@
             });
         });
 
+        const productTabs = document.querySelectorAll('.product-tab');
+        const productPanels = document.querySelectorAll('.products-panel');
+
+        function activateProductPanel(target) {
+            productTabs.forEach(tab => {
+                const isActive = tab.dataset.target === target;
+                tab.classList.toggle('active', isActive);
+                tab.setAttribute('aria-pressed', String(isActive));
+            });
+
+            productPanels.forEach(panel => {
+                panel.classList.toggle('active', panel.dataset.panel === target);
+            });
+        }
+
+        productTabs.forEach(tab => {
+            tab.addEventListener('click', () => activateProductPanel(tab.dataset.target));
+        });
+
         // Modal de producto
         const modal = document.getElementById('product-modal');
         const modalClose = document.querySelector('.modal-close');
@@ -357,13 +453,15 @@
 
         function openModal(card) {
             // Buscar la imagen del producto (no el logo de disponibilidad)
-            const productImg = card.querySelector('.product-image-container img[alt^="Alimento"]');
-            const imgSrc = productImg ? productImg.src : card.querySelector('.product-image-container img:last-child').src;
+            const productImg = card.querySelector('.product-image-container > img:not(.availability-logo)');
+            const fallbackImg = card.querySelector('.product-image-container img:last-child');
+            const imgSrc = productImg ? productImg.src : fallbackImg?.src;
             const title = card.querySelector('h3').textContent;
             const descriptionsData = card.dataset.descriptions || '';
             const descriptions = descriptionsData.split('|').filter(d => d.trim());
             const brand = card.querySelector('.quick-pill.brand')?.textContent || '';
             const flavor = card.querySelector('.quick-pill.flavor')?.textContent || '';
+            const aroma = card.querySelector('.quick-pill.aroma')?.textContent || '';
             const presentation = card.querySelector('.quick-pill.presentation')?.textContent || '';
             const presentations = presentation.split('/').map(p => p.trim()).filter(p => p);
             const availabilityInCard = card.querySelector('.availability-info');
@@ -371,7 +469,12 @@
             const modalAvailability = document.getElementById('modal-availability');
             const modalAvailabilityLogo = document.getElementById('modal-availability-logo');
 
-            document.getElementById('modal-img').src = imgSrc;
+            const modalImg = document.getElementById('modal-img');
+            if (imgSrc) {
+                modalImg.src = imgSrc;
+            } else {
+                modalImg.removeAttribute('src');
+            }
             document.getElementById('modal-title').textContent = title;
 
             if (availabilityInCard && availabilityLogoInCard) {
@@ -394,7 +497,8 @@
             });
 
             document.getElementById('modal-brand').textContent = brand;
-            document.getElementById('modal-flavor').textContent = flavor;
+            document.getElementById('modal-flavor').textContent = aroma || flavor;
+            document.getElementById('modal-flavor-label').textContent = aroma ? 'Aromas' : 'Sabor';
             
             const presContainer = document.getElementById('modal-presentations');
             presContainer.innerHTML = '';

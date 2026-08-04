@@ -314,6 +314,49 @@ span{
     text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5); 
     text-transform: uppercase;
 }
+.productos-intro {
+    max-width: 760px;
+    margin: 0 auto 1.25rem;
+    text-align: center;
+    color: #d0d0d0;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+.product-switcher {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin: 0 auto 2rem;
+}
+.product-tab {
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.05);
+    color: #d7d7d7;
+    padding: 0.8rem 1.4rem;
+    border-radius: 999px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.product-tab:hover {
+    transform: translateY(-2px);
+    border-color: rgba(226, 123, 33, 0.45);
+}
+.product-tab.active {
+    background: linear-gradient(135deg, #C45D00 0%, #e27b21 100%);
+    color: #ffffff;
+    border-color: transparent;
+    box-shadow: 0 12px 24px rgba(196, 93, 0, 0.25);
+}
+.products-panel {
+    display: none;
+}
+.products-panel.active {
+    display: block;
+}
 
 .quienes-somos p {
     font-family: sans-serif;
@@ -433,7 +476,7 @@ span{
 }
 
 /* Imagen del PRODUCTO - protagonista */
-.product-image-container img[alt^="Alimento"] {
+.product-image-container > img:not(.availability-logo) {
     max-width: 100%;
     max-height: 300px;
     height: auto;
@@ -443,7 +486,7 @@ span{
     filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.25));
 }
 
-.product-image-container img[alt^="Alimento"]:hover {
+.product-image-container > img:not(.availability-logo):hover {
     transform: scale(1.08);
 }
 
@@ -495,6 +538,12 @@ span{
     background: rgba(196, 93, 0, 0.2);
     color: #ff9d3d;
     border-color: rgba(196, 93, 0, 0.4);
+}
+
+.quick-pill.aroma {
+    background: rgba(145, 95, 170, 0.2);
+    color: #e2c5ed;
+    border-color: rgba(145, 95, 170, 0.4);
 }
 
 .quick-pill.presentation {
@@ -840,6 +889,127 @@ footer {
     }
 }
 
+    .stones-panel {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1.5rem;
+        border-radius: 24px;
+        background: linear-gradient(145deg, rgba(44, 44, 46, 0.95), rgba(28, 28, 30, 0.96));
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
+    }
+    .stones-hero {
+        text-align: center;
+        max-width: 760px;
+        margin: 0 auto 1.5rem;
+    }
+    .section-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.35rem 0.8rem;
+        margin-bottom: 0.9rem;
+        border-radius: 999px;
+        background: rgba(226, 123, 33, 0.16);
+        color: #ffb36f;
+        border: 1px solid rgba(226, 123, 33, 0.24);
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+    }
+    .stones-hero h3 {
+        margin: 0 0 0.8rem;
+        color: #ffffff;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.8rem;
+    }
+    .stones-hero p {
+        margin: 0;
+        color: #cfcfcf;
+        line-height: 1.65;
+    }
+    .stones-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+    }
+    .stone-card {
+        display: flex;
+        gap: 1rem;
+        align-items: stretch;
+        padding: 1rem;
+        border-radius: 20px;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+        border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .stone-card-cta {
+        background: linear-gradient(145deg, rgba(196, 93, 0, 0.18), rgba(255, 255, 255, 0.03));
+    }
+    .stone-visual {
+        min-width: 180px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background:
+            radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.22), transparent 36%),
+            radial-gradient(circle at 70% 35%, rgba(255, 255, 255, 0.15), transparent 28%),
+            radial-gradient(circle at 45% 70%, rgba(255, 255, 255, 0.18), transparent 30%),
+            linear-gradient(145deg, #b8b0a3, #8e867a 48%, #6f6659 100%);
+        color: #2a241c;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.6rem;
+        font-weight: 700;
+        text-align: center;
+        letter-spacing: 0.04em;
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+    }
+    .stone-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        flex: 1;
+    }
+    .stone-info h4 {
+        margin: 0;
+        color: #ffffff;
+        font-size: 1.2rem;
+    }
+    .stone-info p {
+        margin: 0;
+        color: #d4d4d4;
+        line-height: 1.6;
+    }
+    .stone-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    .stone-tags span,
+    .stone-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 34px;
+        padding: 0.4rem 0.8rem;
+        border-radius: 999px;
+        font-size: 0.82rem;
+        font-weight: 600;
+    }
+    .stone-tags span {
+        background: rgba(255, 255, 255, 0.08);
+        color: #f0f0f0;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .stone-link {
+        width: fit-content;
+        margin-top: auto;
+        text-decoration: none;
+        background: linear-gradient(135deg, #C45D00 0%, #e27b21 100%);
+        color: #ffffff;
+        box-shadow: 0 10px 18px rgba(196, 93, 0, 0.2);
+    }
+
 @keyframes zoomIn {
     from {
         transform: scale(0.9);
@@ -1070,6 +1240,14 @@ footer {
         grid-template-columns: repeat(2, 1fr);
         gap: 15px;
     }
+.product-switcher {
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+    }
+.product-tab {
+        padding: 0.75rem 1rem;
+        font-size: 0.95rem;
+    }
 
     .product-card {
         flex-direction: column;
@@ -1081,7 +1259,7 @@ footer {
         padding: 16px;
     }
 
-    .product-image-container img[alt^="Alimento"] {
+    .product-image-container > img:not(.availability-logo) {
         max-height: 190px;
     }
 
@@ -1117,6 +1295,20 @@ footer {
         padding: 8px 15px;
         font-size: 0.8rem;
         max-width: 140px;
+    }
+.stones-panel {
+        padding: 1rem;
+    }
+.stones-grid {
+        grid-template-columns: 1fr;
+    }
+.stone-card {
+        flex-direction: column;
+    }
+.stone-visual {
+        min-width: 0;
+        min-height: 180px;
+        font-size: 1.3rem;
     }
 
     
@@ -1278,13 +1470,25 @@ footer {
         gap: 20px;
         padding: 0 15px;
     }
+.productos-intro {
+        font-size: 0.96rem;
+        padding: 0 0.5rem;
+    }
+.product-switcher {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0 15px;
+    }
+.product-tab {
+        width: 100%;
+    }
 
     .product-image-container {
         min-height: 290px;
         padding: 22px;
     }
 
-    .product-image-container img[alt^="Alimento"] {
+    .product-image-container > img:not(.availability-logo) {
         max-height: 220px;
     }
 
@@ -1310,6 +1514,16 @@ footer {
     .availability-logo {
         width: 2.6rem;
         height: 2.6rem;
+    }
+.stones-hero h3 {
+        font-size: 1.5rem;
+    }
+.stone-card {
+        padding: 0.9rem;
+    }
+.stone-visual {
+        min-height: 160px;
+        font-size: 1.15rem;
     }
 
     .contacto-section {

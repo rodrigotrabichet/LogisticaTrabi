@@ -7,10 +7,6 @@
     <meta name="description" content="Distribución mayorista de alimentos para mascotas y piedras sanitarias. Logística rápida en Colón, Concordia, Uruguay y zona. Potencia tu veterinaria o pet shop con nosotros." />
     <title>TR Express | Distribuidora de Alimentos para Mascotas en Entre Ríos</title>
     <link rel="stylesheet" href="styles.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Overpass:ital,wght@0,100..900;1,100..900&family=Shippori+Antique+B1&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <link rel="icon" type="image/ico" href="assets/favicon/patas.ico" />
     <link rel="icon" sizes="192x192" href="/assets/favicon/patas-192.png" type="image/png">
     <link rel="canonical" href="https://trexpressdistribuidora.com/" />
@@ -19,48 +15,43 @@
 </head>
 <body>
     <section class="hero" id="inicio">
-        <h1 class="Sl">TR <span>Express</span></h1>
-        <div class="main__action">
-            <div class="main__scroll">
-                <div class="main__scroll-box">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0 0h24v24H0z" fill="none"></path>
-                        <path d="M11.9997 13.1716L7.04996 8.22186L5.63574 9.63607L11.9997 16L18.3637 9.63607L16.9495 8.22186L11.9997 13.1716Z" fill="rgba(28,28,30,1)"></path>
-                    </svg>
-                </div>
-                <span class="main__scroll-text">Desliza</span>
-            </div>
-        </div>
+        <h1 class="hero-title">TR <span class="hero-express">Express</span><span class="hero-stroke" aria-hidden="true"><span class="hero-stroke-line"></span><img class="hero-stroke-truck" src="assets/images/TRExpress_Camioneta2.webp" alt="" width="384" height="173" /></span></h1>
+        <p class="hero-subtitle">Distribución mayorista de alimentos y piedras sanitarias para mascotas, con logística rápida en toda la zona.</p>
+        <a class="hero-scroll-cue" href="#nosotros" aria-label="Deslizá para conocer más">
+            <span>Deslizá para conocer más</span>
+            <span class="hero-scroll-indicator" aria-hidden="true"><span></span></span>
+        </a>
     </section>
 
     <header>
         <nav class="navbar">
-            <div class="hamburger-menu">
+            <button class="hamburger-menu" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">
                 <div class="bar"></div>
                 <div class="bar"></div>
                 <div class="bar"></div>
-            </div>
-            <ul class="nav-links">
+            </button>
+            <ul class="nav-links" id="nav-links">
                 <li><a href="#inicio">Inicio</a></li>
                 <li><a href="#nosotros">Nosotros</a></li>
-                <li>
+                <li class="nav-logo-item">
                     <img src="assets/images/logo.png" alt="Logo de TR Express - Logística y Distribución de Alimentos para Mascotas" class="logo"/>
                 </li>
                 <li><a href="#productos">Productos</a></li>
                 <li><a href="#contacto">Contacto</a></li>
             </ul>
         </nav>
+        <div class="nav-overlay" aria-hidden="true"></div>
     </header>
 
     <main>
-        <section class="container-quienes-somos" id="nosotros">
-            <section class="quienes-somos">
+        <section class="section" id="nosotros">
+            <div class="section-inner quienes-somos reveal" data-reveal>
                 <div class="quienes-somos-imagen-container">
                     <img src="assets/images/perritoQueSalud2.png" alt="Perro feliz saludando, confianza y seguridad en reparto de alimentos TR Express" class="ft-QS">
                 </div>
                 <div class="quienes-somos-section-container">
                     <div class="quienes-somos-titulo-container">
-                        <h2 class="titulos">¿Quiénes somos?</h2>
+                        <h2>¿Quiénes somos?</h2>
                     </div>
                     <p>
                         En TR Express sabemos que la felicidad de tus mascotas empieza con una buena alimentación e higiene. Por eso nos dedicamos al reparto de Pro Quality y Michi Mix. Marcas de Calidad para acompañar el día a día de ellos.
@@ -69,12 +60,92 @@
                         Nos ocupamos de que tu pedido llegue fácil, rápido y sin complicaciones, para que vos solo te preocupes por disfrutar más momentos junto a tu mejor amigo.
                     </p>
                 </div>
-            </section>
+            </div>
         </section>
 
-        <section class="productos" id="productos">
-            <div class="title-container">
-                <h2 class="titulos">Nuestros Productos</h2>
+        <section class="section nueva-tienda" id="nueva-tienda">
+            <div class="section-inner nueva-tienda-grid reveal" data-reveal>
+                <div class="nueva-tienda-copy">
+                    <h2>Te esperamos en nuestro <span>nuevo local</span></h2>
+                    <p>
+                        TR Express abrió su tienda física abierta al público. Pasá a conocernos, asesorate y llevate lo que tu mascota necesita.
+                    </p>
+                    <div class="nueva-tienda-direccion">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        <span>Urquiza 319, Colón, Entre Ríos</span>
+                    </div>
+                    <div class="nueva-tienda-actions">
+                        <a href="https://www.google.com/maps/search/?api=1&amp;query=Urquiza+319+Col%C3%B3n+Entre+R%C3%ADos" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M9 18l-6 3V6l6-3 6 3 6-3v15l-6 3-6-3z"></path>
+                                <path d="M9 18V6"></path>
+                                <path d="M15 15V3"></path>
+                            </svg>
+                            <span>Cómo llegar</span>
+                        </a>
+                        <a href="https://wa.me/+5493447528993?text=Hola Rodrigo!! Estuve viendo el catalogo y estoy interesado. Me gustaria saber mas!" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                                <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
+                            </svg>
+                            <span>Consultar por WhatsApp</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="nueva-tienda-visual" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 300" fill="none">
+                        <defs>
+                            <linearGradient id="store-bg" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stop-color="#303034"/>
+                                <stop offset="100%" stop-color="#232325"/>
+                            </linearGradient>
+                            <linearGradient id="awning" x1="0" y1="0" x2="1" y2="0">
+                                <stop offset="0%" stop-color="#C45D00"/>
+                                <stop offset="100%" stop-color="#FF9D3D"/>
+                            </linearGradient>
+                        </defs>
+                        <!-- Fachada -->
+                        <rect x="30" y="50" width="380" height="230" rx="18" fill="url(#store-bg)" stroke="rgba(255,255,255,0.14)"/>
+                        <rect x="30" y="50" width="380" height="60" rx="18" fill="url(#awning)"/>
+                        <rect x="30" y="86" width="380" height="24" fill="url(#awning)"/>
+                        <!-- Bandeja de toldo -->
+                        <path d="M30 110 H410 L402 130 H38 Z" fill="#B85200"/>
+                        <!-- Vidrieras -->
+                        <rect x="52" y="130" width="130" height="110" rx="8" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.16)"/>
+                        <rect x="196" y="130" width="62" height="110" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.12)"/>
+                        <rect x="272" y="130" width="116" height="110" rx="8" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.16)"/>
+                        <!-- Puerta -->
+                        <rect x="196" y="130" width="62" height="110" fill="rgba(226,123,33,0.35)" stroke="rgba(255,157,61,0.5)"/>
+                        <circle cx="248" cy="185" r="3" fill="#FF9D3D"/>
+                        <!-- Vitrina: productos -->
+                        <rect x="64" y="148" width="34" height="26" rx="4" fill="rgba(226,123,33,0.5)"/>
+                        <rect x="106" y="148" width="34" height="26" rx="4" fill="rgba(226,123,33,0.4)"/>
+                        <rect x="148" y="148" width="22" height="34" rx="4" fill="rgba(226,123,33,0.35)"/>
+                        <rect x="64" y="188" width="26" height="30" rx="4" fill="rgba(226,123,33,0.45)"/>
+                        <rect x="98" y="188" width="26" height="30" rx="4" fill="rgba(226,123,33,0.4)"/>
+                        <rect x="132" y="188" width="26" height="30" rx="4" fill="rgba(226,123,33,0.45)"/>
+                        <rect x="286" y="150" width="40" height="40" rx="8" fill="rgba(226,123,33,0.4)"/>
+                        <rect x="334" y="150" width="40" height="40" rx="8" fill="rgba(226,123,33,0.45)"/>
+                        <rect x="286" y="200" width="40" height="30" rx="8" fill="rgba(226,123,33,0.35)"/>
+                        <rect x="334" y="200" width="40" height="30" rx="8" fill="rgba(226,123,33,0.4)"/>
+                        <!-- Cartel -->
+                        <rect x="150" y="16" width="140" height="34" rx="8" fill="#1F1F20" stroke="rgba(255,157,61,0.6)"/>
+                        <rect x="158" y="24" width="124" height="18" rx="4" fill="rgba(226,123,33,0.3)"/>
+                        <!-- Macetas -->
+                        <rect x="42" y="250" width="30" height="30" rx="4" fill="rgba(255,255,255,0.08)"/>
+                        <circle cx="57" cy="244" r="12" fill="rgba(255,157,61,0.55)"/>
+                        <rect x="368" y="250" width="30" height="30" rx="4" fill="rgba(255,255,255,0.08)"/>
+                        <circle cx="383" cy="244" r="12" fill="rgba(255,157,61,0.55)"/>
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="productos">
+            <div class="section-heading reveal" data-reveal>
+                <h2>Nuestros Productos</h2>
             </div>
 
             <div class="product-switcher" role="tablist" aria-label="Categorías de productos">
@@ -83,129 +154,128 @@
             </div>
 
             <div class="products-panel active" data-panel="alimentos">
-                <div class="product-container">
+                <div class="product-container reveal" data-reveal>
                     <div class="product-card" data-descriptions="Este alimento está diseñado para un cuidado integral. Con un 22% de proteína de alta calidad proveniente del pollo y la carne, ayuda a que sus músculos se mantengan fuertes. Además, le da un plus de defensas, ya que refuerza su sistema inmunológico con prebióticos, vitaminas y minerales.|Gracias a su equilibrio de ácidos grasos Omega 3, 6 y 9, contribuye a un pelo notablemente más brillante y a una piel visiblemente más saludable, ayudando a que luzca y se sienta mejor.|Apunta a una nutrición completa pensada para que disfrute una vida más activa, feliz y llena de bienestar.">
-                    <div class="product-image-container">
-                        <div class="availability-info">
-                            <span>También disponible en</span>
-                            <img src="assets/images/LogoMordidaPequeña.png" alt="Logo Pet Shop Mordida Pequeña" class="availability-logo">
+                        <div class="product-image-container">
+                            <div class="availability-info">
+                                <span>También disponible en</span>
+                                <img src="assets/images/LogoMordidaPequeña.png" alt="Logo Pet Shop Mordida Pequeña" class="availability-logo">
+                            </div>
+                            <img src="assets/images/products/AdultosCriadores20KgSombra2.png" alt="Alimento balanceado Pro Quality Criadores Adultos sabor pollo y carne bolsa 20kg">
                         </div>
-                        <img src="assets/images/products/AdultosCriadores20KgSombra2.png" alt="Alimento balanceado Pro Quality Criadores Adultos sabor pollo y carne bolsa 20kg">
-                    </div>
-                    <div class="product-info-container">
-                        <h3>Criadores Adultos</h3>
-                        <div class="product-quick-info">
-                            <span class="quick-pill brand">Pro Quality</span>
-                            <span class="quick-pill flavor">Carne y Pollo</span>
-                            <span class="quick-pill presentation">20 kg</span>
+                        <div class="product-info-container">
+                            <h3>Criadores Adultos</h3>
+                            <div class="product-quick-info">
+                                <span class="quick-pill brand">Pro Quality</span>
+                                <span class="quick-pill flavor">Carne y Pollo</span>
+                                <span class="quick-pill presentation">20 kg</span>
+                            </div>
+                            <button class="btn btn-primary btn-ver-detalles">Ver detalles</button>
                         </div>
-                        <button class="btn-ver-detalles">Ver detalles</button>
                     </div>
-                </div>
 
                     <div class="product-card" data-descriptions="Pensada para brindar una nutrición de excelencia a tu perro adulto.|Con un 26% de proteína de alta calidad, garantiza el desarrollo y mantenimiento de músculos fuertes. Además, ofrece una alta digestibilidad gracias a la inclusión de prebióticos y probióticos, asegurando una óptima absorción de nutrientes.|Pensado para su bienestar integral, ayuda activamente a la salud de las articulaciones mediante el aporte de condroitín sulfato y glucosamina. A su vez, su equilibrio de ácidos grasos Omega 3 y 6 contribuye a mantener una piel sana y un pelo brillante.">
-                    <div class="product-image-container">
-                        <div class="availability-info">
-                            <span>También disponible en</span>
-                            <img src="assets/images/LogoMordidaPequeña.png" alt="Logo Pet Shop Mordida Pequeña" class="availability-logo">
+                        <div class="product-image-container">
+                            <div class="availability-info">
+                                <span>También disponible en</span>
+                                <img src="assets/images/LogoMordidaPequeña.png" alt="Logo Pet Shop Mordida Pequeña" class="availability-logo">
+                            </div>
+                            <img src="assets/images/products/SuperPremium20Kg.png" alt="Alimento Pro Quality Super Premium Adultos">
                         </div>
-                        <img src="assets/images/products/SuperPremium20Kg.png" alt="Alimento Pro Quality Super Premium Adultos">
-                    </div>
-                    <div class="product-info-container">
-                        <h3>Super Premium Adultos</h3>
-                        <div class="product-quick-info">
-                            <span class="quick-pill brand">Pro Quality</span>
-                            <span class="quick-pill flavor">Carne y Pollo</span>
-                            <span class="quick-pill presentation">20 kg</span>
+                        <div class="product-info-container">
+                            <h3>Super Premium Adultos</h3>
+                            <div class="product-quick-info">
+                                <span class="quick-pill brand">Pro Quality</span>
+                                <span class="quick-pill flavor">Carne y Pollo</span>
+                                <span class="quick-pill presentation">20 kg</span>
+                            </div>
+                            <button class="btn btn-primary btn-ver-detalles">Ver detalles</button>
                         </div>
-                        <button class="btn-ver-detalles">Ver detalles</button>
                     </div>
-                </div>
 
                     <div class="product-card" data-descriptions="Sr. Milo Adultos es la opción ideal si buscás una nutrición completa para tu perro en su etapa adulta. diseñada para ofrecer un alimento balanceado que cubre las necesidades diarias de tu mascota.|Este alimento se destaca por su aporte de más energía, ideal para mantener a tu perro activo y vital. Su fórmula está enriquecida con Vitaminas A, D y E, esenciales para su bienestar general. Además, su irresistible Mix de Sabores a carne, pollo y verdura le encantará.|Con un 21% de proteína, Sr. Milo contribuye a mantener los músculos y la salud de tu perro. Es una solución práctica y nutritiva en una presentación única de gran rendimiento.">
-                    <div class="product-image-container">
-                        <div class="availability-info">
-                            <span>También disponible en</span>
-                            <img src="assets/images/LogoMordidaPequeña.png" alt="Logo Pet Shop Mordida Pequeña" class="availability-logo">
+                        <div class="product-image-container">
+                            <div class="availability-info">
+                                <span>También disponible en</span>
+                                <img src="assets/images/LogoMordidaPequeña.png" alt="Logo Pet Shop Mordida Pequeña" class="availability-logo">
+                            </div>
+                            <img src="assets/images/products/SrMilo20KgSombra2.png" alt="Alimento económico para perros Sr. Milo Adultos mix carne pollo y verduras 20kg">
                         </div>
-                        <img src="assets/images/products/SrMilo20KgSombra2.png" alt="Alimento económico para perros Sr. Milo Adultos mix carne pollo y verduras 20kg">
-                    </div>
-                    <div class="product-info-container">
-                        <h3>Sr. Milo Adultos</h3>
-                        <div class="product-quick-info">
-                            <span class="quick-pill brand">Sr. Milo</span>
-                            <span class="quick-pill flavor">Carne, pollo y verdura</span>
-                            <span class="quick-pill presentation">20 kg</span>
+                        <div class="product-info-container">
+                            <h3>Sr. Milo Adultos</h3>
+                            <div class="product-quick-info">
+                                <span class="quick-pill brand">Sr. Milo</span>
+                                <span class="quick-pill flavor">Carne, pollo y verdura</span>
+                                <span class="quick-pill presentation">20 kg</span>
+                            </div>
+                            <button class="btn btn-primary btn-ver-detalles">Ver detalles</button>
                         </div>
-                        <button class="btn-ver-detalles">Ver detalles</button>
                     </div>
-                </div>
 
                     <div class="product-card" data-descriptions="Formulada específicamente para potenciar el desarrollo de tu cachorro con una nutrición Super Premium desde sus primeros días.|Su potente receta con un 30% de proteínas de alta digestibilidad impulsa la formación de músculos fuertes y llenos de energía. A su vez, el enriquecimiento con prebióticos y probióticos favorece la máxima absorción de nutrientes, fortaleciendo sus defensas naturales para un sistema inmunológico invencible.|Cuidamos cada detalle de su crecimiento: la acción de la glucosamina y el condroitín sulfato protege sus articulaciones en pleno desarrollo, mientras que el exclusivo balance de Omegas 3 y 6 le asegura una piel saludable y un pelaje resplandeciente.">
-                    <div class="product-image-container">
-                        <img src="assets/images/products/SuperPremiumAdultos.webp" alt="Alimento balanceado Pro Quality Super Premium Cachorro bolsa 15 kg">
-                    </div>
-                    <div class="product-info-container">
-                        <h3>Super Premium Cachorro</h3>
-                        <div class="product-quick-info">
-                            <span class="quick-pill brand">Pro Quality</span>
-                            <span class="quick-pill flavor">Carne y Pollo</span>
-                            <span class="quick-pill presentation">15 kg</span>
+                        <div class="product-image-container">
+                            <img src="assets/images/products/SuperPremiumAdultos.webp" alt="Alimento balanceado Pro Quality Super Premium Cachorro bolsa 15 kg">
                         </div>
-                        <button class="btn-ver-detalles">Ver detalles</button>
+                        <div class="product-info-container">
+                            <h3>Super Premium Cachorro</h3>
+                            <div class="product-quick-info">
+                                <span class="quick-pill brand">Pro Quality</span>
+                                <span class="quick-pill flavor">Carne y Pollo</span>
+                                <span class="quick-pill presentation">15 kg</span>
+                            </div>
+                            <button class="btn btn-primary btn-ver-detalles">Ver detalles</button>
+                        </div>
                     </div>
-                </div>
 
                     <div class="product-card" data-descriptions="Pro Quality Criadores Cachorros es la nutrición premium ideal para acompañar el crecimiento de tu cachorro. Con un 24% de proteína, este alimento asegura la energía y los nutrientes necesarios para esta etapa tan importante, promoviendo un desarrollo fuerte y saludable desde sus primeros meses.|Su fórmula está pensada para un cuidado completo. Gracias a sus ingredientes de alta digestibilidad, cuida su sensible sistema digestivo y, al mismo tiempo, ayuda a mantener un sistema inmunológico saludable.|No solo lo cuida por dentro, sino que también contribuye a una piel sana y un pelo brillante. Para que crezca activo y sin molestias, su composición también colabora con la salud de sus articulaciones en pleno desarrollo.">
-                    <div class="product-image-container">
-                        <img src="assets/images/products/Cachorros21KgSombra2.png" alt="Alimento balanceado Pro Quality Criadores Cachorros alta digestibilidad">
-                    </div>
-                    <div class="product-info-container">
-                        <h3>Criadores Cachorros</h3>
-                        <div class="product-quick-info">
-                            <span class="quick-pill brand">Pro Quality</span>
-                            <span class="quick-pill flavor">Carne y Pollo</span>
-                            <span class="quick-pill presentation">21 kg</span>
+                        <div class="product-image-container">
+                            <img src="assets/images/products/Cachorros21KgSombra2.png" alt="Alimento balanceado Pro Quality Criadores Cachorros alta digestibilidad">
                         </div>
-                        <button class="btn-ver-detalles">Ver detalles</button>
+                        <div class="product-info-container">
+                            <h3>Criadores Cachorros</h3>
+                            <div class="product-quick-info">
+                                <span class="quick-pill brand">Pro Quality</span>
+                                <span class="quick-pill flavor">Carne y Pollo</span>
+                                <span class="quick-pill presentation">21 kg</span>
+                            </div>
+                            <button class="btn btn-primary btn-ver-detalles">Ver detalles</button>
+                        </div>
                     </div>
-                </div>
 
                     <div class="product-card" data-descriptions="Es un alimento Super Premium diseñado para el cuidado urinario de tu gato adulto.|Su fórmula avanzada ayuda a reducir los trastornos urinarios gracias a un contenido óptimo de minerales. Esto colabora en minimizar la formación de cálculos y a mantener un pH saludable.|Con un 30% de proteína de alta digestibilidad, promueve músculos sanos y fuertes. Además, la inclusión de ácidos grasos esenciales y zinc contribuye a un pelaje más fuerte y brillante.">
-                    <div class="product-image-container">
-                        <img src="assets/images/products/Gato7kgSombra2.png" alt="Alimento Pro Quality Gatos Adultos Urinary cuidado urinario sabor carne y pollo">
-                    </div>
-                    <div class="product-info-container">
-                        <h3>Gatos Adultos Urinary</h3>
-                        <div class="product-quick-info">
-                            <span class="quick-pill brand">Pro Quality</span>
-                            <span class="quick-pill flavor">Carne, Pollo y Pescado</span>
-                            <span class="quick-pill presentation">7 kg</span>
+                        <div class="product-image-container">
+                            <img src="assets/images/products/Gato7kgSombra2.png" alt="Alimento Pro Quality Gatos Adultos Urinary cuidado urinario sabor carne y pollo">
                         </div>
-                        <button class="btn-ver-detalles">Ver detalles</button>
+                        <div class="product-info-container">
+                            <h3>Gatos Adultos Urinary</h3>
+                            <div class="product-quick-info">
+                                <span class="quick-pill brand">Pro Quality</span>
+                                <span class="quick-pill flavor">Carne, Pollo y Pescado</span>
+                                <span class="quick-pill presentation">7 kg</span>
+                            </div>
+                            <button class="btn btn-primary btn-ver-detalles">Ver detalles</button>
+                        </div>
                     </div>
-                </div>
 
                     <div class="product-card" data-descriptions="Brindale a tu gato adulto una nutrición completa con Pro Quality Gatos sabor Pescado. Este alimento premium, con un 30% de proteína de alta calidad, asegura una mayor digestibilidad y un desarrollo saludable.|Su fórmula está diseñada para un cuidado integral, ya que contiene Taurina para ayudar a un corazón y una visión más saludables, también contiene un equilibrio de minerales que colabora con un tracto urinario óptimo. Sus niveles de fibra adecuados ayudan a prevenir la formación de bolas de pelo.">
-                    <div class="product-image-container">
-                        <img src="assets/images/products/GatosAdultosNuevo.PNG" alt="Alimento para gatos adultos Pro Quality sabor Pescado 30% proteina">
-                    </div>
-                    <div class="product-info-container">
-                        <h3>Alimento Gato Adulto</h3>
-                        <div class="product-quick-info">
-                            <span class="quick-pill brand">Pro Quality</span>
-                            <span class="quick-pill flavor">Pescado</span>
-                            <span class="quick-pill presentation">7 kg</span>
+                        <div class="product-image-container">
+                            <img src="assets/images/products/GatosAdultosNuevo.PNG" alt="Alimento para gatos adultos Pro Quality sabor Pescado 30% proteina">
                         </div>
-                        <button class="btn-ver-detalles">Ver detalles</button>
+                        <div class="product-info-container">
+                            <h3>Alimento Gato Adulto</h3>
+                            <div class="product-quick-info">
+                                <span class="quick-pill brand">Pro Quality</span>
+                                <span class="quick-pill flavor">Pescado</span>
+                                <span class="quick-pill presentation">7 kg</span>
+                            </div>
+                            <button class="btn btn-primary btn-ver-detalles">Ver detalles</button>
+                        </div>
                     </div>
                 </div>
-
-            </div>
             </div>
 
             <div class="products-panel" data-panel="piedras">
-                <div class="product-container">
+                <div class="product-container reveal" data-reveal>
                     <div class="product-card" data-descriptions="MichiMix Piedras Aglomerantes reúne las variantes Clasicas, Aroma Lavanda, Aroma Jazmín y Aroma Madre Selva, todas en presentación de 4kg y 8 kg.|Una línea pensada para ofrecer opciones aglomerantes y aromáticas para la bandeja sanitaria, con cuatro alternativas para tu negocio o mascota.|El envase indica colocar el mineral hasta alcanzar la altura recomendada, reponer el material usado y mantener la bandeja limpia.">
                         <div class="product-image-container">
                             <img src="assets/images/products/Aglomerantes.webp" alt="Piedras aglomerantes MichiMix Clasicas, Aroma Lavanda, Aroma Jazmín y Aroma Madre Selva en bolsas de 8 kg">
@@ -217,7 +287,7 @@
                                 <span class="quick-pill aroma">Aromas variados</span>
                                 <span class="quick-pill presentation">4 kg / 8 kg</span>
                             </div>
-                            <button class="btn-ver-detalles" type="button">Ver detalles</button>
+                            <button class="btn btn-primary btn-ver-detalles" type="button">Ver detalles</button>
                         </div>
                     </div>
 
@@ -232,7 +302,7 @@
                                 <span class="quick-pill aroma">Aroma Lavanda</span>
                                 <span class="quick-pill presentation">15 kg</span>
                             </div>
-                            <button class="btn-ver-detalles" type="button">Ver detalles</button>
+                            <button class="btn btn-primary btn-ver-detalles" type="button">Ver detalles</button>
                         </div>
                     </div>
 
@@ -247,7 +317,7 @@
                                 <span class="quick-pill aroma">Aroma Premium</span>
                                 <span class="quick-pill presentation">15 kg</span>
                             </div>
-                            <button class="btn-ver-detalles" type="button">Ver detalles</button>
+                            <button class="btn btn-primary btn-ver-detalles" type="button">Ver detalles</button>
                         </div>
                     </div>
 
@@ -262,65 +332,93 @@
                                 <span class="quick-pill aroma">Carbón activado</span>
                                 <span class="quick-pill presentation">8 kg</span>
                             </div>
-                            <button class="btn-ver-detalles" type="button">Ver detalles</button>
+                            <button class="btn btn-primary btn-ver-detalles" type="button">Ver detalles</button>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        
-        <section class="locations-section" id="cobertura">
+
+        <section class="section locations-section" id="cobertura">
             <h3 class="trabajo">Trabajamos en las siguientes ciudades</h3>
             <div class="infinite-wrapper">
-        <div class="infinite-track" id="track">
-            
-            <article class="location-card">
-                <div class="location-icon">📍</div>
-                <h3>Colón</h3>
-                <span>Entre Ríos</span>
-            </article>
+                <div class="infinite-track" id="track">
+                    <article class="location-card">
+                        <div class="location-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                        </div>
+                        <h3>Colón</h3>
+                        <span>Entre Ríos</span>
+                    </article>
 
-            <article class="location-card">
-                <div class="location-icon">📍</div>
-                <h3>San Salvador</h3>
-                <span>Entre Ríos</span>
-            </article>
+                    <article class="location-card">
+                        <div class="location-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                        </div>
+                        <h3>San Salvador</h3>
+                        <span>Entre Ríos</span>
+                    </article>
 
-            <article class="location-card">
-                <div class="location-icon">📍</div>
-                <h3>Concordia</h3>
-                <span>Entre Ríos</span>
-            </article>
+                    <article class="location-card">
+                        <div class="location-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                        </div>
+                        <h3>Concordia</h3>
+                        <span>Entre Ríos</span>
+                    </article>
 
-            <article class="location-card">
-                <div class="location-icon">📍</div>
-                <h3>Villaguay</h3>
-                <span>Entre Ríos</span>
-            </article>
+                    <article class="location-card">
+                        <div class="location-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                        </div>
+                        <h3>Villaguay</h3>
+                        <span>Entre Ríos</span>
+                    </article>
 
-            <article class="location-card">
-                <div class="location-icon">📍</div>
-                <h3>C. del Uruguay</h3>
-                <span>Entre Ríos</span>
-            </article>
+                    <article class="location-card">
+                        <div class="location-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                        </div>
+                        <h3>C. del Uruguay</h3>
+                        <span>Entre Ríos</span>
+                    </article>
 
-            <article class="location-card">
-                <div class="location-icon">📍</div>
-                <h3>Maciá</h3>
-                <span>Entre Ríos</span>
-            </article>
-            
-        </div>
-        <h5>y sus localidades intermedias</h5>
-    </div>
-</section>
+                    <article class="location-card">
+                        <div class="location-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                        </div>
+                        <h3>Maciá</h3>
+                        <span>Entre Ríos</span>
+                    </article>
+                </div>
+            </div>
+            <h5 class="locations-note">y sus localidades intermedias</h5>
+        </section>
 
+        <section class="section contacto-section" id="contacto">
+            <div class="section-heading reveal" data-reveal>
+                <h2>Contacto</h2>
+            </div>
 
-        <div class="title-container">
-            <h2 class="titulos">Contacto</h2>
-        </div>
-        <section class="contacto-section" id="contacto">
-            <div class="cards-container">
+            <div class="cards-container reveal" data-reveal>
                 <article class="card card-highlight">
                     <div class="icon-box">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -358,13 +456,11 @@
 
             <div class="cta-container">
                 <p class="cta-text">¿Necesitas asesoría personalizada?</p>
-                <a href="https://wa.me/+5493447528993?text=Hola Rodrigo!! Estuve viendo el catalogo y estoy interesado. Me gustaria saber mas!" target="_blank" class="btn-contacto-link">
-                    <button class="btn-contacto">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="wsp-icon" viewBox="0 0 16 16">
-                            <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
-                        </svg>
-                        <span>Consultar por WhatsApp</span>
-                    </button>
+                <a href="https://wa.me/+5493447528993?text=Hola Rodrigo!! Estuve viendo el catalogo y estoy interesado. Me gustaria saber mas!" target="_blank" class="btn btn-whatsapp btn-contacto">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="wsp-icon" aria-hidden="true">
+                        <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
+                    </svg>
+                    <span>Consultar por WhatsApp</span>
                 </a>
             </div>
         </section>
@@ -428,17 +524,31 @@
 
         const hamburgerMenu = document.querySelector('.hamburger-menu');
         const navLinks = document.querySelector('.nav-links');
+        const navOverlay = document.querySelector('.nav-overlay');
+
+        function setNav(open) {
+            navLinks.classList.toggle('active', open);
+            hamburgerMenu.classList.toggle('active', open);
+            if (navOverlay) navOverlay.classList.toggle('active', open);
+            document.body.style.overflow = open ? 'hidden' : '';
+            hamburgerMenu.setAttribute('aria-expanded', String(open));
+            hamburgerMenu.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+        }
 
         hamburgerMenu.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            hamburgerMenu.classList.toggle('active');
+            setNav(!navLinks.classList.contains('active'));
         });
 
+        if (navOverlay) {
+            navOverlay.addEventListener('click', () => setNav(false));
+        }
+
         document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-                hamburgerMenu.classList.remove('active');
-            });
+            link.addEventListener('click', () => setNav(false));
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') setNav(false);
         });
 
         const productTabs = document.querySelectorAll('.product-tab');
@@ -502,7 +612,7 @@
                 modalAvailabilityLogo.src = '';
                 modalAvailability.setAttribute('aria-hidden', 'true');
             }
-            
+
             const descContainer = document.getElementById('modal-descriptions');
             descContainer.innerHTML = '';
             descriptions.forEach(desc => {
@@ -514,7 +624,7 @@
             document.getElementById('modal-brand').textContent = brand;
             document.getElementById('modal-flavor').textContent = aroma || flavor;
             document.getElementById('modal-flavor-label').textContent = aroma ? 'Aromas' : 'Sabor';
-            
+
             const presContainer = document.getElementById('modal-presentations');
             presContainer.innerHTML = '';
             presentations.forEach(pres => {
@@ -548,21 +658,34 @@
 
         modalClose.addEventListener('click', closeModal);
         modalOverlay.addEventListener('click', closeModal);
-        
+
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeModal();
         });
 
-    document.addEventListener("DOMContentLoaded", () => {
+        // Reveal al hacer scroll (con respeto a prefers-reduced-motion)
+        const revealEls = document.querySelectorAll('[data-reveal]');
+        if (revealEls.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                        revealObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.12 });
+            revealEls.forEach(el => revealObserver.observe(el));
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
             const track = document.getElementById('track');
             const wrapper = document.querySelector('.infinite-wrapper');
-            
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
             // 1. Clonar elementos para garantizar el infinito visual
-            // Necesitamos suficientes clones para llenar la pantalla y tener buffer a los lados
             const originalItems = Array.from(track.children);
-            
+
             // Clonamos 2 veces (tenemos: Original + Clon1 + Clon2) para tener margen de sobra
-            // Esto asegura que nunca se vea un espacio vacío al arrastrar rápido
             originalItems.forEach(item => track.appendChild(item.cloneNode(true)));
             originalItems.forEach(item => track.appendChild(item.cloneNode(true)));
 
@@ -575,7 +698,6 @@
             let animationID;
 
             // Calculamos el ancho de UN set de elementos (incluyendo el gap)
-            // Necesitamos saber cuánto mide el grupo original para saber cuándo resetear
             function getSingleSetWidth() {
                 const gap = 32; // 2rem = 32px aprox (ajustar si cambias el CSS)
                 let width = 0;
@@ -600,11 +722,9 @@
                 }
 
                 // LÓGICA INFINITA (El truco matemático)
-                // Si nos pasamos hacia la izquierda del ancho de un set, sumamos el ancho
                 if (position <= -singleSetWidth) {
                     position += singleSetWidth;
                 }
-                // Si nos pasamos hacia la derecha (arrastrando), restamos el ancho
                 else if (position > 0) {
                     position -= singleSetWidth;
                 }
@@ -613,6 +733,12 @@
                 track.style.transform = `translateX(${position}px)`;
 
                 animationID = requestAnimationFrame(animate);
+            }
+
+            // Con movimiento reducido: el track queda estático (sin bucle)
+            if (reduceMotion) {
+                track.style.transform = 'translateX(0)';
+                return;
             }
 
             // Iniciar animación
@@ -629,9 +755,9 @@
 
             const moveDrag = (x) => {
                 if (!isDragging) return;
-                const diff = x - lastX; // Cuánto movió el dedo desde el último frame
-                position += diff; // Sumamos directamente a la posición
-                lastX = x; // Actualizamos para el siguiente frame
+                const diff = x - lastX;
+                position += diff;
+                lastX = x;
             };
 
             const endDrag = () => {
@@ -641,7 +767,7 @@
 
             // Mouse Events
             wrapper.addEventListener('mousedown', e => startDrag(e.pageX));
-            window.addEventListener('mousemove', e => moveDrag(e.pageX)); // Window para no perderlo si sale del div
+            window.addEventListener('mousemove', e => moveDrag(e.pageX));
             window.addEventListener('mouseup', endDrag);
 
             // Touch Events (Celular)
@@ -650,5 +776,12 @@
             wrapper.addEventListener('touchend', endDrag);
         });
     </script>
+
+    <!-- Libs de efectos visuales (CDN) + inicialización -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3/tsparticles.confetti.bundle.min.js"></script>
+    <script defer src="effects.js"></script>
 </body>
 </html>

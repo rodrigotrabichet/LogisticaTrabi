@@ -532,46 +532,43 @@
             if (e.key === 'Escape') setNav(false);
         });
 
-        const productTabs = document.querySelectorAll('.product-tab');
-        const productPanels = document.querySelectorAll('.products-panel');
-
+        // Consulta en vivo: los tabs y paneles pueden renderizarse desde la planilla.
         function activateProductPanel(target) {
-            productTabs.forEach(tab => {
+            document.querySelectorAll('.product-tab').forEach(tab => {
                 const isActive = tab.dataset.target === target;
                 tab.classList.toggle('active', isActive);
                 tab.setAttribute('aria-pressed', String(isActive));
             });
 
-            productPanels.forEach(panel => {
+            document.querySelectorAll('.products-panel').forEach(panel => {
                 panel.classList.toggle('active', panel.dataset.panel === target);
             });
         }
 
         const reduceMotionTabs = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        productTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                if (tab.classList.contains('active')) return;
-                // View Transitions API con fallback al cambio instantáneo
-                if (document.startViewTransition && !reduceMotionTabs) {
-                    document.startViewTransition(() => activateProductPanel(tab.dataset.target));
-                } else {
-                    activateProductPanel(tab.dataset.target);
-                }
-            });
+        // Delegación: las pestañas pueden renderizarse dinámicamente desde la planilla.
+        document.addEventListener('click', (e) => {
+            const tab = e.target.closest('.product-tab');
+            if (!tab || tab.classList.contains('active')) return;
+            // View Transitions API con fallback al cambio instantáneo
+            if (document.startViewTransition && !reduceMotionTabs) {
+                document.startViewTransition(() => activateProductPanel(tab.dataset.target));
+            } else {
+                activateProductPanel(tab.dataset.target);
+            }
         });
 
         // Modal de producto
         const modal = document.getElementById('product-modal');
         const modalClose = document.querySelector('.modal-close');
         const modalOverlay = document.querySelector('.modal-overlay');
-        const productCards = document.querySelectorAll('.product-card');
         let modalOpener = null; // Elemento que abrió el modal (para devolverle el foco)
 
         function openModal(card) {
             // Buscar la imagen del producto (no el logo de disponibilidad)
             const productImg = card.querySelector('.product-image-container > img:not(.availability-logo)');
-            const fallbackImg = card.querySelector('.product-image-container img:last-child');
+            const fallbackImg = card.querySelector('.product-image-container img:last-child:not(.availability-logo)');
             const imgSrc = productImg ? productImg.src : fallbackImg?.src;
             const title = card.querySelector('h3').textContent;
             const descriptionsData = card.dataset.descriptions || '';
@@ -641,17 +638,11 @@
             });
         }
 
-        productCards.forEach(card => {
-            // Botón "Ver detalles"
-            const btn = card.querySelector('.btn-ver-detalles');
-            if (btn) {
-                btn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    openModal(card);
-                });
-            }
-            // También al hacer click en la card completa
-            card.addEventListener('click', () => openModal(card));
+        // Delegación: las cards pueden renderizarse dinámicamente desde la planilla.
+        // Un único handler evita el doble disparo que antes se resolvía con stopPropagation.
+        document.addEventListener('click', (e) => {
+            const card = e.target.closest('.product-card');
+            if (card) openModal(card);
         });
 
         function closeModal() {
@@ -819,6 +810,7 @@
     <!-- GSAP (CDN) + animación del hero -->
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script defer src="effects.js"></script>
+    <script defer src="sheets-catalog.js"></script>
     <!-- Iconify: iconos SVG bajo demanda (set Lucide, v2.1.0 fijada) -->
     <script defer src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
 </body>

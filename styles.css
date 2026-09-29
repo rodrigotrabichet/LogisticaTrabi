@@ -2145,8 +2145,11 @@ footer {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    align-items: flex-start;
-    text-align: left;
+    /* Centrado en todos los anchos: la dirección y el botón son angostos y
+       alineados a la izquierda dejaban un hueco largo al lado que desbalanceaba
+       la columna contra la foto. */
+    align-items: center;
+    text-align: center;
 }
 
 .nueva-tienda-copy h2 {
@@ -2156,6 +2159,8 @@ footer {
     line-height: 1.1;
     color: var(--text-hi);
     margin: 0;
+    /* Reparte las dos líneas del título en vez de dejar una corta colgando. */
+    text-wrap: balance;
 }
 
 .nueva-tienda-copy h2 span {
@@ -2163,6 +2168,22 @@ footer {
     font-size: 1em;
     color: var(--accent-bright);
     font-style: italic;
+    /* En bloque para que "nuevo local" no se parta en dos líneas y el subrayado
+       quede siempre debajo de la frase completa. */
+    display: inline-block;
+    position: relative;
+}
+
+/* Regla fina que se desvanece, en el mismo idioma que las líneas de sección. */
+.nueva-tienda-copy h2 span::after {
+    content: '';
+    position: absolute;
+    left: 0.08em;
+    right: -0.08em;
+    bottom: -0.05em;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--accent-bright), rgba(255, 157, 61, 0.12));
 }
 
 .nueva-tienda-copy p {
@@ -2170,7 +2191,10 @@ footer {
     color: var(--text-mid);
     font-size: 1.1rem;
     line-height: 1.7;
-    max-width: 52ch;
+    /* Más corto que el ancho de la columna: con el texto centrado, las líneas
+       largas obligan a barajar el ojo de un lado al otro para encontrar el
+       inicio de cada renglón. */
+    max-width: 42ch;
     text-wrap: pretty;
 }
 
@@ -2210,21 +2234,22 @@ footer {
     margin-top: 0.5rem;
 }
 
+/* La foto del local se trata como una ventana al local: sin marco interno con
+   relleno, esquinas muy redondeadas y una sombra cálida con filo ámbar que la
+   despega del fondo oscuro. */
 .nueva-tienda-visual {
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: clamp(1.25rem, 3vw, 2.5rem);
-    background: linear-gradient(150deg, var(--bg-1), var(--bg-0));
-    border: 1px solid var(--line);
-    border-radius: var(--radius-lg);
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    border-radius: 2rem;
+    overflow: hidden;
+    box-shadow:
+        0 24px 60px -12px rgba(0, 0, 0, 0.8),
+        0 0 35px -5px rgba(221, 131, 13, 0.22),
+        0 0 0 1px rgba(255, 157, 61, 0.34);
 }
 
-.nueva-tienda-visual svg {
+.nueva-tienda-visual img {
+    display: block;
     width: 100%;
-    max-width: 440px;
     height: auto;
 }
 
@@ -2246,14 +2271,11 @@ footer {
 @media (max-width: 900px) {
     .nueva-tienda-grid {
         grid-template-columns: 1fr;
-        text-align: center;
     }
 
-    .nueva-tienda-copy {
-        align-items: center;
-        text-align: center;
-    }
-
+    /* El centrado del texto ya viene de la regla base. Estos dos sí importan
+       acá: si la dirección o los botones envuelven, el contenido queda centrado
+       dentro de su propia caja. */
     .nueva-tienda-direccion {
         justify-content: center;
     }

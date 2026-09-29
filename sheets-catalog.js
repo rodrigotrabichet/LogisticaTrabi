@@ -18,6 +18,27 @@
     var AVAILABILITY_LOGO_ALT = 'Logo Pet Shop Mordida Pequeña';
     // Valores de la columna "activo" que ocultan la fila (ya normalizados a minúsculas).
     var HIDDEN_ACTIVE_VALUES = ['false', 'no', '0', 'falso'];
+    // Tokens canónicos de la columna "especial" y variantes de escritura aceptadas.
+    // Todos los textos están normalizados: minúsculas, sin diacríticos y con espacios simples.
+    var SPECIAL_MORDIDA = 'mordida pequena';
+    var SPECIAL_OFERTA = 'oferta';
+    // Separadores admitidos entre tokens de una misma celda.
+    var SPECIAL_TOKEN_SEPARATOR = /[,|]/;
+    var SPECIAL_VARIANTS = [
+        { token: SPECIAL_MORDIDA, variants: ['mordida pequena', 'mordida peq'] },
+        { token: SPECIAL_OFERTA, variants: ['oferta'] }
+    ];
+    // Índice variante -> token canónico. Se crea sin prototipo para que un texto
+    // desconocido como "constructor" no colisione con Object.prototype.
+    var SPECIAL_BY_VARIANT = (function () {
+        var index = Object.create(null);
+        SPECIAL_VARIANTS.forEach(function (entry) {
+            entry.variants.forEach(function (variant) {
+                index[variant] = entry.token;
+            });
+        });
+        return index;
+    })();
     // Imágenes de Google Drive: thumbnail redimensionado como src primario y URL directa como respaldo.
     var DRIVE_THUMBNAIL_URL = 'https://drive.google.com/thumbnail?id=';
     var DRIVE_THUMBNAIL_SIZE = '&sz=w1200';
@@ -58,6 +79,32 @@
 
     function normalizeCategory(value) {
         return toText(value).toLowerCase();
+    }
+
+    // Normaliza texto de entrada para comparar tokens: minúsculas, sin diacríticos
+    // y con espacios simples. Así "Mordida Pequeña", "mordida pequena" y
+    // "Mordida Pequena" terminan siendo la misma clave.
+    function normalizeKey(value) {
+        return toText(value)
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/\s+/g, ' ');
+    }
+
+    // Interpreta la columna "especial": texto libre que puede traer uno o varios
+    // tokens separados por coma o pipe. Los valores no reconocidos se descartan
+    // en silencio para no romper el render.
+    function parseSpecial(value) {
+        var flags = { mordidaPequena: false, oferta: false };
+
+        toText(value).split(SPECIAL_TOKEN_SEPARATOR).forEach(function (rawToken) {
+            var token = SPECIAL_BY_VARIANT[normalizeKey(rawToken)];
+            if (token === SPECIAL_MORDIDA) flags.mordidaPequena = true;
+            if (token === SPECIAL_OFERTA) flags.oferta = true;
+        });
+
+        return flags;
     }
 
     function capitalizeFirst(text) {
@@ -131,7 +178,7 @@
                 image: toText(row[5]),
                 description: toText(row[6]),
                 order: parseOrder(toText(row[8])),
-                availability: toText(row[9])
+                especial: parseSpecial(row[9])
             });
         });
 
@@ -219,15 +266,40 @@
         return image;
     }
 
+    // Leyenda "Oferta" de la franja superior del área de imagen. Es texto con
+    // marcas finas a los costados, no una píldora: comparte la franja con la
+    // leyenda de disponibilidad, así que necesita una presencia tipográfica y
+    // no un bloque propio.
+    function buildOfferLegend() {
+        var legend = document.createElement('span');
+        legend.className = 'offer-legend';
+        legend.textContent = 'OFERTA';
+        return legend;
+    }
+
     function buildProductCard(product) {
         var card = document.createElement('div');
-        card.className = 'product-card';
+        card.className = product.especial.oferta ? 'product-card is-offer' : 'product-card';
         card.setAttribute('data-descriptions', product.description);
 
         var imageContainer = document.createElement('div');
         imageContainer.className = 'product-image-container';
 
-        if (product.availability) {
+        // Franja de leyendas especiales, arriba de la foto y sobre el fondo claro.
+        // Solo se crea si hay al menos una leyenda: sin ninguna, el DOM de la card
+        // queda exactamente igual que antes.
+        var specialStrip = null;
+        if (product.especial.oferta || product.especial.mordidaPequena) {
+            specialStrip = document.createElement('div');
+            specialStrip.className = 'special-strip';
+        }
+
+        if (product.especial.oferta) {
+            specialStrip.appendChild(buildOfferLegend());
+        }
+
+        // Bloque Mordida Pequeña: mismo DOM y mismas clases que en el HTML estático.
+        if (product.especial.mordidaPequena) {
             var availabilityInfo = document.createElement('div');
             availabilityInfo.className = 'availability-info';
 
@@ -241,13 +313,18 @@
 
             availabilityInfo.appendChild(availabilityText);
             availabilityInfo.appendChild(availabilityLogo);
-            imageContainer.appendChild(availabilityInfo);
+            specialStrip.appendChild(availabilityInfo);
+        }
+
+        if (specialStrip) {
+            imageContainer.appendChild(specialStrip);
         }
 
         var imageSource = resolveImageSource(product.image);
         if (imageSource) {
             imageContainer.appendChild(buildProductImage(imageSource, product));
         }
+
         card.appendChild(imageContainer);
 
         var infoContainer = document.createElement('div');

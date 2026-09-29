@@ -1,10 +1,12 @@
 /**
  * Catálogo dinámico desde Google Sheets.
  *
- * Carga productos y categorías con una única request a Sheets API v4 y
- * reemplaza las pestañas y paneles de la sección "Nuestros Productos".
- * Si cualquier paso falla, el HTML estático queda intacto (fallback) y
- * solo se registra un warning en consola.
+ * Lee la hoja "Productos" con una única request a Sheets API v4 y reemplaza
+ * las pestañas y paneles de la sección "Nuestros Productos". Las categorías
+ * salen de la propia columna "categoria" de esa hoja: para agregar una
+ * categoría nueva alcanza con escribirla en la columna, sin pestañas aparte.
+ * Si cualquier paso falla, el HTML estático queda intacto (fallback) y solo se
+ * registra un warning en consola.
  */
 (function () {
     'use strict';
@@ -12,7 +14,6 @@
     var SPREADSHEET_ID = '1SYoeNeFqcH2c5xXLGUW-Hbo4ywQNtuTi7kGDJOGmCkM';
     var API_KEY = 'AIzaSyAy2UHwlmqfUWNW4JwjMHF92TRidUMjcJ4';
     var PRODUCTS_RANGE = 'Productos!A2:J';
-    var CATEGORIES_RANGE = 'Categorias!A2:A';
     var REQUEST_TIMEOUT_MS = 8000;
     var AVAILABILITY_LOGO_SRC = 'assets/images/LogoMordidaPequeña.png';
     var AVAILABILITY_LOGO_ALT = 'Logo Pet Shop Mordida Pequeña';
@@ -49,10 +50,9 @@
     document.body.dataset.catalog = 'static';
 
     function buildEndpoint() {
-        return 'https://sheets.googleapis.com/v4/spreadsheets/' + SPREADSHEET_ID + '/values:batchGet'
-            + '?ranges=' + encodeURIComponent(PRODUCTS_RANGE)
-            + '&ranges=' + encodeURIComponent(CATEGORIES_RANGE)
-            + '&key=' + encodeURIComponent(API_KEY);
+        return 'https://sheets.googleapis.com/v4/spreadsheets/' + SPREADSHEET_ID + '/values/'
+            + encodeURIComponent(PRODUCTS_RANGE)
+            + '?key=' + encodeURIComponent(API_KEY);
     }
 
     function fetchCatalog() {
@@ -193,34 +193,27 @@
         return products;
     }
 
-    function groupByCategory(products, categoryRows) {
+    // Arma las secciones a partir de la columna "categoria" de la propia hoja de
+    // productos: cada categoría nueva que se escriba ahí aparece como una pestaña
+    // más. El orden de las pestañas es el de primera aparición en la planilla, así
+    // que para mover una categoría al principio hay que subir sus filas.
+    function groupByCategory(products) {
         var sections = [];
         var sectionByKey = Object.create(null);
 
-        function addSection(key, label) {
-            var section = { key: key, label: label, products: [] };
-            sections.push(section);
-            sectionByKey[key] = section;
-            return section;
-        }
-
-        // 1) Primero las categorías declaradas en la pestaña Categorias, en su orden.
-        categoryRows.forEach(function (row) {
-            var key = normalizeCategory(row[0]);
-            if (!key || sectionByKey[key]) return;
-            addSection(key, capitalizeFirst(toText(row[0])));
-        });
-
-        // 2) Las categorías no declaradas se agregan al final, por orden de aparición.
         products.forEach(function (product) {
-            var section = sectionByKey[product.category] || addSection(product.category, product.categoryLabel);
+            var section = sectionByKey[product.category];
+
+            if (!section) {
+                section = { key: product.category, label: product.categoryLabel, products: [] };
+                sections.push(section);
+                sectionByKey[product.category] = section;
+            }
+
             section.products.push(product);
         });
 
-        // Solo categorías con al menos un producto visible.
-        return sections.filter(function (section) {
-            return section.products.length > 0;
-        });
+        return sections;
     }
 
     function buildPill(modifier, text) {
@@ -425,26 +418,15 @@
         }
     }
 
-    function getRows(valueRanges, index) {
-        var range = valueRanges && valueRanges[index];
-        return (range && range.values) || [];
-    }
-
     fetchCatalog()
         .then(function (data) {
-            var valueRanges = data && data.valueRanges;
-            if (!valueRanges || !valueRanges.length) {
-                throw new Error('Respuesta de Sheets sin valueRanges');
-            }
+            var products = parseProducts((data && data.values) || []);
 
-            var products = parseProducts(getRows(valueRanges, 0));
-            var sections = groupByCategory(products, getRows(valueRanges, 1));
-
-            if (!sections.length) {
+            if (!products.length) {
                 throw new Error('La planilla no tiene productos visibles');
             }
 
-            renderCatalog(sections);
+            renderCatalog(groupByCategory(products));
             document.body.dataset.catalog = 'sheet';
         })
         .catch(function (error) {

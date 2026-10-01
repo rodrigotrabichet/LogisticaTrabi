@@ -5,8 +5,7 @@
    fade/slide timeline; falls back to an instant swap when GSAP
    is unavailable or the user prefers reduced motion.
    The visual deck (.contact-deck) holds one card per segment and
-   swaps them like playing cards on every tab change, with the
-   figcaption following the active segment.
+   swaps them like playing cards on every tab change.
    Default state: retail ("minorista") selected, set instantly.
    ============================================================ */
 (function () {
@@ -17,13 +16,7 @@
     var tabs = Array.prototype.slice.call(document.querySelectorAll('.contact-seg-tab'));
     if (!tabs.length) return;
 
-    var CAPTIONS = {
-        minorista: 'Para tu mascota, directo a tu casa',
-        comercio: 'Pasá por el local o escribinos por WhatsApp'
-    };
-
     var deckCards = Array.prototype.slice.call(document.querySelectorAll('.contact-deck-card'));
-    var deckCaption = document.querySelector('.contact-deck-caption');
     var deckTl = null;
 
     function segmentFor(tab) {
@@ -47,10 +40,6 @@
             card.classList.toggle('is-active', active);
             if (window.gsap) gsap.set(card, { clearProps: 'all' });
         });
-        if (deckCaption) {
-            deckCaption.textContent = CAPTIONS[segment] || '';
-            if (window.gsap) gsap.set(deckCaption, { clearProps: 'all' });
-        }
     }
 
     function animateDeck(segment) {
@@ -61,12 +50,7 @@
         }
         var current = document.querySelector('.contact-deck-card.is-active');
         var next = cardFor(segment);
-        if (!next || current === next) {
-            if (deckCaption && deckCaption.textContent !== (CAPTIONS[segment] || '')) {
-                deckCaption.textContent = CAPTIONS[segment] || '';
-            }
-            return;
-        }
+        if (!next || current === next) return;
         if (deckTl) deckTl.kill();
         gsap.set(current, { zIndex: 1 });
         gsap.set(next, { zIndex: 2 });
@@ -83,26 +67,11 @@
         });
         // Outgoing card folds away to the left…
         deckTl.to(current, { rotationY: -12, x: -30, opacity: 0, duration: 0.35, ease: 'power2.in' }, 0);
-        // …while the caption dips out, swaps text mid-flight, and rises back.
-        if (deckCaption) {
-            deckTl.to(deckCaption, {
-                y: 8,
-                opacity: 0,
-                duration: 0.2,
-                ease: 'power2.in',
-                onComplete: function () {
-                    deckCaption.textContent = CAPTIONS[segment] || '';
-                }
-            }, 0);
-        }
         // Incoming card unfolds from the right on top.
         deckTl.fromTo(next,
             { rotationY: 12, x: 30, opacity: 0 },
             { rotationY: 0, x: 0, opacity: 1, duration: 0.45, ease: 'power3.out' },
             0.3);
-        if (deckCaption) {
-            deckTl.to(deckCaption, { y: 0, opacity: 1, duration: 0.3, ease: 'power3.out' }, 0.45);
-        }
     }
 
     function panelFor(tab) {

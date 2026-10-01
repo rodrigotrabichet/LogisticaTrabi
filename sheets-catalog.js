@@ -259,15 +259,26 @@
         return image;
     }
 
-    // Leyenda "Oferta" de la franja superior del área de imagen. Es texto con
-    // marcas finas a los costados, no una píldora: comparte la franja con la
-    // leyenda de disponibilidad, así que necesita una presencia tipográfica y
-    // no un bloque propio.
-    function buildOfferLegend() {
-        var legend = document.createElement('span');
-        legend.className = 'offer-legend';
-        legend.textContent = 'OFERTA';
-        return legend;
+    // Ribbon "Oferta" de esquina a 45° sobre la card. Va como hijo directo de
+    // la card (no del image-container): el modal exige que la foto sea hija
+    // directa de .product-image-container y el ribbon es position absolute,
+    // así que no altera el layout.
+    function buildOfferRibbon() {
+        var ribbon = document.createElement('div');
+        ribbon.className = 'offer-ribbon';
+        ribbon.setAttribute('role', 'img');
+        ribbon.setAttribute('aria-label', 'Oferta');
+
+        var band = document.createElement('span');
+        band.className = 'offer-ribbon-band';
+
+        var label = document.createElement('span');
+        label.className = 'offer-ribbon-label';
+        label.textContent = 'OFERTA';
+
+        band.appendChild(label);
+        ribbon.appendChild(band);
+        return ribbon;
     }
 
     function buildProductCard(product) {
@@ -278,17 +289,14 @@
         var imageContainer = document.createElement('div');
         imageContainer.className = 'product-image-container';
 
-        // Franja de leyendas especiales, arriba de la foto y sobre el fondo claro.
-        // Solo se crea si hay al menos una leyenda: sin ninguna, el DOM de la card
-        // queda exactamente igual que antes.
+        // Franja de disponibilidad, arriba de la foto y sobre el fondo claro.
+        // Solo se crea si hay disponibilidad (Mordida Pequeña): la oferta va
+        // en el ribbon de esquina sobre la card, no en la franja. Sin
+        // disponibilidad, el DOM de la card queda igual que antes.
         var specialStrip = null;
-        if (product.especial.oferta || product.especial.mordidaPequena) {
+        if (product.especial.mordidaPequena) {
             specialStrip = document.createElement('div');
             specialStrip.className = 'special-strip';
-        }
-
-        if (product.especial.oferta) {
-            specialStrip.appendChild(buildOfferLegend());
         }
 
         // Bloque Mordida Pequeña: mismo DOM y mismas clases que en el HTML estático.
@@ -350,6 +358,12 @@
         infoContainer.appendChild(detailsButton);
 
         card.appendChild(infoContainer);
+
+        // Ribbon de esquina: hijo directo de la card, fuera del
+        // image-container para no romper el modal.
+        if (product.especial.oferta) {
+            card.appendChild(buildOfferRibbon());
+        }
         return card;
     }
 

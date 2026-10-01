@@ -78,11 +78,11 @@ main {
 }
 
 .hamburger-menu.active .bar:nth-child(1) {
-    transform: translateY(17px) rotate(45deg);
+    transform: translateY(12px) rotate(45deg);
 }
 
 .hamburger-menu.active .bar:nth-child(3) {
-    transform: translateY(-7px) rotate(-45deg);
+    transform: translateY(-12px) rotate(-45deg);
 }
 
 .navbar li a {
@@ -359,12 +359,10 @@ span{
     filter: none;
 }
 
-/* ---------- Franja de leyendas especiales ----------
+/* ---------- Franja de disponibilidad ----------
    Tira superior del área de imagen, sobre el fondo claro y arriba de la foto.
-   Aloja la leyenda de "Oferta" y la de disponibilidad ("También disponible en"
-   más el logo de Mordida Pequeña). Las dos comparten la franja, así que van en
-   un flex que centra y envuelve: en desktop entran lado a lado y en móvil se
-   apilan solas, sin pisarse y sin recortar el logo. */
+   Aloja la disponibilidad ("También disponible en" más el logo de Mordida
+   Pequeña). La oferta va en el ribbon de esquina sobre la card, no acá. */
 .special-strip {
     display: flex;
     flex-wrap: wrap;
@@ -375,37 +373,60 @@ span{
     margin-bottom: 6px;
 }
 
-/* Leyenda "Oferta": es texto, no una píldora. Toma presencia del peso, las
-   mayúsculas y el letterspacing, con dos marcas finas a los costados.
-   Color --accent-deep y NO el naranja de marca: sobre la zona clara #dd830d da
-   2.87:1 y #e27b21 2.96:1, los dos por debajo del mínimo AA; con --accent-deep
-   el contraste sobre blanco es 5.56:1 y el texto se lee. */
-.offer-legend {
-    display: inline-flex;
+/* ---------- Ribbon de esquina "Oferta" ----------
+   Adaptación en CSS puro de la demo rib-01 de CodeFronts, sin Tailwind.
+   Caja de esquina sobre la card (que ya es relative con radius 18px y
+   overflow hidden: el recorte a la esquina redondeada sale solo, sin
+   clip-path extra). Banda sólida #d96a12 con texto #241408 (contraste 6:1,
+   sin neón). Sin sheen animado y sin animación de entrada: con
+   prefers-reduced-motion no hay nada que desactivar porque nada se anima. */
+.product-card {
+    /* Tamaño fijo en px a propósito: si fuera porcentaje, el 28% se
+       resolvería contra el ANCHO en `width` pero contra el ALTO en
+       `height`, y la caja dejaría de ser cuadrada. */
+    --offer-rib-size: 124px;
+    --offer-rib-band: 36px;
+}
+
+.offer-ribbon {
+    position: absolute;
+    top: -31px;
+    right: -31px;
+    width: var(--offer-rib-size);
+    height: var(--offer-rib-size);
+    aspect-ratio: 1;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.offer-ribbon-band {
+    position: absolute;
+    /* Banda a +45° centrada en la caja: cruza de borde a borde (del borde
+       superior al derecho) abrazando la esquina, como la demo de referencia. */
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    width: calc(var(--offer-rib-size) * 1.5);
+    height: var(--offer-rib-band);
+    display: flex;
     align-items: center;
-    gap: 0.5em;
-    color: var(--accent-deep);
+    justify-content: center;
+    background: #d96a12;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+.offer-ribbon-label {
+    color: #241408;
     font-family: var(--font-body);
-    font-size: 0.8rem;
+    font-size: 0.72rem;
     font-weight: 800;
     font-style: normal;
-    line-height: 1.2;
+    line-height: 1;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     white-space: nowrap;
-}
-
-/* Marcas finas a los costados del texto. Van como pseudo-elementos para que no
-   las anuncie un lector de pantalla ni las copie el usuario. */
-.offer-legend::before,
-.offer-legend::after {
-    content: '';
-    display: block;
-    width: 14px;
-    height: 2px;
-    border-radius: 1px;
-    background-color: currentColor;
-    opacity: 0.55;
+    transform: translateY(2px);
 }
 
 /* Card destacada por "Oferta": filo luminoso interior y sombra más cálida.
@@ -496,25 +517,27 @@ span{
 
 /* Botón Ver Detalles */
 .btn-ver-detalles {
-    background: linear-gradient(135deg, #C45D00 0%, #e27b21 100%);
-    color: white;
-    border: none;
+    background: #d96a12;
+    color: #241408;
+    border: 1px solid rgba(36, 20, 8, 0.2);
     padding: 10px 20px;
     border-radius: 25px;
     font-family: 'Roboto', sans-serif;
     font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    box-shadow: 0 5px 12px rgba(169, 78, 0, 0.22);
+    transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
     margin-top: auto;
     width: 100%;
     max-width: 180px;
 }
 
 .btn-ver-detalles:hover {
-    background: linear-gradient(135deg, #e27b21 0%, #ff9d3d 100%);
-    transform: scale(1.03);
-    box-shadow: 0 4px 15px rgba(196, 93, 0, 0.4);
+    background: #e27b21;
+    border-color: rgba(36, 20, 8, 0.28);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(169, 78, 0, 0.26);
 }
 
 /* Ocultar estilos antiguos que ya no se usan */
@@ -616,15 +639,21 @@ span{
 /* --- Configuración de la Sección General ---  */
 
 .contacto-section {
-    padding: var(--section-pad) 5%;
-    background: linear-gradient(165deg, #75623d, #07152e);
+    --contact-accent: #d96a12;
+    --contact-accent-hover: #e27b21;
+    padding: 1.5rem 5% var(--section-pad);
+    background: transparent;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
     min-height: 40vh;
-    border-radius: 1.5rem;
-    overflow: hidden;
+    border-radius: 0;
+    overflow: visible;
+}
+
+.contact-title-container {
+    margin-bottom: 1.5rem;
 }
 
 .title-container h2 {
@@ -662,17 +691,6 @@ span{
     object-fit: cover;
 }
 
-.contact-visual figcaption {
-    position: absolute;
-    inset: auto 0 0 0;
-    padding: 0.85rem 1.1rem;
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: #fff;
-    background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.72));
-    text-shadow: 0 1px 2px rgba(0,0,0,0.4);
-}
-
 /* ---------- Contact deck: two stacked photos swapped like cards ---------- */
 /* Signature moment: perspective lives on the stage (not the figure) so the
    3D fold is isolated inside it; the figure stays the outer clip. */
@@ -708,10 +726,6 @@ span{
 .contact-deck-card.is-active {
     opacity: 1;
     visibility: visible;
-}
-
-.contact-deck-caption {
-    z-index: 3;
 }
 
 .btn-contacto {
@@ -762,12 +776,12 @@ span{
 /* Section title for the contact segment switcher.
    Full-width row above the toggle+panel / visual row on desktop, so the
    toggle (left column) and the figure (right column) start at the same
-   height. Centered on mobile, left-aligned on desktop. */
+   height. Centered at every breakpoint. */
 .contact-seg-title {
     margin: 0;
     font-family: var(--font-display);
-    font-size: clamp(1.3rem, 3.2vw, 1.8rem);
-    font-weight: 800;
+    font-size: clamp(1.15rem, 2.8vw, 1.6rem);
+    font-weight: 700;
     line-height: 1.25;
     letter-spacing: 0.01em;
     color: var(--text-hi);
@@ -776,16 +790,9 @@ span{
     text-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
-/* Brand accent as a gradient hairline under "WhatsApp" (kept in
-   --text-hi on purpose: --accent-bright text would fail AA on the
-   lighter end of the section gradient). */
+/* Keep the WhatsApp label together when the heading wraps. */
 .contact-seg-title-accent {
     color: inherit;
-    background-image: linear-gradient(90deg, var(--accent-deep) 0%, var(--accent) 45%, var(--accent-bright) 100%);
-    background-size: 100% 2px;
-    background-repeat: no-repeat;
-    background-position: 0 100%;
-    padding-bottom: 3px;
     white-space: nowrap;
 }
 
@@ -814,12 +821,12 @@ span{
     font-family: var(--font-body);
     text-align: left;
     cursor: pointer;
-    transition: transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+    transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
 .contact-seg-tab strong {
-    font-size: 1rem;
-    font-weight: 800;
+    font-size: clamp(0.92rem, 1.4vw, 1rem);
+    font-weight: 700;
     font-style: normal;
     font-family: inherit;
     color: inherit;
@@ -827,7 +834,7 @@ span{
 }
 
 .contact-seg-tab small {
-    font-size: 0.85rem;
+    font-size: clamp(0.78rem, 1.2vw, 0.85rem);
     font-weight: 400;
     font-style: normal;
     font-family: inherit;
@@ -837,16 +844,26 @@ span{
 }
 
 .contact-seg-tab:hover {
-    border-color: var(--line-strong);
+    border-color: rgba(226, 123, 33, 0.35);
     background: rgba(255, 255, 255, 0.04);
     color: var(--text-hi);
 }
 
 .contact-seg-tab.is-active {
-    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-bright) 100%);
-    color: #1f1000;
+    background: var(--contact-accent);
+    color: #241408;
     border-color: transparent;
-    box-shadow: 0 8px 20px rgba(226, 123, 33, 0.35);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+@media (hover: hover) {
+    .contact-seg-tab:hover {
+        transform: translateY(-1px);
+    }
+
+    .contact-seg-tab.is-active:hover {
+        background: var(--contact-accent-hover);
+    }
 }
 
 .contact-seg-tab.is-active small {
@@ -927,48 +944,17 @@ span{
     box-sizing: border-box;
     margin-inline: auto;
     border: none;
-    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-bright) 100%);
-    color: #1f1000;
-    box-shadow: 0 10px 22px rgba(226, 123, 33, 0.35);
-    position: relative;
-    overflow: hidden;
-    isolation: isolate;
-    transition: transform 220ms ease, box-shadow 220ms ease, background-color 220ms ease;
-}
-
-/* Sheen sweep: single pass on hover-capable pointers only. */
-.contact-seg-panel .contact-seg-cta::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.35) 50%, transparent 60%);
-    transform: translateX(-150%);
-    pointer-events: none;
+    background: var(--contact-accent);
+    color: #241408;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+    transition: transform 220ms ease, background 220ms ease, box-shadow 220ms ease;
 }
 
 @media (hover: hover) {
     .contact-seg-panel .contact-seg-cta:hover {
-        background: linear-gradient(135deg, var(--accent) 0%, var(--accent-bright) 100%);
-        transform: translateY(-2px);
-        box-shadow: 0 12px 24px rgba(196, 93, 0, 0.35);
-    }
-
-    .contact-seg-panel .contact-seg-cta:hover::after {
-        transform: translateX(150%);
-        transition: transform 550ms ease;
-    }
-}
-
-/* Keyboard: same lift as hover, plus the accent-bright outline below. */
-.contact-seg-panel .contact-seg-cta:focus-visible {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 24px rgba(196, 93, 0, 0.35);
-}
-
-/* Touch: no sticky lift, no sheen. */
-@media (hover: none) {
-    .contact-seg-panel .contact-seg-cta::after {
-        display: none;
+        background: var(--contact-accent-hover);
+        transform: translateY(-1px);
+        box-shadow: 0 8px 16px rgba(169, 78, 0, 0.24);
     }
 }
 
@@ -1039,7 +1025,7 @@ span{
     .contact-seg-title {
         grid-column: 1 / -1;
         grid-row: 1;
-        text-align: left;
+        text-align: center;
     }
 
     .contact-seg {
@@ -1069,10 +1055,6 @@ span{
     .contact-seg-panel .contact-seg-cta:hover,
     .contact-seg-panel .contact-seg-cta:focus-visible {
         transform: none;
-    }
-
-    .contact-seg-panel .contact-seg-cta::after {
-        display: none;
     }
 
     .btn-contacto:hover {
@@ -1375,39 +1357,125 @@ footer {
 
 /* TABLETS Y MÓVILES  */
 @media (max-width: 768px) {
+    /* Menú móvil: expansión circular desde el botón (clip-path), CSS puro.
+       El estado abierto lo marca la clase .active que ya alterna el JS;
+       desktop queda intacto. */
     .nav-links {
-        font-size: small;
+        counter-reset: nav;
         position: fixed;
         left: 0;
         top: 0;
-        gap: 20px; 
+        width: 100vw;
+        height: 100vh;
+        height: 100svh;
+        max-width: none;
+        margin: 0;
+        padding: 6rem 2.5rem 2.5rem;
         flex-direction: column;
-        background-color: #1F1F20; 
-        width: 20%;
-        height: 30vh;
-        text-align: center;
-        translate: calc(-100% - 2rem) 0;
-        transition: translate 0.3s ease;
-        justify-content: center; 
-        max-width: none;    
-        border: 2px #E27B21 solid;       
-        border-radius: 20px;   
-        box-shadow:#232325 ;          
-        z-index: 14;        
-        margin-left: 1rem;
+        justify-content: center;
+        align-items: stretch;
+        gap: 0.25rem;
+        text-align: left;
+        font-size: 1rem;
+        background: radial-gradient(120% 100% at 100% 0%, #2e2e31 0%, #1F1F20 60%);
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+        box-sizing: border-box;
+        z-index: 14;
+        translate: none;
+        clip-path: circle(0px at calc(100% - 44px) 39px);
+        visibility: hidden;
+        transition: clip-path 0.65s cubic-bezier(0.65, 0, 0.35, 1), visibility 0s 0.65s;
     }
 
     .nav-links.active {
+        translate: none;
+        clip-path: circle(150% at calc(100% - 44px) 39px);
+        visibility: visible;
+        transition: clip-path 0.65s cubic-bezier(0.65, 0, 0.35, 1), visibility 0s 0s;
+    }
+
+    /* El logo ya vive en el header; dentro del menú a pantalla completa sobra. */
+    .nav-links li:nth-child(3) {
+        display: none;
+    }
+
+    .nav-links li {
+        counter-increment: nav;
+        list-style: none;
+        opacity: 0;
+        translate: 0 18px;
+        transition: opacity 0.4s ease, translate 0.4s ease;
+    }
+
+    .nav-links.active li {
+        opacity: 1;
         translate: 0 0;
     }
 
+    .nav-links.active li:nth-child(1) { transition-delay: 180ms; }
+    .nav-links.active li:nth-child(2) { transition-delay: 240ms; }
+    .nav-links.active li:nth-child(4) { transition-delay: 300ms; }
+    .nav-links.active li:nth-child(5) { transition-delay: 360ms; }
+
     .hamburger-menu {
         display: flex;
-        z-index: 15; 
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
+        padding: 0;
+        border: none;
+        border-radius: 50%;
+        background: #2b2b2e;
+        cursor: pointer;
+        z-index: 15;
+        transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .hamburger-menu:hover {
+        transform: scale(1.06);
+    }
+
+    .hamburger-menu:active {
+        transform: scale(0.94);
+    }
+
+    .hamburger-menu.active {
+        background: #d96a12;
+    }
+
+    .hamburger-menu.active .bar {
+        background-color: #241408;
     }
 
     .navbar li a {
-        font-size: 1.5em; 
+        display: flex;
+        align-items: baseline;
+        gap: 0.9rem;
+        padding: 0.8rem 0.25rem;
+        font-size: clamp(1.7rem, 8vw, 2rem);
+        font-weight: 800;
+        letter-spacing: -0.01em;
+        color: #f5f5f4;
+    }
+
+    .navbar li a::before {
+        content: "0" counter(nav);
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        color: #e27b21;
+    }
+
+    .navbar li a:hover {
+        color: #e27b21;
+    }
+
+    .navbar li a:focus-visible {
+        outline: 2px solid #e27b21;
+        outline-offset: 4px;
     }
 
     /* Ajustes Quienes Somos y Producto (Sin cambios) */
@@ -1479,14 +1547,19 @@ footer {
         gap: 3px 10px;
     }
 
-    .offer-legend {
-        font-size: 0.72rem;
-        letter-spacing: 0.12em;
+    .product-card {
+        --offer-rib-size: 104px;
+        --offer-rib-band: 30px;
     }
 
-    .offer-legend::before,
-    .offer-legend::after {
-        width: 11px;
+    .offer-ribbon {
+        top: -24px;
+        right: -24px;
+    }
+
+    .offer-ribbon-label {
+        font-size: 0.68rem;
+        letter-spacing: 0.12em;
     }
 
     .product-info-container {
@@ -1525,7 +1598,7 @@ footer {
 
     
     .contacto-section {
-        padding: 4rem 1.5rem;
+        padding: 1.5rem 1.5rem 4rem;
         min-height: auto;
     }
 
@@ -1533,7 +1606,8 @@ footer {
     .contact-seg-panel .contact-seg-cta {
         width: 100%;
         justify-content: center;
-        padding: 1.2rem;
+        min-height: 48px;
+        padding: 0.9rem 1rem;
     }
 
     .footer-content {
@@ -1551,11 +1625,39 @@ footer {
     }
 
     .contact-seg-panel .contact-seg-cta .wsp-icon {
-        width: 2.5rem;
-        height: 2.5rem;
-        padding-left: 0.5rem;
+        width: 1.5rem;
+        height: 1.5rem;
+        padding-left: 0;
     }
 
+}
+
+/* Movimiento reducido: el menú móvil funde en vez de expandirse. */
+@media (max-width: 768px) and (prefers-reduced-motion: reduce) {
+    .nav-links {
+        clip-path: none;
+        opacity: 0;
+        transition: opacity 0.15s ease, visibility 0s 0.15s;
+    }
+
+    .nav-links.active {
+        clip-path: none;
+        opacity: 1;
+        transition: opacity 0.15s ease, visibility 0s 0s;
+    }
+
+    .nav-links li {
+        translate: none;
+    }
+
+    .nav-links.active li:nth-child(n) {
+        transition-delay: 0s;
+    }
+
+    .hamburger-menu:hover,
+    .hamburger-menu:active {
+        transform: none;
+    }
 }
 
 /* Mobile devices (hasta 480px) */
@@ -1564,15 +1666,8 @@ footer {
         padding: 5px 0;
     }
 
-    .nav-links{
-        height: 32vh;
-        font-size: x-small;
-    }
-
-    .nav-links.active{
-        border: 1px #bd661a solid;
-        margin-left: 0.5rem;
-    }
+    /* El menú móvil ya es pantalla completa desde el bloque de 768px:
+       acá no se pisa layout, altura ni bordes. */
 
     .quienes-somos-section-container {
         font-size: 1em;
@@ -1634,9 +1729,6 @@ footer {
         height: 2.6rem;
     }
 
-    .offer-legend {
-        font-size: 0.68rem;
-    }
 .stones-hero h3 {
         font-size: 1.5rem;
     }
@@ -1649,15 +1741,13 @@ footer {
     }
 
     .contacto-section {
-        padding: 3rem 1rem; 
+        padding: 1.25rem 1rem 3rem;
     }
 }
 
 /* Small mobile devices (hasta 320px) */
 @media (max-width: 320px) {
-    .nav-links{
-        height: 25vh;
-    }
+    /* Sin overrides: el menú móvil hereda el layout de pantalla completa. */
 
     .quienes-somos-titulo-container h2 {
         font-size: 1.5em;
@@ -1665,16 +1755,6 @@ footer {
 
     .product-info-container h3 {
         font-size: 1.2rem;
-    }
-
-    .offer-legend {
-        font-size: 0.62rem;
-        letter-spacing: 0.1em;
-    }
-
-    .offer-legend::before,
-    .offer-legend::after {
-        width: 8px;
     }
 
     .contact-seg-panel .contact-seg-cta {
@@ -2701,6 +2781,46 @@ footer {
 .location-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(226, 123, 33, 0.35);
+}
+
+/* El carrusel conserva su escala en desktop; en mobile se compacta para
+   mostrar más contexto sin que cada ciudad se coma el viewport. */
+@media (max-width: 768px) {
+    .locations-section {
+        padding: 2.5rem 0;
+        margin-top: 3rem;
+    }
+
+    .infinite-track {
+        gap: 0.85rem;
+        padding: 0.65rem 0;
+    }
+
+    .location-card {
+        min-width: 132px;
+        padding: 0.85rem 1rem;
+        border-radius: 14px;
+    }
+
+    .location-icon {
+        width: 2.4rem;
+        height: 2.4rem;
+        margin-bottom: 0.35rem;
+    }
+
+    .location-icon iconify-icon {
+        width: 1.3rem;
+        height: 1.3rem;
+    }
+
+    .location-card h3 {
+        font-size: 0.9rem;
+        line-height: 1.15;
+    }
+
+    .location-card span {
+        font-size: 0.7rem;
+    }
 }
 
 /* ---------- View Transitions y movimiento reducido ---------- */

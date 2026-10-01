@@ -616,106 +616,102 @@ span{
 /* --- Configuración de la Sección General ---  */
 
 .contacto-section {
-    padding: 5vh 5%; 
+    padding: var(--section-pad) 5%;
     background: linear-gradient(165deg, #75623d, #07152e);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 40vh; 
+    min-height: 40vh;
     border-radius: 1.5rem;
+    overflow: hidden;
 }
 
 .title-container h2 {
     color: white;
     text-align: center;
-    font-size: clamp(1.8rem, 4vw, 2.5rem); 
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
     text-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.2);
 }
 
-/* --- Contenedor Grid para las Tarjetas --- */
-.cards-container {
+/* --- Contact layout: segment (lead) + store visual --- */
+.contact-layout {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); 
-    gap: 3rem;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
     width: 100%;
-    max-width: 85rem; 
-    margin-bottom: var(--spacing-md);
+    max-width: 85rem;
+    align-items: stretch;
 }
 
-/* --- Estilo de cada Tarjeta (Card) --- */
-.card {
-    background-color: #ffffff;
-    border-radius: 0.75rem; 
-    padding: 2rem 1.5rem;   
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    box-shadow: 0 0.25rem 1rem rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
-    position: relative;
-    height: 80%;
-}
-
-.card:hover {
-    transform: translateY(-0.5rem);
-}
-
-
-/* --- Estilo de los Iconos --- */
-.icon-box {
-    background-color: var(--color-icon-bg);
-    width: 3.5rem;  
-    height: 3.5rem;
-    border-radius: 0.6rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1.2rem;
-}
-
-.icon-box svg {
-    width: 1.8rem;
-    height: 1.8rem;
-    stroke: white;
-    stroke-width: 2;
-}
-
-.card h3 {
-    font-size: clamp(1.1rem, 2.5vw, 1.3rem);
-    color: var(--color-text-dark);
-    margin-bottom: 1rem;
-    font-weight: 700;
-    line-height: 1.3;
-    text-wrap: pretty;
-}
-
-.card p {
-    font-size: 1rem; 
-    color: var(--color-text-gray);
-    line-height: 1.4;
+.contact-visual {
     margin: 0;
-    padding-bottom: 0.5rem; 
+    position: relative;
+    box-sizing: border-box;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--line-strong);
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.35);
+    min-height: 14rem;
 }
 
-/*  Sección Botón WhatsApp Inferior  */
-.cta-container {
-    text-align: center;
+.contact-visual img {
+    display: block;
     width: 100%;
-    padding: 0 1rem; 
+    height: 100%;
+    object-fit: cover;
 }
 
-.cta-text {
-    color: white;
+.contact-visual figcaption {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: 0.85rem 1.1rem;
+    font-size: 0.9rem;
     font-weight: 600;
-    margin-bottom: 1rem;
-    font-size: clamp(1rem, 3vw, 1.25rem);
-    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    color: #fff;
+    background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.72));
+    text-shadow: 0 1px 2px rgba(0,0,0,0.4);
 }
 
-.btn-contacto-link {
-    text-decoration: none;
-    display: inline-block;
+/* ---------- Contact deck: two stacked photos swapped like cards ---------- */
+/* Signature moment: perspective lives on the stage (not the figure) so the
+   3D fold is isolated inside it; the figure stays the outer clip. */
+.contact-visual.contact-deck {
+    perspective: none;
+    min-width: 0;
+}
+
+.contact-deck-stage {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    border-radius: inherit;
+    overflow: hidden;
+    perspective: 1200px;
+    transform-style: preserve-3d;
+    isolation: isolate;
+}
+
+.contact-deck-card {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    will-change: transform, opacity;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.contact-deck-card.is-active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.contact-deck-caption {
+    z-index: 3;
 }
 
 .btn-contacto {
@@ -749,23 +745,339 @@ span{
     fill: currentColor;
 }
 
-.cta-container {
-    padding: 0 2rem;
-}
-
-.cta-text {
-    font-size: 1.5rem; 
-    margin-bottom: 1.5rem;
-}
-
-
-.wsp-icon {
-    width: 1.8rem; 
-    height: 1.8rem;
-}
-
 .contacto-section {
     text-wrap: pretty;
+}
+
+/* ---------- Contact segment switcher (retail vs. store) ---------- */
+.contact-seg {
+    width: 100%;
+    max-width: 38rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+/* Section title for the contact segment switcher.
+   Full-width row above the toggle+panel / visual row on desktop, so the
+   toggle (left column) and the figure (right column) start at the same
+   height. Centered on mobile, left-aligned on desktop. */
+.contact-seg-title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 3.2vw, 1.8rem);
+    font-weight: 800;
+    line-height: 1.25;
+    letter-spacing: 0.01em;
+    color: var(--text-hi);
+    text-align: center;
+    text-wrap: balance;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+/* Brand accent as a gradient hairline under "WhatsApp" (kept in
+   --text-hi on purpose: --accent-bright text would fail AA on the
+   lighter end of the section gradient). */
+.contact-seg-title-accent {
+    color: inherit;
+    background-image: linear-gradient(90deg, var(--accent-deep) 0%, var(--accent) 45%, var(--accent-bright) 100%);
+    background-size: 100% 2px;
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    padding-bottom: 3px;
+    white-space: nowrap;
+}
+
+.contact-seg-toggle {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+    padding: 0.375rem;
+    border-radius: var(--radius-lg);
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid var(--line);
+    box-sizing: border-box;
+}
+
+.contact-seg-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    min-height: 48px;
+    padding: 0.8rem 1.1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--text-mid);
+    font-family: var(--font-body);
+    text-align: left;
+    cursor: pointer;
+    transition: transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.contact-seg-tab strong {
+    font-size: 1rem;
+    font-weight: 800;
+    font-style: normal;
+    font-family: inherit;
+    color: inherit;
+    line-height: 1.25;
+}
+
+.contact-seg-tab small {
+    font-size: 0.85rem;
+    font-weight: 400;
+    font-style: normal;
+    font-family: inherit;
+    color: inherit;
+    opacity: 0.9;
+    line-height: 1.4;
+}
+
+.contact-seg-tab:hover {
+    border-color: var(--line-strong);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text-hi);
+}
+
+.contact-seg-tab.is-active {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-bright) 100%);
+    color: #1f1000;
+    border-color: transparent;
+    box-shadow: 0 8px 20px rgba(226, 123, 33, 0.35);
+}
+
+.contact-seg-tab.is-active small {
+    opacity: 0.9;
+}
+
+.contact-seg-tab:focus-visible,
+.contact-seg-cta:focus-visible {
+    outline: 3px solid var(--accent-bright);
+    outline-offset: 2px;
+}
+
+.contact-seg-panels {
+    margin-top: 0;
+}
+
+.contact-seg-panel {
+    position: relative;
+    background-color: var(--bg-1);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.35);
+    padding: 1.75rem 1.75rem 2rem;
+    text-align: center;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* Signature accent: slim brand-gradient hairline on top of the active panel. */
+.contact-seg-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent-deep) 0%, var(--accent) 45%, var(--accent-bright) 100%);
+}
+
+.contact-seg-panel[hidden] {
+    display: none;
+}
+
+.contact-seg-panel h3 {
+    margin: 0 0 1rem;
+    color: var(--text-hi);
+    font-size: clamp(1.15rem, 2.5vw, 1.4rem);
+    font-weight: 700;
+    line-height: 1.3;
+    max-width: 46rem;
+    text-align: left;
+}
+
+.contact-seg-panel ul {
+    margin: 0 0 1.5rem;
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    max-width: 46rem;
+    text-align: left;
+}
+
+.contact-seg-panel li {
+    color: var(--text-mid);
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.contact-seg-panel li::marker {
+    color: var(--accent-bright);
+}
+
+/* Brand-orange CTA inside the segment (sole contact action), centered. */
+.contact-seg-panel .contact-seg-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    width: auto;
+    box-sizing: border-box;
+    margin-inline: auto;
+    border: none;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-bright) 100%);
+    color: #1f1000;
+    box-shadow: 0 10px 22px rgba(226, 123, 33, 0.35);
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    transition: transform 220ms ease, box-shadow 220ms ease, background-color 220ms ease;
+}
+
+/* Sheen sweep: single pass on hover-capable pointers only. */
+.contact-seg-panel .contact-seg-cta::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.35) 50%, transparent 60%);
+    transform: translateX(-150%);
+    pointer-events: none;
+}
+
+@media (hover: hover) {
+    .contact-seg-panel .contact-seg-cta:hover {
+        background: linear-gradient(135deg, var(--accent) 0%, var(--accent-bright) 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 12px 24px rgba(196, 93, 0, 0.35);
+    }
+
+    .contact-seg-panel .contact-seg-cta:hover::after {
+        transform: translateX(150%);
+        transition: transform 550ms ease;
+    }
+}
+
+/* Keyboard: same lift as hover, plus the accent-bright outline below. */
+.contact-seg-panel .contact-seg-cta:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(196, 93, 0, 0.35);
+}
+
+/* Touch: no sticky lift, no sheen. */
+@media (hover: none) {
+    .contact-seg-panel .contact-seg-cta::after {
+        display: none;
+    }
+}
+
+.contact-seg-panel .contact-seg-cta span {
+    color: inherit;
+}
+
+.contact-seg-cta {
+    text-decoration: none;
+}
+
+@media (max-width: 480px) {
+    .contact-seg-toggle {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-seg-tab {
+        width: 100%;
+    }
+
+    .contact-seg-panel {
+        padding: 1.5rem 1.25rem 1.75rem;
+    }
+
+    .contact-seg-panel .contact-seg-cta {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* ---------- Contact layout breakpoints ---------- */
+/* Tablet / small desktop: single column, compact visual on top. */
+@media (max-width: 1023px) {
+    .contact-layout {
+        max-width: 38rem;
+        margin: 0 auto;
+    }
+
+    .contact-visual {
+        order: -1;
+        max-height: 240px;
+        min-height: 0;
+    }
+
+    .contact-visual img {
+        height: 240px;
+    }
+
+    .contact-deck-stage {
+        aspect-ratio: 16 / 9;
+        max-height: 240px;
+    }
+
+    .contact-deck-stage .contact-deck-card {
+        height: 100%;
+    }
+}
+
+/* Desktop: title full-width on row 1; segment (toggle+panel) and store
+   visual side by side on row 2, both starting at the same height. */
+@media (min-width: 1024px) {
+    .contact-layout {
+        grid-template-columns: minmax(0, 34rem) minmax(0, 1fr);
+        gap: 2rem;
+        align-items: stretch;
+    }
+
+    .contact-seg-title {
+        grid-column: 1 / -1;
+        grid-row: 1;
+        text-align: left;
+    }
+
+    .contact-seg {
+        grid-column: 1;
+        grid-row: 2;
+        max-width: 38rem;
+        min-width: 0;
+    }
+
+    .contact-visual {
+        grid-column: 2;
+        grid-row: 2;
+        aspect-ratio: auto;
+        min-height: 0;
+        min-width: 0;
+        width: 100%;
+        align-self: start;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .contact-seg-tab,
+    .contact-seg-cta {
+        transition: none;
+    }
+
+    .contact-seg-panel .contact-seg-cta:hover,
+    .contact-seg-panel .contact-seg-cta:focus-visible {
+        transform: none;
+    }
+
+    .contact-seg-panel .contact-seg-cta::after {
+        display: none;
+    }
+
+    .btn-contacto:hover {
+        transform: none;
+    }
 }
 
 /* footer */
@@ -1053,9 +1365,6 @@ footer {
         grid-template-columns: repeat(2, 1fr);
         gap: 20px;
     }
-    .cta-text {
-    font-size: 1.2rem;
-    }
 
 }
 
@@ -1216,40 +1525,15 @@ footer {
 
     
     .contacto-section {
-        padding: 4rem 1.5rem; 
+        padding: 4rem 1.5rem;
         min-height: auto;
     }
 
-.cards-container {
-        display: flex;            
-        flex-direction: column;    
-        gap: 3rem;                
+    /* Segment CTA: full-width tap target on touch devices. */
+    .contact-seg-panel .contact-seg-cta {
         width: 100%;
-        padding: 0 1rem;
-        box-sizing: border-box;   
-    }
-
-    .card {
-        align-items: center; 
-        text-align: center;
-        padding: 2.5rem 1.5rem;
-        width: 100%;               
-        box-sizing: border-box;   
-        height: auto;              
-        margin-bottom: 0;         
-    }
-
-    /* Botón ancho completo para facilitar el click */
-    .btn-contacto {
-        width: 100%; 
         justify-content: center;
         padding: 1.2rem;
-    }
-    
-    .cta-container {
-        width: 100%;
-        max-width: 25rem; 
-        margin: 0 auto; /* Centrado */
     }
 
     .footer-content {
@@ -1262,38 +1546,15 @@ footer {
         text-align: center;
     }
 
-    .cta-container {
-    width: 100%;
-    padding: 0 1.5rem; 
-    box-sizing: border-box;
-    max-width: 500px; 
-    margin: 0 auto; 
-}
+    .contact-seg-panel .contact-seg-cta {
+        font-size: 1rem;
+    }
 
-.cta-text {
-    font-size: 1.2rem;
-    margin-bottom: 1.2rem;
-}
-
-/* Importante: El enlace debe ocupar todo el ancho para que el botón pueda expandirse */
-.btn-contacto-link {
-    width: 100%;
-    display: block; 
-}
-
-.btn-contacto {
-    scale: 0.8;
-    width: 100%;             
-    justify-content: center; 
-    padding: 1.2rem;         
-    font-size: 1rem;
-}
-
-.btn-contacto .wsp-icon {
-    width: 2.5rem;
-    height: 2.5rem;
-    padding-left: 0.5rem;
-}
+    .contact-seg-panel .contact-seg-cta .wsp-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+        padding-left: 0.5rem;
+    }
 
 }
 
@@ -1390,14 +1651,6 @@ footer {
     .contacto-section {
         padding: 3rem 1rem; 
     }
-
-    .cards-container {
-        gap: 1.5rem; 
-    }
-
-    .card h3 {
-        font-size: 1.25rem;
-    }
 }
 
 /* Small mobile devices (hasta 320px) */
@@ -1424,18 +1677,9 @@ footer {
         width: 8px;
     }
 
-    .cta-container {
-        padding: 0 0.5rem;
-    }
-
-    .cta-text {
-        font-size: 1rem;
-        margin-bottom: 0.8rem;
-    }
-
-    .btn-contacto {
-        padding: 0.8rem 0.5rem; 
-        font-size: 0.9rem;      
+    .contact-seg-panel .contact-seg-cta {
+        padding: 0.8rem 0.5rem;
+        font-size: 0.9rem;
         gap: 0.4rem;
         width: 100%;
     }

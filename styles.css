@@ -2454,8 +2454,75 @@ footer {
 
 /* ---------- Nuevo local físico ---------- */
 .nueva-tienda {
+    --tienda-bg: #26262b;
+    --tienda-wave-h: clamp(64px, 10vw, 120px);
+    position: relative;
     font-family: var(--font-body);
-    background: radial-gradient(ellipse at 18% 20%, rgba(196, 93, 0, 0.12), transparent 46%);
+    background-color: var(--tienda-bg);
+}
+
+/* Padding extra = tercio de ola por lado: los divisores quedan pegados al contenido.
+   Márgenes negativos: `main` trae 20px de padding lateral y dejaría dos
+   franjas del fondo de página a los costados de esta sección con fondo propio;
+   se compensan en el padding para no mover el contenido. */
+.section.nueva-tienda {
+    padding-top: calc(var(--section-pad) + var(--tienda-wave-h) * 0.35);
+    padding-bottom: calc(var(--section-pad) + var(--tienda-wave-h) * 0.35);
+    margin-inline: -20px;
+    padding-inline: calc(1.5rem + 20px);
+}
+
+/* ---------- Divisor de olas apiladas (solo #nueva-tienda) ----------
+   Adaptación en CSS puro de la demo wsd-04a de CodeFronts, sin Tailwind.
+   SVG estático, sin JS y sin animación. Full-bleed: la sección vive con
+   padding horizontal, así que el stack se centra con left 50% + 100vw. */
+.nueva-tienda .tienda-wave {
+    position: absolute;
+    left: 50%;
+    width: 100vw;
+    height: var(--tienda-wave-h);
+    transform: translateX(-50%);
+    pointer-events: none;
+}
+
+.nueva-tienda .tienda-wave--top {
+    top: 0;
+    transform: translateX(-50%) scaleY(-1);
+}
+
+.nueva-tienda .tienda-wave--bottom {
+    bottom: 0;
+}
+
+.nueva-tienda .tienda-wave__layer {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* Capas en colores sólidos con contraste: nada de transparencias ni brillos. */
+.nueva-tienda .tienda-wave__layer--1 path {
+    fill: #f4f1ea;
+}
+
+.nueva-tienda .tienda-wave__layer--2 path {
+    fill: #d96a12;
+}
+
+/* Capa frontal opaca: arriba funde con la sección, abajo con la página. */
+.nueva-tienda .tienda-wave--top .tienda-wave__layer--3 path {
+    fill: var(--tienda-bg);
+}
+
+.nueva-tienda .tienda-wave--bottom .tienda-wave__layer--3 path {
+    fill: #1f1f20;
+}
+
+.nueva-tienda .nueva-tienda-grid {
+    position: relative;
+    z-index: 1;
 }
 
 .nueva-tienda-grid {

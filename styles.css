@@ -2377,6 +2377,44 @@ footer {
     box-shadow: 0 16px 32px rgba(226, 123, 33, 0.35);
 }
 
+/* Gooey drip en el "¿Cómo llegar?" (adaptado de CodeFronts "gooey drip
+   button" a la paleta del sitio): una gota blanca con borde redondeado
+   baja desde arriba e inunda el botón en hover, con el icono y el texto
+   siempre por encima. Oscuro sobre blanco: contraste sobrado. */
+.btn.btn-primary.btn-goo {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+}
+
+.btn.btn-primary.btn-goo > :not(.btn-drip) {
+    position: relative;
+    z-index: 1;
+}
+
+.btn-drip {
+    position: absolute;
+    left: 0;
+    top: -100%;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border-radius: 0 0 46% 54% / 0 0 40% 40%;
+    transition: transform 0.55s cubic-bezier(0.5, 0, 0.2, 1);
+    pointer-events: none;
+}
+
+.btn.btn-primary.btn-goo:hover .btn-drip,
+.btn.btn-primary.btn-goo:focus-visible .btn-drip {
+    transform: translateY(100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .btn-drip {
+        transition: transform 0.25s;
+    }
+}
+
 /* Secundario: contorno */
 .btn-outline {
     background: transparent;
@@ -2716,9 +2754,12 @@ footer {
     fill: #d96a12;
 }
 
-/* Capa frontal opaca: arriba funde con la sección, abajo con la página. */
+/* Capa frontal opaca: arriba funde con la PÁGINA (no con la sección: el
+   fondo de página #1f1f20 y el de la sección #26262b son dos oscuros
+   distintos y se notaba la costura justo arriba de las líneas), abajo con
+   la página también. */
 .nueva-tienda .tienda-wave--top .tienda-wave__layer--3 path {
-    fill: var(--tienda-bg);
+    fill: #1f1f20;
 }
 
 .nueva-tienda .tienda-wave--bottom .tienda-wave__layer--3 path {

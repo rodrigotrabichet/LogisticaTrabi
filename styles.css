@@ -2404,6 +2404,11 @@ footer {
 
 .hero-title .hero-express {
     display: block;
+    position: relative;
+    /* Por debajo del camión: cuando el camión cruza a la altura de la
+       palabra, las letras quedan tapadas hasta que la rueda trasera
+       las descubre (el clip lo sincroniza effects.js). */
+    z-index: 1;
     font-family: var(--font-display);
     font-size: var(--express-size);
     font-weight: 800;
@@ -2419,9 +2424,16 @@ footer {
 .hero-stroke {
     display: block;
     position: relative;
+    /* Por encima de "Express": el camión (hijo) cruza LITERALMENTE por
+       delante de las letras a la altura de la palabra y al final baja
+       a estacionar sobre la línea. */
+    z-index: 2;
     width: min(74%, 38rem);
     height: 5px;
-    margin: 2.65rem auto 0;
+    /* Pegada a la palabra como un subrayado de verdad: el bloque del hero
+       queda compacto y centra prolijo en vertical (en móvil se mantiene
+       más aire porque ahí el camión baja a estacionar sobre la línea). */
+    margin: 0.6rem auto 0;
     /* La regla genérica de `span` también pisa el font-size heredado acá;
        se re-afirma el del título para que el em de --express-size (y la
        altura del camión) se resuelvan contra la tipografía del hero. */
@@ -2442,17 +2454,19 @@ footer {
     box-shadow: 0 0 16px rgba(226, 123, 33, 0.35);
 }
 
-/* El camión viaja sobre la línea como si fuera la ruta: su base (sombra)
-   queda apoyada en la línea, no centrada sobre ella */
+/* El camión viaja sobre la línea como si fuera la ruta, pero cruza a la
+   altura de "Express" (effects.js lo eleva con `y` durante el viaje):
+   su carrocería tapa las letras y la rueda trasera las va descubriendo.
+   Al terminar baja a estacionar con la base apoyada en la línea. */
 .hero-stroke-truck {
     position: absolute;
     right: -1.5rem;
     top: 50%;
     transform: translateY(-100%);
-    /* Alto ≈ altura real de las mayúsculas de "Express" (0.76 del tamaño de
-       fuente, medido sobre la tinta): el camión queda a la altura de la
-       palabra en todos los breakpoints, siguiendo a --express-size. */
-    height: calc(var(--express-size) * 0.76);
+    /* Alto ≈ altura de las mayúsculas de "Express" más un resto: el camión
+       tiene que tapar de verdad las letras al pasar por delante, en todos
+       los breakpoints (sigue a --express-size como la palabra). */
+    height: calc(var(--express-size) * 1.02);
     width: auto;
     filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.45));
     pointer-events: none;

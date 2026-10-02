@@ -1,8 +1,12 @@
 /* ============================================================
    TR Express — Animación del hero
-   GSAP: "TR" entra primero; después el camión recorre la estela,
-   descubre "Express" a su paso (el clip de la palabra sigue la
-   posición real de la rueda trasera) y deja el subrayado debajo.
+   GSAP: "TR" entra primero; después el camión cruza LITERALMENTE por
+   delante de "Express" (elevado a la altura de la palabra, por encima
+   de las letras gracias al z-index) y descubre la palabra a su paso
+   (el clip sigue la posición real de la rueda trasera). Si hay pantalla
+   de sobra sigue de largo en ese mismo carril hasta despejar la palabra;
+   en pantallas angostas baja a estacionar sobre la estela. El subrayado
+   queda dibujado debajo en todos los casos.
    Respeta prefers-reduced-motion y, si la CDN de GSAP no carga,
    el hero queda en su estado final estático sin romper el layout.
    El timeline arranca cuando las fuentes están listas (o pasado
@@ -40,23 +44,87 @@
         return (1 - REAR_WHEEL_F) * truck.offsetWidth + rightPx;
     }
 
+    /* `lift`: desplazamiento vertical (px, negativo = subir) que centra
+       el camión sobre "Express" durante el cruce para que tape las letras
+       de verdad. En reposo la base del camión apoya en la línea: ocupa
+       [lineC - H, lineC]; centrado sobre Express debe ocupar
+       [expressC - H/2, expressC + H/2]. */
+    function heroLift() {
+        var stroke = document.querySelector('.hero-stroke');
+        var express = document.querySelector('.hero-express');
+        var truckEl = document.querySelector('.hero-stroke-truck');
+        if (!stroke || !express || !truckEl) return 0;
+        var expressRect = express.getBoundingClientRect();
+        var strokeRect = stroke.getBoundingClientRect();
+        var truckH = truckEl.getBoundingClientRect().height || truckEl.offsetHeight || 0;
+        var expressCenterY = expressRect.top + expressRect.height / 2;
+        var strokeCenterY = strokeRect.top + strokeRect.height / 2;
+        return expressCenterY - strokeCenterY + truckH / 2;
+    }
+
+    /* Respiro (px) entre la palabra y el camión estacionado en modo pase. */
+    var HERO_PASS_GAP = 20;
+
+    /* Distancia extra (px) para que el camión siga en su carril a la altura
+       de "Express" hasta despejar la palabra por completo + respiro, en vez
+       de bajar a la línea. Normaliza la posición actual del camión (puede
+       tener un x viejo tras un resize) para medir desde su anclaje natural. */
+    function heroPassExtra(baseEndX) {
+        var express = document.querySelector('.hero-express');
+        var truck = document.querySelector('.hero-stroke-truck');
+        if (!express || !truck) return 0;
+        var expressRect = express.getBoundingClientRect();
+        var truckRect = truck.getBoundingClientRect();
+        var currentX = 0;
+        if (window.gsap && gsap.getProperty) {
+            currentX = gsap.getProperty(truck, 'x') || 0;
+        }
+        var naturalLeft = truckRect.left - currentX;
+        var extra = expressRect.right + HERO_PASS_GAP - (naturalLeft + baseEndX);
+        return extra > 0 ? extra : 0;
+    }
+
+    /* ¿Hay pantalla de sobra para que el camión siga de largo en su carril?
+       Si el camión despejado (palabra + respiro + su propio ancho) entra en
+       el viewport, modo pase; si no (móviles angostos), baja a estacionar
+       sobre la línea como antes. */
+    function heroWantsPass() {
+        var express = document.querySelector('.hero-express');
+        var truck = document.querySelector('.hero-stroke-truck');
+        if (!express || !truck) return false;
+        var truckW = truck.getBoundingClientRect().width || truck.offsetWidth || 0;
+        var extendedRight = express.getBoundingClientRect().right + HERO_PASS_GAP + truckW;
+        var vw = document.documentElement.clientWidth || window.innerWidth || 0;
+        return extendedRight <= vw - 8;
+    }
+
     /* Geometría del recorrido, toda en el mismo sistema de coordenadas:
-       el camión arranca con la rueda trasera en el inicio de la estela y
-       termina con la rueda en el extremo derecho. La estela está centrada
-       bajo "Express" y mide ~74% del ancho de la palabra, así que el
-       progreso del viaje (0→1) cubre la palabra exactamente de borde a
-       borde: al empezar el borde del revelado pisa la primera letra y al
-       terminar pisa la última. */
+       el camión arranca con la rueda trasera en el inicio de la estela.
+       En pantallas con lugar (modo pase) el final se estira para que siga
+       en su carril a la altura de "Express" hasta despejar la palabra, sin
+       bajar; en pantallas angostas termina con la rueda en el extremo
+       derecho y baja a estacionar sobre la línea. El progreso del viaje
+       (0→1) cubre la palabra exactamente de borde a borde: al empezar el
+       borde del revelado pisa la primera letra y al terminar pisa la última. */
     function journeyGeometry() {
         var stroke = document.querySelector('.hero-stroke');
         if (!stroke) return null;
 
-        var endX = heroEndOffset();
+        var baseEndX = heroEndOffset();
+        var extra = 0;
+        var settleDown = true;
+        if (heroWantsPass()) {
+            extra = heroPassExtra(baseEndX);
+            settleDown = false;
+        }
+        var endX = baseEndX + extra;
         var strokeRect = stroke.getBoundingClientRect();
         return {
             startX: endX - strokeRect.width,
             endX: endX,
-            travel: strokeRect.width
+            travel: strokeRect.width,
+            lift: heroLift(),
+            settleDown: settleDown
         };
     }
 
@@ -67,10 +135,18 @@
         if (!window.gsap) return;
         document.documentElement.classList.remove('hero-anim');
         gsap.set('.hero-stroke-line', { scaleX: 1 });
-        // yPercent:-100 + y:0 re-afirma el translateY(-100%) del CSS en forma
+        // yPercent:-100 re-afirma el translateY(-100%) del CSS en forma
         // proporcional: si el camión cambió de tamaño, el px congelado al
-        // crear el tween quedaría desplazado.
-        gsap.set('.hero-stroke-truck', { x: heroEndOffset(), yPercent: -100, y: 0, opacity: 1 });
+        // crear el tween quedaría desplazado. En modo pase queda elevado
+        // (y = lift) a la altura de "Express"; si no, apoyado en la línea.
+        var baseEndX = heroEndOffset();
+        var finalX = baseEndX;
+        var finalY = 0;
+        if (heroWantsPass()) {
+            finalX = baseEndX + heroPassExtra(baseEndX);
+            finalY = heroLift();
+        }
+        gsap.set('.hero-stroke-truck', { x: finalX, yPercent: -100, y: finalY, opacity: 1 });
         gsap.set('.hero-express', { clipPath: 'none' });
         gsap.set(['.hero-tr', '.hero-subtitle'], { clearProps: 'all' });
     }
@@ -101,9 +177,10 @@
         var geo = journeyGeometry();
         if (!geo) return;
 
-        // Arranque: camión fuera de escena (a la izquierda) y palabra oculta
-        // (el clip inicial también vive en CSS para no flashear el estado final).
-        gsap.set('.hero-stroke-truck', { yPercent: -100, y: 0, x: geo.startX, opacity: 0 });
+        // Arranque: camión fuera de escena (a la izquierda, ya elevado a la
+        // altura de "Express") y palabra oculta (el clip inicial también
+        // vive en CSS para no flashear el estado final).
+        gsap.set('.hero-stroke-truck', { yPercent: -100, y: geo.lift, x: geo.startX, opacity: 0 });
 
         // Estela: la línea se dibuja de izquierda a derecha en sintonía con
         // el viaje del camión.
@@ -114,6 +191,12 @@
         // El camión es la única fuente de verdad del recorrido: en cada frame
         // se lee su x y con eso se calcula hasta dónde se reveló la palabra,
         // así el borde de la letra coincide siempre con la rueda trasera.
+        // Viaja ELEVADO a la altura de "Express" (y = lift) tapando las
+        // letras de verdad. En pantallas con lugar sigue de largo en ese
+        // mismo carril hasta despejar la palabra (modo pase); en pantallas
+        // angostas baja a la línea solo al estacionar: en el último 20%
+        // del recorrido `settle` (smoothstep) lo lleva de vuelta a y = 0,
+        // donde queda apoyado sobre la estela como antes.
         var journey = { x: geo.startX, opacity: 0 };
         heroTl.to(journey, {
             x: geo.endX,
@@ -123,7 +206,13 @@
             onUpdate: function () {
                 var revealed = (journey.x - geo.startX) / geo.travel;
                 revealed = revealed < 0 ? 0 : revealed > 1 ? 1 : revealed;
-                gsap.set('.hero-stroke-truck', { x: journey.x, opacity: journey.opacity });
+                var y = geo.lift;
+                if (geo.settleDown) {
+                    var t = (revealed - 0.8) / 0.2;
+                    t = t < 0 ? 0 : t > 1 ? 1 : t;
+                    y = geo.lift * (1 - t * t * (3 - 2 * t));
+                }
+                gsap.set('.hero-stroke-truck', { x: journey.x, y: y, opacity: journey.opacity });
                 gsap.set('.hero-express', {
                     clipPath: 'inset(0 ' + ((1 - revealed) * 100).toFixed(2) + '% 0 0)'
                 });

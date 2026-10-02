@@ -18,6 +18,11 @@
 
     var deckCards = Array.prototype.slice.call(document.querySelectorAll('.contact-deck-card'));
     var deckTl = null;
+    var panelTl = null;
+    // Fuente única de la verdad: qué segmento está vigente. El DOM (clases,
+    // timelines a medio correr) puede mentir durante clicks rápidos; esta
+    // variable, no. Se actualiza en cada select, anime o no.
+    var activeSegment = null;
 
     function segmentFor(tab) {
         return tab.id === 'tab-comercio' ? 'comercio' : 'minorista';
@@ -30,16 +35,28 @@
         return null;
     }
 
-    function swapDeckInstant(segment) {
+    /* Mata el timeline del deck a medio correr y limpia los estilos inline
+       que dejó (opacidades, rotaciones): sin esto, un click rápido deja
+       restos que traban la card. No toca clases; es solo higiene. */
+    function resetDeckFlight() {
         if (deckTl) {
             deckTl.kill();
             deckTl = null;
         }
+        if (window.gsap) {
+            deckCards.forEach(function (card) {
+                gsap.set(card, { clearProps: 'all' });
+            });
+        }
+    }
+
+    function swapDeckInstant(segment) {
+        resetDeckFlight();
         deckCards.forEach(function (card) {
             var active = card.getAttribute('data-segment') === segment;
             card.classList.toggle('is-active', active);
-            if (window.gsap) gsap.set(card, { clearProps: 'all' });
         });
+        activeSegment = segment;
     }
 
     function animateDeck(segment) {
@@ -48,13 +65,24 @@
             swapDeckInstant(segment);
             return;
         }
-        var current = document.querySelector('.contact-deck-card.is-active');
+        // El segmento previo sale de la variable, no del DOM: con clicks
+        // rápidos puede haber dos cards con is-active a la vez y el
+        // querySelector devolvería cualquiera.
+        var previous = activeSegment;
+        // Se mata primero y se ordena después: ningún timeline viejo puede
+        // sobrevivir para corromper el estado al completarse.
+        resetDeckFlight();
         var next = cardFor(segment);
+        var current = previous ? cardFor(previous) : null;
+        deckCards.forEach(function (card) {
+            card.classList.toggle('is-active', card === next);
+        });
+        activeSegment = segment;
+        // Mismo segmento (o sin cards): estado ya correcto y limpio, nada
+        // que animar y —clave— ningún timeline vivo que trabe nada.
         if (!next || current === next) return;
-        if (deckTl) deckTl.kill();
         gsap.set(current, { zIndex: 1 });
         gsap.set(next, { zIndex: 2 });
-        next.classList.add('is-active');
         deckTl = gsap.timeline({
             onComplete: function () {
                 if (current) {
@@ -83,9 +111,18 @@
         if (!window.gsap || reduceMotion) return;
         var items = panel.querySelectorAll('h3, li, .contact-seg-cta');
         if (!items.length) return;
-        var tl = gsap.timeline({ defaults: { ease: 'power3.out', duration: 0.45 } });
-        tl.from(panel, { y: 18, opacity: 0, duration: 0.35 })
-          .from(items, { y: 14, opacity: 0, stagger: 0.07 }, '-=0.15');
+        // Se mata el stagger anterior: con clicks rápidos se encimaban
+        // varios timelines peleando por las mismas propiedades (flicker).
+        // fromTo con finales explícitos: si el anterior murió a mitad de
+        // fade, el "destino" heredado sería opacity 0 y el item quedaría
+        // invisible. Así siempre termina en su estado real.
+        if (panelTl) panelTl.kill();
+        panelTl = gsap.timeline({
+            defaults: { ease: 'power3.out', duration: 0.45 },
+            onComplete: function () { panelTl = null; }
+        });
+        panelTl.fromTo(panel, { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35 })
+          .fromTo(items, { y: 14, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.07 }, '-=0.15');
     }
 
     function select(tab, animate) {

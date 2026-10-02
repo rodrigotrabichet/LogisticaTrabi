@@ -607,7 +607,6 @@ span{
     }
 
     .location-icon { 
-    font-size: 1.5rem; 
     margin-bottom: 0.5rem; 
     }
 
@@ -2835,10 +2834,13 @@ footer {
     color: #C45D00;
 }
 
+/* El SVG interno de iconify-icon se dimensiona en 1em: el tamaño se controla
+   con font-size (acompañando al box), no con atributos width/height en el HTML. */
 .location-icon iconify-icon {
     display: inline-flex;
     width: 1.75rem;
     height: 1.75rem;
+    font-size: 1.75rem;
 }
 
 .location-card {
@@ -2878,6 +2880,7 @@ footer {
     .location-icon iconify-icon {
         width: 1.3rem;
         height: 1.3rem;
+        font-size: 1.3rem;
     }
 
     .location-card h3 {

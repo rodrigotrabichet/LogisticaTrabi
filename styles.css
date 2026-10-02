@@ -2762,6 +2762,23 @@ footer {
     fill: #1f1f20;
 }
 
+/* Sangrado anti-hairline (el caso de Agrimensura): el borde recto
+   antialiaseado de la capa frontal deja asomar 1px de la naranja de atrás
+   justo en el límite de la sección, arriba y abajo. La capa frontal se
+   estira 1px por fuera para que ese borde quede sobre fondo liso y no se
+   lea como línea finita. OJO el stack de arriba está espejado con
+   scaleY(-1): su borde recto es el de ABAJO del SVG, así que se estira
+   hacia abajo en coordenadas sin espejar (top: 0 + alto extra). El estirón
+   deforma la curva <2%: invisible. */
+.nueva-tienda .tienda-wave--top .tienda-wave__layer--3 {
+    top: 0;
+    height: calc(100% + 1px);
+}
+
+.nueva-tienda .tienda-wave--bottom .tienda-wave__layer--3 {
+    height: calc(100% + 1px);
+}
+
 .nueva-tienda .tienda-wave--bottom .tienda-wave__layer--3 path {
     fill: #1f1f20;
 }

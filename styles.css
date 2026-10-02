@@ -2975,10 +2975,12 @@ footer {
        por delante; al estacionar queda con aire sobre las letras. */
     .hero-stroke-truck {
         height: calc(var(--express-size) * 0.95);
-        /* Sombra contenida: con el blur de desktop (16px) el faldón negro
-           de la camioneta + la sombra se leía como una estela negra sobre
-           el fondo claro en movimiento. Pegada y suave acá. */
-        filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.25));
+        /* Sin drop-shadow: en la GPU del celu el filtro se desparrama en
+           movimiento y se lee como estela negra (probado: con filtro hay
+           manchón ancho en los frames, sin filtro va limpio). La wagon
+           trae faldón y ruedas oscuras que la definen sola. En desktop la
+           sombra dramática queda intacta. */
+        filter: none;
     }
 
     .hero-scroll-cue {

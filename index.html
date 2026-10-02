@@ -92,7 +92,7 @@
                         <span>Urquiza 319, Colón, Entre Ríos</span>
                     </div>
                     <div class="nueva-tienda-actions">
-                        <a href="https://www.google.com/maps/search/?api=1&amp;query=Urquiza+319+Col%C3%B3n+Entre+R%C3%ADos" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-goo">
+                        <a href="https://www.google.com/maps/dir/?api=1&amp;destination=Urquiza+319,+Col%C3%B3n,+Entre+R%C3%ADos" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-goo">
                             <span class="btn-drip" aria-hidden="true"></span>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                 <path d="M9 18l-6 3V6l6-3 6 3 6-3v15l-6 3-6-3z"></path>
@@ -839,6 +839,47 @@
             wrapper.addEventListener('touchmove', e => moveDrag(e.touches[0].pageX));
             wrapper.addEventListener('touchend', endDrag);
         });
+
+        // "¿Cómo llegar?" con origen en la ubicación actual: si el navegador
+        // la comparte, la ruta sale de ahí; si no (o sin permiso), se usa el
+        // href con solo destino y Maps lo completa en el celu.
+        (function () {
+            var btn = document.querySelector('.nueva-tienda-actions .btn-goo');
+            if (!btn) return;
+            var label = btn.querySelector('span:last-child');
+            var original = label ? label.textContent : '';
+            function openMaps(tab, url) {
+                if (tab && !tab.closed) {
+                    tab.location.href = url;
+                    return;
+                }
+                var w = window.open(url, '_blank', 'noopener');
+                if (!w) window.location.href = url;
+            }
+            btn.addEventListener('click', function (e) {
+                if (!navigator.geolocation) return;
+                e.preventDefault();
+                // Se abre en el gesto (sincrónico) para que el navegador no
+                // lo bloquee como popup: la ubicación llega después.
+                var tab = null;
+                try { tab = window.open('about:blank', '_blank', 'noopener'); } catch (err) { tab = null; }
+                if (label) label.textContent = 'Ubicándote…';
+                btn.style.pointerEvents = 'none';
+                function done(url) {
+                    if (label) label.textContent = original;
+                    btn.style.pointerEvents = '';
+                    openMaps(tab, url);
+                }
+                navigator.geolocation.getCurrentPosition(
+                    function (pos) {
+                        var origin = pos.coords.latitude.toFixed(6) + ',' + pos.coords.longitude.toFixed(6);
+                        done('https://www.google.com/maps/dir/?api=1&origin=' + origin + '&destination=' + encodeURIComponent('Urquiza 319, Colón, Entre Ríos'));
+                    },
+                    function () { done(btn.getAttribute('href')); },
+                    { timeout: 8000, maximumAge: 300000 }
+                );
+            });
+        })();
     </script>
 
     <!-- GSAP (CDN) + animación del hero -->

@@ -2835,7 +2835,21 @@ footer {
 
     .hero-stroke {
         width: min(78%, 20rem);
-        margin-top: 2.1rem;
+        /* Más aire que en desktop: acá abajo estaciona el camión después
+           de su vuelta por la derecha (modo loop). */
+        margin-top: 3rem;
+    }
+
+    /* En móvil no hay línea naranja: el camión cruza por delante de la
+       palabra, sale del plano y vuelve a estacionar debajo de ella. */
+    .hero-stroke-line {
+        display: none;
+    }
+
+    /* Camión con presencia a la altura de la palabra para taparla al cruzar
+       por delante; al estacionar queda con aire sobre las letras. */
+    .hero-stroke-truck {
+        height: calc(var(--express-size) * 0.95);
     }
 
     .hero-scroll-cue {

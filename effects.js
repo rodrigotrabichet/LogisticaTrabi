@@ -5,8 +5,10 @@
    de las letras gracias al z-index) y descubre la palabra a su paso
    (el clip sigue la posición real de la rueda trasera). Si hay pantalla
    de sobra sigue de largo en ese mismo carril hasta despejar la palabra;
-   en pantallas angostas baja a estacionar sobre la estela. El subrayado
-   queda dibujado debajo en todos los casos.
+   en pantallas angostas da la vuelta manzana: entra desde fuera por la
+   izquierda, cruza, sale por la derecha, baja fuera de escena y reingresa
+   por la izquierda a estacionar debajo de la palabra (modo loop, sin línea
+   naranja). El subrayado queda dibujado debajo solo donde hay lugar.
    Respeta prefers-reduced-motion y, si la CDN de GSAP no carga,
    el hero queda en su estado final estático sin romper el layout.
    El timeline arranca cuando las fuentes están listas (o pasado
@@ -84,10 +86,11 @@
         return extra > 0 ? extra : 0;
     }
 
-    /* ¿Hay pantalla de sobra para que el camión siga de largo en su carril?
-       Si el camión despejado (palabra + respiro + su propio ancho) entra en
-       el viewport, modo pase; si no (móviles angostos), baja a estacionar
-       sobre la línea como antes. */
+    /* ¿Hay pantalla de sobra para el cruce por delante? Si el camión
+       despejado (palabra + respiro + su propio ancho) entra en el
+       viewport, modo pase; si no (móviles angostos), modo clásico: viaja
+       todo el recorrido sobre la línea por debajo de la palabra, como la
+       versión original. */
     function heroWantsPass() {
         var express = document.querySelector('.hero-express');
         var truck = document.querySelector('.hero-stroke-truck');
@@ -98,33 +101,64 @@
         return extendedRight <= vw - 8;
     }
 
-    /* Geometría del recorrido, toda en el mismo sistema de coordenadas:
-       el camión arranca con la rueda trasera en el inicio de la estela.
-       En pantallas con lugar (modo pase) el final se estira para que siga
-       en su carril a la altura de "Express" hasta despejar la palabra, sin
-       bajar; en pantallas angostas termina con la rueda en el extremo
-       derecho y baja a estacionar sobre la línea. El progreso del viaje
-       (0→1) cubre la palabra exactamente de borde a borde: al empezar el
-       borde del revelado pisa la primera letra y al terminar pisa la última. */
+    /* Geometría del modo pase (pantallas con lugar), toda en el mismo
+       sistema de coordenadas: el camión arranca con la rueda trasera en el
+       inicio de la estela, viaja elevado a la altura de "Express" y el final
+       se estira para que siga en su carril hasta despejar la palabra, sin
+       bajar. El progreso del viaje (0→1) cubre la palabra exactamente de
+       borde a borde: al empezar el borde del revelado pisa la primera letra
+       y al terminar pisa la última. */
     function journeyGeometry() {
         var stroke = document.querySelector('.hero-stroke');
         if (!stroke) return null;
 
         var baseEndX = heroEndOffset();
-        var extra = 0;
-        var settleDown = true;
-        if (heroWantsPass()) {
-            extra = heroPassExtra(baseEndX);
-            settleDown = false;
-        }
-        var endX = baseEndX + extra;
+        var endX = baseEndX + heroPassExtra(baseEndX);
         var strokeRect = stroke.getBoundingClientRect();
         return {
             startX: endX - strokeRect.width,
             endX: endX,
-            travel: strokeRect.width,
-            lift: heroLift(),
-            settleDown: settleDown
+            revealX0: endX - strokeRect.width,
+            revealX1: endX,
+            lift: heroLift()
+        };
+    }
+
+    /* Geometría del modo loop (móviles angostos): vuelta manzana. El camión
+       entra desde fuera de la pantalla por la izquierda, cruza por delante
+       de "Express" (y = lift) y sale del plano por la derecha; después baja
+       fuera de escena, reingresa por la izquierda sobre la línea y estaciona
+       centrado debajo de la palabra. Siempre mira a la derecha (sin espejar:
+       el texto del camión queda legible). La línea naranja está oculta en
+       móvil (CSS), así que no hay estela que dibujar. El revelado sigue a la
+       rueda trasera medido sobre la palabra (revealX0→revealX1). */
+    function heroLoopGeometry(lift) {
+        var stroke = document.querySelector('.hero-stroke');
+        var express = document.querySelector('.hero-express');
+        var truck = document.querySelector('.hero-stroke-truck');
+        if (!stroke || !express || !truck) return null;
+        var strokeRect = stroke.getBoundingClientRect();
+        var expressRect = express.getBoundingClientRect();
+        var truckRect = truck.getBoundingClientRect();
+        var currentX = 0;
+        if (window.gsap && gsap.getProperty) {
+            currentX = gsap.getProperty(truck, 'x') || 0;
+        }
+        var naturalLeft = truckRect.left - currentX;
+        var truckW = truckRect.width || truck.offsetWidth || 0;
+        var rearFromLeft = REAR_WHEEL_F * truckW;
+        var offMargin = 24;
+        var vw = document.documentElement.clientWidth || window.innerWidth || 0;
+        var strokeCenterX = strokeRect.left + strokeRect.width / 2;
+        return {
+            // Fuera de la pantalla por la izquierda (entra) y por la derecha (sale).
+            startX: -naturalLeft - truckW - offMargin,
+            exitX: vw - naturalLeft + offMargin,
+            parkX: strokeCenterX - (naturalLeft + truckW / 2),
+            // La rueda trasera pisa el borde izquierdo/derecho de la palabra.
+            revealX0: expressRect.left - (naturalLeft + rearFromLeft),
+            revealX1: expressRect.right - (naturalLeft + rearFromLeft),
+            lift: lift
         };
     }
 
@@ -138,15 +172,20 @@
         // yPercent:-100 re-afirma el translateY(-100%) del CSS en forma
         // proporcional: si el camión cambió de tamaño, el px congelado al
         // crear el tween quedaría desplazado. En modo pase queda elevado
-        // (y = lift) a la altura de "Express"; si no, apoyado en la línea.
-        var baseEndX = heroEndOffset();
-        var finalX = baseEndX;
-        var finalY = 0;
+        // (y = lift) a la altura de "Express"; en modo loop, estacionado
+        // centrado debajo de la palabra (y = 0). Siempre mirando a la derecha.
+        var finalX;
+        var finalY;
         if (heroWantsPass()) {
+            var baseEndX = heroEndOffset();
             finalX = baseEndX + heroPassExtra(baseEndX);
             finalY = heroLift();
+        } else {
+            var loopGeo = heroLoopGeometry(0);
+            finalX = loopGeo ? loopGeo.parkX : heroEndOffset();
+            finalY = 0;
         }
-        gsap.set('.hero-stroke-truck', { x: finalX, yPercent: -100, y: finalY, opacity: 1 });
+        gsap.set('.hero-stroke-truck', { x: finalX, yPercent: -100, y: finalY, opacity: 1, scaleX: 1 });
         gsap.set('.hero-express', { clipPath: 'none' });
         gsap.set(['.hero-tr', '.hero-subtitle'], { clearProps: 'all' });
     }
@@ -174,50 +213,85 @@
             .fromTo('.hero-tr', { y: 44, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7 }, 0.1)
             .fromTo('.hero-subtitle', { y: 30, opacity: 0 }, { y: 0, opacity: 1 }, 0.45);
 
-        var geo = journeyGeometry();
+        var pass = heroWantsPass();
+        var geo = pass ? journeyGeometry() : heroLoopGeometry(heroLift());
         if (!geo) return;
 
         // Arranque: camión fuera de escena (a la izquierda, ya elevado a la
-        // altura de "Express") y palabra oculta (el clip inicial también
-        // vive en CSS para no flashear el estado final).
-        gsap.set('.hero-stroke-truck', { yPercent: -100, y: geo.lift, x: geo.startX, opacity: 0 });
-
-        // Estela: la línea se dibuja de izquierda a derecha en sintonía con
-        // el viaje del camión.
-        heroTl.fromTo('.hero-stroke-line',
-            { scaleX: 0 },
-            { scaleX: 1, duration: 1.15, ease: 'power2.inOut' }, 0.85);
+        // altura de "Express", mirando a la derecha) y palabra oculta (el
+        // clip inicial también vive en CSS para no flashear el estado final).
+        gsap.set('.hero-stroke-truck', { yPercent: -100, y: geo.lift, x: geo.startX, opacity: 0, scaleX: 1 });
 
         // El camión es la única fuente de verdad del recorrido: en cada frame
         // se lee su x y con eso se calcula hasta dónde se reveló la palabra,
         // así el borde de la letra coincide siempre con la rueda trasera.
-        // Viaja ELEVADO a la altura de "Express" (y = lift) tapando las
-        // letras de verdad. En pantallas con lugar sigue de largo en ese
-        // mismo carril hasta despejar la palabra (modo pase); en pantallas
-        // angostas baja a la línea solo al estacionar: en el último 20%
-        // del recorrido `settle` (smoothstep) lo lleva de vuelta a y = 0,
-        // donde queda apoyado sobre la estela como antes.
-        var journey = { x: geo.startX, opacity: 0 };
-        heroTl.to(journey, {
-            x: geo.endX,
-            opacity: 1,
-            duration: 1.15,
-            ease: 'power2.inOut',
-            onUpdate: function () {
-                var revealed = (journey.x - geo.startX) / geo.travel;
-                revealed = revealed < 0 ? 0 : revealed > 1 ? 1 : revealed;
-                var y = geo.lift;
-                if (geo.settleDown) {
-                    var t = (revealed - 0.8) / 0.2;
-                    t = t < 0 ? 0 : t > 1 ? 1 : t;
-                    y = geo.lift * (1 - t * t * (3 - 2 * t));
+        function paintReveal(x) {
+            var span = geo.revealX1 - geo.revealX0;
+            var revealed = span > 0 ? (x - geo.revealX0) / span : 1;
+            revealed = revealed < 0 ? 0 : revealed > 1 ? 1 : revealed;
+            gsap.set('.hero-express', {
+                clipPath: 'inset(0 ' + ((1 - revealed) * 100).toFixed(2) + '% 0 0)'
+            });
+        }
+
+        if (pass) {
+            // Estela: la línea se dibuja de izquierda a derecha en sintonía
+            // con el viaje del camión (en móvil la línea está oculta).
+            heroTl.fromTo('.hero-stroke-line',
+                { scaleX: 0 },
+                { scaleX: 1, duration: 1.15, ease: 'power2.inOut' }, 0.85);
+
+            // Viaja ELEVADO a la altura de "Express" (y = lift) tapando las
+            // letras de verdad y sigue de largo en ese mismo carril hasta
+            // despejar la palabra.
+            var journey = { x: geo.startX, opacity: 0 };
+            heroTl.to(journey, {
+                x: geo.endX,
+                opacity: 1,
+                duration: 1.15,
+                ease: 'power2.inOut',
+                onUpdate: function () {
+                    paintReveal(journey.x);
+                    gsap.set('.hero-stroke-truck', { x: journey.x, y: geo.lift, opacity: journey.opacity });
                 }
-                gsap.set('.hero-stroke-truck', { x: journey.x, y: y, opacity: journey.opacity });
-                gsap.set('.hero-express', {
-                    clipPath: 'inset(0 ' + ((1 - revealed) * 100).toFixed(2) + '% 0 0)'
-                });
-            }
-        }, 0.85);
+            }, 0.85);
+        } else {
+            // Modo loop (vuelta manzana): A) entra desde fuera por la izquierda,
+            // cruza por delante y sale del plano por la derecha; B) baja fuera
+            // de escena; C) reingresa por la izquierda sobre la línea y llega
+            // más lento, planeando hasta estacionar centrado debajo de
+            // "Express". Siempre mirando a la derecha, texto legible.
+            var fly = { x: geo.startX, opacity: 0 };
+            heroTl.to(fly, {
+                x: geo.exitX,
+                opacity: 1,
+                duration: 1.4,
+                ease: 'power2.inOut',
+                onUpdate: function () {
+                    paintReveal(fly.x);
+                    gsap.set('.hero-stroke-truck', { x: fly.x, y: geo.lift, opacity: fly.opacity });
+                }
+            }, 0.85);
+            var drop = { y: geo.lift };
+            heroTl.to(drop, {
+                y: 0,
+                duration: 0.25,
+                ease: 'power2.in',
+                onUpdate: function () {
+                    gsap.set('.hero-stroke-truck', { y: drop.y });
+                }
+            }, 2.25);
+            var back = { x: geo.startX };
+            heroTl.set('.hero-stroke-truck', { x: geo.startX }, 2.5);
+            heroTl.to(back, {
+                x: geo.parkX,
+                duration: 1.0,
+                ease: 'power2.out',
+                onUpdate: function () {
+                    gsap.set('.hero-stroke-truck', { x: back.x, y: 0 });
+                }
+            }, 2.5);
+        }
     }
 
     if (document.fonts && document.fonts.ready) {

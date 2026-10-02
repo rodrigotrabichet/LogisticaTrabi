@@ -445,6 +445,7 @@
                         <img id="modal-availability-logo" src="" alt="Logo de disponibilidad" class="availability-logo">
                     </div>
                     <img id="modal-img" src="" alt="Producto">
+                    <div id="modal-thumbs" class="modal-thumbs" hidden></div>
                 </div>
                 <div class="modal-info">
                     <h2 id="modal-title"></h2>
@@ -554,10 +555,67 @@
             const modalAvailabilityLogo = document.getElementById('modal-availability-logo');
 
             const modalImg = document.getElementById('modal-img');
-            if (imgSrc) {
-                modalImg.src = imgSrc;
+            const modalThumbs = document.getElementById('modal-thumbs');
+
+            // Cadena de respaldo por foto (mismo criterio que las cards): si una
+            // URL falla se prueba la siguiente; agotadas, la imagen queda vacía.
+            const applyChain = (img, candidates, onExhausted) => {
+                let index = 0;
+                img.onerror = () => {
+                    index += 1;
+                    if (index < candidates.length) {
+                        img.src = candidates[index];
+                        return;
+                    }
+                    img.onerror = null;
+                    onExhausted(img);
+                };
+                img.src = candidates[0];
+            };
+
+            const setModalPhoto = (photo, index) => {
+                applyChain(modalImg, photo.candidates, (img) => img.removeAttribute('src'));
+                modalThumbs.querySelectorAll('.modal-thumb').forEach((thumb, i) => {
+                    thumb.classList.toggle('is-active', i === index);
+                });
+            };
+
+            modalImg.alt = title;
+
+            // Galería: las cards dinámicas dejan la lista de fotos en data-photos;
+            // el HTML estático (una sola foto) sigue por el camino de siempre.
+            let photos = null;
+            const photosData = card.getAttribute('data-photos');
+            if (photosData) {
+                try { photos = JSON.parse(photosData); } catch (e) { photos = null; }
+            }
+            modalThumbs.innerHTML = '';
+            if (photos && photos.length) {
+                if (photos.length > 1) {
+                    photos.forEach((photo, index) => {
+                        const thumb = document.createElement('button');
+                        thumb.type = 'button';
+                        thumb.className = index === 0 ? 'modal-thumb is-active' : 'modal-thumb';
+                        thumb.setAttribute('aria-label', 'Ver foto ' + (index + 1) + ' de ' + photos.length);
+                        const thumbImg = document.createElement('img');
+                        thumbImg.alt = '';
+                        thumbImg.setAttribute('loading', 'lazy');
+                        thumbImg.decoding = 'async';
+                        applyChain(thumbImg, photo.candidates, () => { thumb.hidden = true; });
+                        thumb.appendChild(thumbImg);
+                        thumb.addEventListener('click', () => setModalPhoto(photo, index));
+                        modalThumbs.appendChild(thumb);
+                    });
+                }
+                setModalPhoto(photos[0], 0);
+                modalThumbs.hidden = photos.length < 2;
             } else {
-                modalImg.removeAttribute('src');
+                modalThumbs.hidden = true;
+                if (imgSrc) {
+                    modalImg.src = imgSrc;
+                } else {
+                    modalImg.removeAttribute('src');
+                }
             }
             document.getElementById('modal-title').textContent = title;
 

@@ -316,6 +316,7 @@ span{
     justify-content: center;
     padding: 20px;
     min-height: 320px;
+    position: relative;
 }
 
 /* Estilos para la información de disponibilidad */
@@ -351,6 +352,21 @@ span{
 
 .product-image-container > img:not(.availability-logo):hover {
     transform: scale(1.08);
+}
+
+/* Chip sobre la portada que avisa cuántas fotos tiene el producto. */
+.product-photo-count {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    background: rgba(24, 24, 26, 0.78);
+    color: #ffffff;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    pointer-events: none;
 }
 
 /* Logo pequeño de disponibilidad */
@@ -1892,6 +1908,55 @@ footer {
     filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
 }
 
+/* Galería del modal: miniaturas debajo de la imagen principal. */
+.modal-thumbs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 16px;
+    max-width: 100%;
+}
+
+/* `display: flex` le gana al display:none que trae [hidden] por defecto. */
+.modal-thumbs[hidden] {
+    display: none;
+}
+
+.modal-thumb {
+    width: 56px;
+    height: 56px;
+    padding: 0;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    overflow: hidden;
+    background: none;
+    cursor: pointer;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.modal-thumb img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    max-height: none;
+    filter: none;
+}
+
+.modal-thumb:hover {
+    transform: translateY(-2px);
+}
+
+.modal-thumb.is-active {
+    border-color: var(--color-primary);
+}
+
+.modal-thumb:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
 .modal-info {
     flex: 1;
     padding: 30px;
@@ -2100,6 +2165,17 @@ footer {
     .modal-info {
         padding: 15px;
         padding-bottom: 80px;
+    }
+
+    /* Miniaturas más chicas: le devuelven altura útil a la info del modal. */
+    .modal-thumbs {
+        gap: 6px;
+        margin-top: 10px;
+    }
+
+    .modal-thumb {
+        width: 48px;
+        height: 48px;
     }
 
     .modal-info h2 {

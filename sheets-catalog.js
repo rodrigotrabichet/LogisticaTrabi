@@ -40,11 +40,19 @@
         });
         return index;
     })();
-    // Imágenes de Google Drive: thumbnail redimensionado como src primario y URL directa como respaldo.
+    // Imágenes de Google Drive: se sirven a través de un proxy de imágenes que
+    // cachea en CDN y entrega webp del ancho pedido (Drive solo, además de
+    // throttlear el hotlinking, no redimensiona estos PNG). Si el proxy falla
+    // se cae al thumbnail directo y después al CDN de Google, en ese orden.
+    var DRIVE_PROXY_URL = 'https://images.weserv.nl/';
+    var DRIVE_PROXY_WIDTH = 800;
     var DRIVE_THUMBNAIL_URL = 'https://drive.google.com/thumbnail?id=';
     var DRIVE_THUMBNAIL_SIZE = '&sz=w1200';
     var DRIVE_FALLBACK_URL = 'https://lh3.googleusercontent.com/d/';
     var DRIVE_ID_PATTERN = /^[A-Za-z0-9_-]{20,}$/;
+    // La celda "imagen" admite varias fotos separadas por salto de línea o "|".
+    // La primera es la portada; el orden es el de la galería del modal.
+    var PHOTO_SEPARATOR = /\r?\n|\|/;
 
     // Marcador para tests: 'static' hasta que el render desde la planilla sea exitoso.
     document.body.dataset.catalog = 'static';
@@ -157,6 +165,31 @@
         return { src: value };
     }
 
+    // Varias fotos por producto: la celda se parte por salto de línea o "|" y
+    // cada entrada se resuelve con el mismo criterio que una foto sola.
+    function resolveImageSources(raw) {
+        return toText(raw)
+            .split(PHOTO_SEPARATOR)
+            .map(resolveImageSource)
+            .filter(function (source) { return !!source; });
+    }
+
+    // Cadena de URLs candidatas de una foto: se prueban en orden hasta que una
+    // cargue. Drive pasa por el proxy con dos respaldos; las demás fuentes
+    // (rutas locales u otras URLs) van tal cual.
+    function photoCandidates(source) {
+        if (!source.driveId) return [source.src];
+
+        var driveId = source.driveId;
+        return [
+            DRIVE_PROXY_URL + '?url='
+                + encodeURIComponent('drive.google.com/thumbnail?id=' + driveId + DRIVE_THUMBNAIL_SIZE)
+                + '&w=' + DRIVE_PROXY_WIDTH + '&output=webp',
+            DRIVE_THUMBNAIL_URL + driveId + DRIVE_THUMBNAIL_SIZE,
+            DRIVE_FALLBACK_URL + driveId
+        ];
+    }
+
     function parseProducts(rows) {
         var products = [];
 
@@ -229,34 +262,40 @@
             .join(' ');
     }
 
-    function buildProductImage(imageSource, product) {
+    // Aplica una cadena de URLs a un <img>: ante error prueba la siguiente; si
+    // se agotan, delega en onExhausted (la card quita la imagen, el modal la vacía).
+    function applyImageChain(image, candidates, onExhausted) {
+        var index = 0;
+        image.onerror = function () {
+            index += 1;
+            if (index < candidates.length) {
+                image.src = candidates[index];
+                return;
+            }
+            image.onerror = null;
+            onExhausted(image);
+        };
+        image.src = candidates[0];
+    }
+
+    function buildProductImage(photo, product) {
         // Debe ser hijo directo de .product-image-container: el modal lo busca así.
         var image = document.createElement('img');
         image.setAttribute('loading', 'lazy');
         image.alt = buildImageAlt(product);
-
-        if (imageSource.driveId) {
-            var driveId = imageSource.driveId;
-            var fallbackUsed = false;
-
-            // Primer fallo: un único reintento con la URL de tamaño completo.
-            // Segundo fallo: se quita la imagen para no dejar el ícono roto.
-            image.onerror = function () {
-                if (!fallbackUsed) {
-                    fallbackUsed = true;
-                    image.src = DRIVE_FALLBACK_URL + driveId;
-                    return;
-                }
-                image.remove();
-                console.warn('[TR Express] No se pudo cargar la imagen de Drive del producto "' + product.name + '".');
-            };
-
-            image.src = DRIVE_THUMBNAIL_URL + driveId + DRIVE_THUMBNAIL_SIZE;
-        } else {
-            image.src = imageSource.src;
-        }
-
+        applyImageChain(image, photo.candidates, function (img) {
+            img.remove();
+            console.warn('[TR Express] No se pudo cargar la imagen del producto "' + product.name + '".');
+        });
         return image;
+    }
+
+    // Chip sobre la portada que avisa cuántas fotos tiene el producto.
+    function buildPhotoCountBadge(count) {
+        var badge = document.createElement('span');
+        badge.className = 'product-photo-count';
+        badge.textContent = count + ' fotos';
+        return badge;
     }
 
     // Ribbon "Oferta" de esquina a 45° sobre la card. Va como hijo directo de
@@ -321,9 +360,16 @@
             imageContainer.appendChild(specialStrip);
         }
 
-        var imageSource = resolveImageSource(product.image);
-        if (imageSource) {
-            imageContainer.appendChild(buildProductImage(imageSource, product));
+        var photos = resolveImageSources(product.image).map(function (source) {
+            return { candidates: photoCandidates(source) };
+        });
+        if (photos.length) {
+            imageContainer.appendChild(buildProductImage(photos[0], product));
+            if (photos.length > 1) {
+                imageContainer.appendChild(buildPhotoCountBadge(photos.length));
+            }
+            // La galería del modal lee la lista completa desde acá.
+            card.setAttribute('data-photos', JSON.stringify(photos));
         }
 
         card.appendChild(imageContainer);

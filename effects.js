@@ -187,7 +187,7 @@
         }
         gsap.set('.hero-stroke-truck', { x: finalX, yPercent: -100, y: finalY, opacity: 1, scaleX: 1 });
         gsap.set('.hero-express', { clipPath: 'none' });
-        gsap.set(['.hero-tr', '.hero-subtitle'], { clearProps: 'all' });
+        gsap.set(['.hero-tr', '.hero-subtitle', '.hero-scroll-cue'], { clearProps: 'all' });
     }
 
     var heroStarted = false;
@@ -210,8 +210,20 @@
         heroTl
             // fromTo con valores explícitos: el estado inicial oculto vive en
             // CSS (clase hero-anim) y un .from() tomaría 0 como destino.
-            .fromTo('.hero-tr', { y: 44, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7 }, 0.1)
-            .fromTo('.hero-subtitle', { y: 30, opacity: 0 }, { y: 0, opacity: 1 }, 0.45);
+            // "TR" entra primero; el subtítulo y el cue entran al final
+            // (playOutro), cuando el camión ya terminó su recorrido.
+            .fromTo('.hero-tr', { y: 44, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7 }, 0.1);
+
+        // Outro: el subtítulo y el cue entran recién cuando el camión terminó
+        // su recorrido — la animación es la estrella, el texto acompaña.
+        function playOutro(at) {
+            heroTl.fromTo('.hero-subtitle',
+                { y: 30, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.55 }, at);
+            heroTl.fromTo('.hero-scroll-cue',
+                { y: 16, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.5 }, at + 0.4);
+        }
 
         var pass = heroWantsPass();
         var geo = pass ? journeyGeometry() : heroLoopGeometry(heroLift());
@@ -255,6 +267,7 @@
                     gsap.set('.hero-stroke-truck', { x: journey.x, y: geo.lift, opacity: journey.opacity });
                 }
             }, 0.85);
+            playOutro(2.05);
         } else {
             // Modo loop (vuelta manzana): A) entra desde fuera por la izquierda,
             // cruza por delante y sale del plano por la derecha; B) baja fuera
@@ -291,6 +304,7 @@
                     gsap.set('.hero-stroke-truck', { x: back.x, y: 0 });
                 }
             }, 2.5);
+            playOutro(3.55);
         }
     }
 

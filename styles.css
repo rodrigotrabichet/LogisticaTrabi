@@ -768,6 +768,61 @@ span{
     transform: scale(1.05);
 }
 
+/* Liquid fill en los CTA minorista/comercio (adaptado de CodeFronts
+   "liquid fill & organic morphing" a la paleta del sitio): un blob
+   orgánico se hincha desde el centro e inunda el botón con el naranja
+   brillante en vez del cambio plano de fondo, con el icono y el texto
+   siempre por encima. Oscuro sobre naranja brillante: contraste ~7:1. */
+.btn-contacto.contact-seg-cta {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+}
+
+.btn-contacto.contact-seg-cta > :not(.btn-liquid) {
+    position: relative;
+    z-index: 1;
+}
+
+.btn-liquid {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 130%;
+    aspect-ratio: 1;
+    background: var(--accent-bright);
+    border-radius: 42% 58% 63% 37% / 45% 38% 62% 55%;
+    transform: translate(-50%, -50%) scale(0);
+    animation: btn-liquid-wobble 6s ease-in-out infinite;
+    transition: transform 1s cubic-bezier(0.2, 0.9, 0.2, 1), border-radius 0.7s;
+    pointer-events: none;
+}
+
+.btn-contacto.contact-seg-cta:hover .btn-liquid,
+.btn-contacto.contact-seg-cta:focus-visible .btn-liquid {
+    transform: translate(-50%, -50%) scale(1.2);
+    border-radius: 0.5rem;
+    animation-play-state: paused;
+}
+
+@keyframes btn-liquid-wobble {
+    0%,
+    100% {
+        border-radius: 42% 58% 63% 37% / 45% 38% 62% 55%;
+    }
+
+    50% {
+        border-radius: 60% 40% 38% 62% / 55% 62% 38% 45%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .btn-liquid {
+        animation: none;
+        transition: transform 0.2s;
+    }
+}
+
 .wsp-icon {
     width: 1.4rem;
     height: 1.4rem;
@@ -2386,7 +2441,7 @@ footer {
     /* Tamaño de "Express" en em del título. El camión de la estela deriva su
        altura de esta misma variable: si cambia un breakpoint, cambian los dos
        juntos y nunca se desincronizan. */
-    --express-size: 0.48em;
+    --express-size: 0.54em;
 }
 
 /* "TR" entra primero y por separado: inline-block para que GSAP pueda
@@ -2489,6 +2544,11 @@ footer {
     opacity: 0;
 }
 
+/* El cue entra después de la animación, junto con el subtítulo. */
+.hero-anim .hero-scroll-cue {
+    opacity: 0;
+}
+
 .hero-anim .hero-stroke-line {
     transform: scaleX(0);
 }
@@ -2499,10 +2559,15 @@ footer {
 
 .hero-subtitle {
     max-width: 52ch;
-    margin: 2.25rem auto 0;
+    margin: 2rem auto 0;
     color: var(--text-mid);
-    font-size: clamp(1.05rem, 2.4vw, 1.3rem);
+    /* Secundario a propósito: la estrella es la animación del hero
+       (TR + Express + camión), esto acompaña chiquito y legible. */
+    font-size: clamp(0.85rem, 1.8vw, 1rem);
     line-height: 1.65;
+    /* El navegador reparte las líneas parejas en cada ancho: sin palabras
+       sueltas al final ni líneas raquíticas en ningún dispositivo. */
+    text-wrap: balance;
     text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
 }
 
@@ -2542,35 +2607,37 @@ footer {
     color: inherit;
 }
 
+/* Flechita minimalista: trazo fino que hereda el color del texto y flota
+   suave hacia abajo. Se enciende junto con el texto al hover. */
 .hero-scroll-indicator {
     display: inline-flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
-    width: 1rem;
-    height: 1.5rem;
-    padding-top: 0.15rem;
-    border: 1px solid var(--line-strong);
-    border-radius: var(--radius-pill);
+    width: 1.25rem;
+    height: 1.25rem;
 }
 
 .hero-scroll-indicator span {
-    width: 0.25rem;
-    height: 0.25rem;
-    border-right: 1px solid var(--accent-bright);
-    border-bottom: 1px solid var(--accent-bright);
+    width: 0.55rem;
+    height: 0.55rem;
+    border: none;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    border-bottom-right-radius: 3px;
+    background: none;
     transform: rotate(45deg);
     animation: none;
 }
 
 @keyframes scrollCue {
     0%, 100% {
-        opacity: 0.45;
-        transform: translateY(0) rotate(45deg);
+        opacity: 0.35;
+        transform: translateY(-2px) rotate(45deg);
     }
 
     50% {
         opacity: 1;
-        transform: translateY(0.25rem) rotate(45deg);
+        transform: translateY(3px) rotate(45deg);
     }
 }
 
@@ -2817,7 +2884,7 @@ footer {
 /* Tablets horizontales: tamaño original del "Express" */
 @media (min-width: 769px) and (max-width: 1179px) {
     .hero-title {
-        --express-size: 0.55em;
+        --express-size: 0.6em;
     }
 }
 
@@ -2857,7 +2924,7 @@ footer {
     }
 
     .hero-title {
-        --express-size: 0.6em;
+        --express-size: 0.66em;
     }
 
     .section {

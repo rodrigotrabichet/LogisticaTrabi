@@ -1437,7 +1437,10 @@ footer {
         top: 0;
         width: 100vw;
         height: 100vh;
-        height: 100svh;
+        /* dvh sigue al chrome del navegador mobile: con svh (el alto más
+           chico) el menú quedaba corto cuando al scrollear se esconde la
+           barra del navegador y el viewport crece. */
+        height: 100dvh;
         max-width: none;
         margin: 0;
         padding: 6rem 2.5rem 2.5rem;
@@ -1464,6 +1467,16 @@ footer {
         clip-path: circle(150% at calc(100% - 44px) 39px);
         visibility: visible;
         transition: clip-path 0.65s cubic-bezier(0.65, 0, 0.35, 1), visibility 0s 0s;
+    }
+
+    /* El backdrop-filter del header lo convierte en contexto de
+       posicionamiento y el menú fixed se anclaría al header (que vive en
+       flujo tras el hero) en vez del viewport: abría bajo el fold. Con el
+       menú abierto el header queda tapado por su fondo opaco, así que
+       apagar el blur no se nota. */
+    header:has(.nav-links.active) {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
     }
 
     /* El logo ya vive en el header; dentro del menú a pantalla completa sobra. */

@@ -2383,12 +2383,29 @@ footer {
     line-height: 0.7em;
     margin: 0;
     position: relative;
+    /* Tamaño de "Express" en em del título. El camión de la estela deriva su
+       altura de esta misma variable: si cambia un breakpoint, cambian los dos
+       juntos y nunca se desincronizan. */
+    --express-size: 0.48em;
+}
+
+/* "TR" entra primero y por separado: inline-block para que GSAP pueda
+   desplazarlo (los transforms no aplican a elementos inline puros).
+   Re-afirma el contexto tipográfico del hero: la regla genérica de `span`
+   (font-size 0.7em, family Segoe) pisaría al título. */
+.hero-title .hero-tr {
+    display: inline-block;
+    font-family: inherit;
+    font-size: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+    color: inherit;
 }
 
 .hero-title .hero-express {
     display: block;
     font-family: var(--font-display);
-    font-size: 0.48em;
+    font-size: var(--express-size);
     font-weight: 800;
     font-style: italic;
     letter-spacing: 0.15em;
@@ -2405,6 +2422,10 @@ footer {
     width: min(74%, 38rem);
     height: 5px;
     margin: 2.65rem auto 0;
+    /* La regla genérica de `span` también pisa el font-size heredado acá;
+       se re-afirma el del título para que el em de --express-size (y la
+       altura del camión) se resuelvan contra la tipografía del hero. */
+    font-size: inherit;
 }
 
 /* La línea es la estela que el camión va dejando al avanzar. Necesita
@@ -2428,10 +2449,38 @@ footer {
     right: -1.5rem;
     top: 50%;
     transform: translateY(-100%);
-    width: clamp(3.25rem, 7vw, 6rem);
-    height: auto;
+    /* Alto ≈ altura real de las mayúsculas de "Express" (0.76 del tamaño de
+       fuente, medido sobre la tinta): el camión queda a la altura de la
+       palabra en todos los breakpoints, siguiendo a --express-size. */
+    height: calc(var(--express-size) * 0.76);
+    width: auto;
     filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.45));
     pointer-events: none;
+}
+
+/* Estado inicial de la intro del hero (la clase la agrega un script inline
+   en el <head> antes del primer paint): el camión y la estela esperan fuera
+   de escena y "Express" queda oculto hasta que el camión lo descubre.
+   effects.js libera la clase cuando no hay animación (sin GSAP o con
+   movimiento reducido) y también al terminar el timeline. */
+.hero-anim .hero-express {
+    clip-path: inset(0 100% 0 0);
+}
+
+.hero-anim .hero-tr {
+    opacity: 0;
+}
+
+.hero-anim .hero-subtitle {
+    opacity: 0;
+}
+
+.hero-anim .hero-stroke-line {
+    transform: scaleX(0);
+}
+
+.hero-anim .hero-stroke-truck {
+    opacity: 0;
 }
 
 .hero-subtitle {
@@ -2753,8 +2802,8 @@ footer {
 
 /* Tablets horizontales: tamaño original del "Express" */
 @media (min-width: 769px) and (max-width: 1179px) {
-    .hero-title .hero-express {
-        font-size: 0.55em;
+    .hero-title {
+        --express-size: 0.55em;
     }
 }
 
@@ -2779,8 +2828,8 @@ footer {
         margin-top: 1.75rem;
     }
 
-    .hero-title .hero-express {
-        font-size: 0.6em;
+    .hero-title {
+        --express-size: 0.6em;
     }
 
     .section {

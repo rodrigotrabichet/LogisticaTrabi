@@ -16,10 +16,13 @@
     <link rel="canonical" href="https://trexpressdistribuidora.com/" />
     <link rel="preload" as="image" href="assets/images/ImagenHero-mobile.webp" media="(max-width: 768px)">
     <link rel="preload" as="image" href="assets/images/ImagenHero-desktop.webp" media="(min-width: 769px)">
+    <!-- Estado inicial de la intro del hero: evita el flash del estado final
+         mientras carga GSAP. effects.js libera la clase si no hay animación. -->
+    <script>document.documentElement.classList.add('hero-anim');</script>
 </head>
 <body>
     <section class="hero" id="inicio">
-        <h1 class="hero-title">TR <span class="hero-express">Express</span><span class="hero-stroke" aria-hidden="true"><span class="hero-stroke-line"></span><img class="hero-stroke-truck" src="assets/images/TRExpress_Camioneta2.webp" alt="" width="384" height="173" /></span></h1>
+        <h1 class="hero-title"><span class="hero-tr">TR</span> <span class="hero-express">Express</span><span class="hero-stroke" aria-hidden="true"><span class="hero-stroke-line"></span><img class="hero-stroke-truck" src="assets/images/TRExpress_Camioneta2.webp" alt="" width="384" height="173" /></span></h1>
         <p class="hero-subtitle">Distribución mayorista de alimentos y piedras sanitarias para mascotas, con logística rápida en toda la zona.</p>
         <a class="hero-scroll-cue" href="#nosotros" aria-label="Deslizá para conocer más">
             <span>Deslizá para conocer más</span>

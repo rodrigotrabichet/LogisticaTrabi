@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Distribución mayorista de alimentos para mascotas y piedras sanitarias. Logística rápida en Colón, Concordia, Uruguay y zona. Potencia tu veterinaria o pet shop con nosotros." />
+    <meta name="description" content="Distribución mayorista y minorista de alimentos para mascotas y piedras sanitarias. Logística rápida en Colón, Concordia, Uruguay y zona. Potencia tu veterinaria o pet shop con nosotros." />
     <title>TR Express | Distribuidora de Alimentos para Mascotas en Entre Ríos</title>
     <link rel="stylesheet" href="styles.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,31 +16,28 @@
     <link rel="canonical" href="https://trexpressdistribuidora.com/" />
     <link rel="preload" as="image" href="assets/images/ImagenHero-mobile.webp" media="(max-width: 768px)">
     <link rel="preload" as="image" href="assets/images/ImagenHero-desktop.webp" media="(min-width: 769px)">
+    <!-- Estado inicial de la intro del hero: evita el flash del estado final
+         mientras carga GSAP. effects.js libera la clase si no hay animación. -->
+    <script>document.documentElement.classList.add('hero-anim');</script>
 </head>
 <body>
     <section class="hero" id="inicio">
-        <h1 class="Sl">TR <span>Express</span></h1>
-        <div class="main__action">
-            <div class="main__scroll">
-                <div class="main__scroll-box">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0 0h24v24H0z" fill="none"></path>
-                        <path d="M11.9997 13.1716L7.04996 8.22186L5.63574 9.63607L11.9997 16L18.3637 9.63607L16.9495 8.22186L11.9997 13.1716Z" fill="rgba(28,28,30,1)"></path>
-                    </svg>
-                </div>
-                <span class="main__scroll-text">Desliza</span>
-            </div>
-        </div>
+        <h1 class="hero-title"><span class="hero-tr">TR</span> <span class="hero-express">Express</span><span class="hero-stroke" aria-hidden="true"><span class="hero-stroke-line"></span><img class="hero-stroke-truck" src="assets/images/TRExpress_Camioneta2.webp" alt="" width="384" height="173" /></span></h1>
+        <p class="hero-subtitle">Distribución mayorista / minorista de alimentos y piedras sanitarias para mascotas, con logística rápida en toda la zona.</p>
+        <a class="hero-scroll-cue" href="#nosotros" aria-label="Deslizá para conocer más">
+            <span>Deslizá para conocer más</span>
+            <span class="hero-scroll-indicator" aria-hidden="true"><span></span></span>
+        </a>
     </section>
 
     <header>
         <nav class="navbar">
-            <div class="hamburger-menu">
+            <button class="hamburger-menu" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">
                 <div class="bar"></div>
                 <div class="bar"></div>
                 <div class="bar"></div>
-            </div>
-            <ul class="nav-links">
+            </button>
+            <ul class="nav-links" id="nav-links">
                 <li><a href="#inicio">Inicio</a></li>
                 <li><a href="#nosotros">Nosotros</a></li>
                 <li>
@@ -51,6 +48,9 @@
             </ul>
         </nav>
     </header>
+
+    <!-- Overlay del menú móvil: cierra tocando afuera -->
+    <div class="nav-overlay" aria-hidden="true"></div>
 
     <main>
         <section class="container-quienes-somos" id="nosotros">
@@ -70,6 +70,53 @@
                     </p>
                 </div>
             </section>
+        </section>
+
+        <section class="section nueva-tienda" id="nueva-tienda">
+            <div class="tienda-wave tienda-wave--top" aria-hidden="true">
+                <svg class="tienda-wave__layer tienda-wave__layer--1" viewBox="0 0 1440 130" preserveAspectRatio="none" aria-hidden="true"><path d="M0,70 C260,20 520,120 780,74 C1040,28 1240,60 1440,40 L1440,130 L0,130 Z" /></svg>
+                <svg class="tienda-wave__layer tienda-wave__layer--2" viewBox="0 0 1440 130" preserveAspectRatio="none" aria-hidden="true"><path d="M0,86 C240,44 500,126 760,88 C1020,50 1250,96 1440,66 L1440,130 L0,130 Z" /></svg>
+                <svg class="tienda-wave__layer tienda-wave__layer--3" viewBox="0 0 1440 130" preserveAspectRatio="none" aria-hidden="true"><path d="M0,100 C220,70 480,132 740,102 C1000,72 1250,120 1440,92 L1440,130 L0,130 Z" /></svg>
+            </div>
+            <div class="section-inner nueva-tienda-grid reveal" data-reveal>
+                <div class="nueva-tienda-copy">
+                    <h2>Te esperamos en nuestro <span>nuevo local</span></h2>
+                    <p>
+                        TR Express abrió su negocio abierto al público. Pasá a conocernos, asesorate y llevate lo que tu mascota necesita.
+                    </p>
+                    <div class="nueva-tienda-direccion">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        <span>Urquiza 319, Colón, Entre Ríos</span>
+                    </div>
+                    <div class="nueva-tienda-actions">
+                        <a href="https://www.google.com/maps/dir/?api=1&amp;destination=Urquiza+319,+Col%C3%B3n,+Entre+R%C3%ADos" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-goo">
+                            <span class="btn-drip" aria-hidden="true"></span>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M9 18l-6 3V6l6-3 6 3 6-3v15l-6 3-6-3z"></path>
+                                <path d="M9 18V6"></path>
+                                <path d="M15 15V3"></path>
+                            </svg>
+                            <span>¿Cómo llegar?</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="nueva-tienda-visual">
+                    <img src="assets/images/LocalInterior.webp"
+                         srcset="assets/images/LocalInterior-700.webp 700w, assets/images/LocalInterior.webp 1400w"
+                         sizes="(max-width: 900px) 92vw, 520px"
+                         width="1400" height="1069"
+                         loading="lazy" decoding="async"
+                         alt="Interior del local de TR Express: pared negra con el cartel TR Express Distribuciones, estanterías con bolsas de alimento y camas para mascotas.">
+                </div>
+            </div>
+            <div class="tienda-wave tienda-wave--bottom" aria-hidden="true">
+                <svg class="tienda-wave__layer tienda-wave__layer--1" viewBox="0 0 1440 130" preserveAspectRatio="none" aria-hidden="true"><path d="M0,70 C260,20 520,120 780,74 C1040,28 1240,60 1440,40 L1440,130 L0,130 Z" /></svg>
+                <svg class="tienda-wave__layer tienda-wave__layer--2" viewBox="0 0 1440 130" preserveAspectRatio="none" aria-hidden="true"><path d="M0,86 C240,44 500,126 760,88 C1020,50 1250,96 1440,66 L1440,130 L0,130 Z" /></svg>
+                <svg class="tienda-wave__layer tienda-wave__layer--3" viewBox="0 0 1440 130" preserveAspectRatio="none" aria-hidden="true"><path d="M0,100 C220,70 480,132 740,102 C1000,72 1250,120 1440,92 L1440,130 L0,130 Z" /></svg>
+            </div>
         </section>
 
         <section class="productos" id="productos">
@@ -275,37 +322,37 @@
         <div class="infinite-track" id="track">
             
             <article class="location-card">
-                <div class="location-icon">📍</div>
+                <div class="location-icon"><iconify-icon icon="lucide:map-pin" aria-hidden="true"></iconify-icon></div>
                 <h3>Colón</h3>
                 <span>Entre Ríos</span>
             </article>
 
             <article class="location-card">
-                <div class="location-icon">📍</div>
+                <div class="location-icon"><iconify-icon icon="lucide:map-pin" aria-hidden="true"></iconify-icon></div>
                 <h3>San Salvador</h3>
                 <span>Entre Ríos</span>
             </article>
 
             <article class="location-card">
-                <div class="location-icon">📍</div>
+                <div class="location-icon"><iconify-icon icon="lucide:map-pin" aria-hidden="true"></iconify-icon></div>
                 <h3>Concordia</h3>
                 <span>Entre Ríos</span>
             </article>
 
             <article class="location-card">
-                <div class="location-icon">📍</div>
+                <div class="location-icon"><iconify-icon icon="lucide:map-pin" aria-hidden="true"></iconify-icon></div>
                 <h3>Villaguay</h3>
                 <span>Entre Ríos</span>
             </article>
 
             <article class="location-card">
-                <div class="location-icon">📍</div>
+                <div class="location-icon"><iconify-icon icon="lucide:map-pin" aria-hidden="true"></iconify-icon></div>
                 <h3>C. del Uruguay</h3>
                 <span>Entre Ríos</span>
             </article>
 
             <article class="location-card">
-                <div class="location-icon">📍</div>
+                <div class="location-icon"><iconify-icon icon="lucide:map-pin" aria-hidden="true"></iconify-icon></div>
                 <h3>Maciá</h3>
                 <span>Entre Ríos</span>
             </article>
@@ -316,57 +363,63 @@
 </section>
 
 
-        <div class="title-container">
+        <div class="title-container contact-title-container">
             <h2 class="titulos">Contacto</h2>
         </div>
         <section class="contacto-section" id="contacto">
-            <div class="cards-container">
-                <article class="card card-highlight">
-                    <div class="icon-box">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                        </svg>
-                    </div>
-                    <h3>¿Querés que tu tienda destaque hoy?</h3>
-                    <p>Contactanos, asesorate y hacelo realidad ahora mismo.</p>
-                </article>
-
-                <article class="card">
-                    <div class="icon-box">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
-                    </div>
-                    <h3>¿Querés que a tu negocio no le falte nada?</h3>
-                    <p>Te garantizamos un abastecimiento ágil y puntual para que siempre tengas qué ofrecer.</p>
-                </article>
-
-                <article class="card">
-                    <div class="icon-box">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                    </div>
-                    <h3>¿Buscás productos de calidad?</h3>
-                    <p>Nos especializamos en ofrecer calidad y seguridad.</p>
-                </article>
-
-                <article class="card">
-                    <div class="icon-box">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                    </div>
-                    <h3>¿Valorás la excelencia en tus compras?</h3>
-                    <p>Te ofrecemos solo lo mejor, porque la calidad no se negocia.</p>
-                </article>
-            </div>
-
-            <div class="cta-container">
-                <p class="cta-text">¿Necesitas asesoría personalizada?</p>
-                <a href="https://wa.me/+5493447528993?text=Hola Rodrigo!! Estuve viendo el catalogo y estoy interesado. Me gustaria saber mas!" target="_blank" class="btn-contacto-link">
-                    <button class="btn-contacto">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="wsp-icon" viewBox="0 0 16 16">
-                            <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
-                        </svg>
-                        <span>Consultar por WhatsApp</span>
+          <div class="contact-layout">
+            <h3 class="contact-seg-title">Contanos qué se ajusta más a vos y te guiamos por WhatsApp</h3>
+            <div class="contact-seg">
+                <div class="contact-seg-toggle" role="tablist" aria-label="Elegí cómo querés contactarnos">
+                    <button type="button" class="contact-seg-tab is-active" role="tab" id="tab-minorista" aria-controls="panel-minorista" aria-selected="true">
+                        <strong>Soy cliente minorista</strong>
+                        <small>Me interesa comprar por   menor y asesoría para mi mascota</small>
                     </button>
-                </a>
+                    <button type="button" class="contact-seg-tab" role="tab" id="tab-comercio" aria-controls="panel-comercio" aria-selected="false" tabindex="-1">
+                        <strong>Tengo un comercio</strong>
+                        <small>Me interesa vender productos de TR Express en mi negocio</small>
+                    </button>
+                </div>
+                <div class="contact-seg-panels">
+                    <article class="contact-seg-panel" role="tabpanel" id="panel-minorista" aria-labelledby="tab-minorista" tabindex="0">
+                        <h3>Comprá por menor con asesoría para tu mascota</h3>
+                        <ul>
+                            <li>Te recomendamos el alimento ideal según edad, tamaño y necesidades de tu mascota.</li>
+                            <li>Coordinás tu compra por WhatsApp con atención directa y cercana.</li>
+                            <li>Llevate calidad garantizada con entrega en tu zona.</li>
+                        </ul>
+                        <a class="btn-contacto contact-seg-cta" target="_blank" rel="noopener" href="https://wa.me/+5493447528993?text=Hola!%20Soy%20cliente%20minorista%2C%20vi%20el%20cat%C3%A1logo%20de%20TR%20Express%20y%20quiero%20comprar%20por%20menor%20y%20recibir%20asesor%C3%ADa%20para%20mi%20mascota.">
+                            <span class="btn-liquid" aria-hidden="true"></span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="wsp-icon" viewBox="0 0 16 16" aria-hidden="true">
+                                <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
+                            </svg>
+                            <span>Consultar como minorista</span>
+                        </a>
+                    </article>
+                    <article class="contact-seg-panel" role="tabpanel" id="panel-comercio" aria-labelledby="tab-comercio" tabindex="0" hidden>
+                        <h3>Vendé TR Express en tu negocio</h3>
+                        <ul>
+                            <li>Accedé a condiciones mayoristas y abastecimiento ágil y puntual.</li>
+                            <li>Recibí asesoría comercial para armar el surtido ideal para tus clientes.</li>
+                            <li>Hacé crecer tu negocio con productos de calidad que se venden solos.</li>
+                        </ul>
+                        <a class="btn-contacto contact-seg-cta" target="_blank" rel="noopener" href="https://wa.me/+5493447528993?text=Hola!%20Tengo%20un%20comercio%20y%20quiero%20vender%20productos%20TR%20Express%20en%20mi%20negocio%20como%20cliente%20mayorista.">
+                            <span class="btn-liquid" aria-hidden="true"></span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="wsp-icon" viewBox="0 0 16 16" aria-hidden="true">
+                                <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
+                            </svg>
+                            <span>Consultar como comercio</span>
+                        </a>
+                    </article>
+                </div>
             </div>
+            <figure class="contact-visual contact-deck">
+              <div class="contact-deck-stage" aria-hidden="false">
+                <img class="contact-deck-card is-active" data-segment="minorista" src="assets/images/Selector-Minorista.webp" srcset="assets/images/Selector-Minorista-700.webp 700w, assets/images/Selector-Minorista-1100.webp 1100w, assets/images/Selector-Minorista.webp 1600w" sizes="(max-width: 480px) 82vw, (max-width: 1023px) 430px, 42vw" alt="Estantería del local TR Express con bolsas de alimento VORAZ y Criadores para mascotas" loading="lazy" decoding="async" width="1600" height="1200">
+                <img class="contact-deck-card" data-segment="comercio" src="assets/images/Selector-Mayorista.webp" srcset="assets/images/Selector-Mayorista-700.webp 700w, assets/images/Selector-Mayorista.webp 1080w" sizes="(max-width: 480px) 82vw, (max-width: 1023px) 430px, 42vw" alt="Depósito mayorista de TR Express con pallets de alimento para mascotas listos para distribución" loading="lazy" decoding="async" width="1080" height="735">
+              </div>
+            </figure>
+          </div>
         </section>
     </main>
 
@@ -398,6 +451,7 @@
                         <img id="modal-availability-logo" src="" alt="Logo de disponibilidad" class="availability-logo">
                     </div>
                     <img id="modal-img" src="" alt="Producto">
+                    <div id="modal-thumbs" class="modal-thumbs" hidden></div>
                 </div>
                 <div class="modal-info">
                     <h2 id="modal-title"></h2>
@@ -428,48 +482,70 @@
 
         const hamburgerMenu = document.querySelector('.hamburger-menu');
         const navLinks = document.querySelector('.nav-links');
+        const navOverlay = document.querySelector('.nav-overlay');
+
+        function setNav(open) {
+            navLinks.classList.toggle('active', open);
+            hamburgerMenu.classList.toggle('active', open);
+            if (navOverlay) navOverlay.classList.toggle('active', open);
+            document.body.style.overflow = open ? 'hidden' : '';
+            hamburgerMenu.setAttribute('aria-expanded', String(open));
+            hamburgerMenu.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+        }
 
         hamburgerMenu.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            hamburgerMenu.classList.toggle('active');
+            setNav(!navLinks.classList.contains('active'));
         });
+
+        if (navOverlay) {
+            navOverlay.addEventListener('click', () => setNav(false));
+        }
 
         document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-                hamburgerMenu.classList.remove('active');
-            });
+            link.addEventListener('click', () => setNav(false));
         });
 
-        const productTabs = document.querySelectorAll('.product-tab');
-        const productPanels = document.querySelectorAll('.products-panel');
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') setNav(false);
+        });
 
+        // Consulta en vivo: los tabs y paneles pueden renderizarse desde la planilla.
         function activateProductPanel(target) {
-            productTabs.forEach(tab => {
+            document.querySelectorAll('.product-tab').forEach(tab => {
                 const isActive = tab.dataset.target === target;
                 tab.classList.toggle('active', isActive);
                 tab.setAttribute('aria-pressed', String(isActive));
             });
 
-            productPanels.forEach(panel => {
+            document.querySelectorAll('.products-panel').forEach(panel => {
                 panel.classList.toggle('active', panel.dataset.panel === target);
             });
         }
 
-        productTabs.forEach(tab => {
-            tab.addEventListener('click', () => activateProductPanel(tab.dataset.target));
+        const reduceMotionTabs = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // Delegación: las pestañas pueden renderizarse dinámicamente desde la planilla.
+        document.addEventListener('click', (e) => {
+            const tab = e.target.closest('.product-tab');
+            if (!tab || tab.classList.contains('active')) return;
+            // View Transitions API con fallback al cambio instantáneo
+            if (document.startViewTransition && !reduceMotionTabs) {
+                document.startViewTransition(() => activateProductPanel(tab.dataset.target));
+            } else {
+                activateProductPanel(tab.dataset.target);
+            }
         });
 
         // Modal de producto
         const modal = document.getElementById('product-modal');
         const modalClose = document.querySelector('.modal-close');
         const modalOverlay = document.querySelector('.modal-overlay');
-        const productCards = document.querySelectorAll('.product-card');
+        let modalOpener = null; // Elemento que abrió el modal (para devolverle el foco)
 
         function openModal(card) {
             // Buscar la imagen del producto (no el logo de disponibilidad)
             const productImg = card.querySelector('.product-image-container > img:not(.availability-logo)');
-            const fallbackImg = card.querySelector('.product-image-container img:last-child');
+            const fallbackImg = card.querySelector('.product-image-container img:last-child:not(.availability-logo)');
             const imgSrc = productImg ? productImg.src : fallbackImg?.src;
             const title = card.querySelector('h3').textContent;
             const descriptionsData = card.dataset.descriptions || '';
@@ -485,10 +561,67 @@
             const modalAvailabilityLogo = document.getElementById('modal-availability-logo');
 
             const modalImg = document.getElementById('modal-img');
-            if (imgSrc) {
-                modalImg.src = imgSrc;
+            const modalThumbs = document.getElementById('modal-thumbs');
+
+            // Cadena de respaldo por foto (mismo criterio que las cards): si una
+            // URL falla se prueba la siguiente; agotadas, la imagen queda vacía.
+            const applyChain = (img, candidates, onExhausted) => {
+                let index = 0;
+                img.onerror = () => {
+                    index += 1;
+                    if (index < candidates.length) {
+                        img.src = candidates[index];
+                        return;
+                    }
+                    img.onerror = null;
+                    onExhausted(img);
+                };
+                img.src = candidates[0];
+            };
+
+            const setModalPhoto = (photo, index) => {
+                applyChain(modalImg, photo.candidates, (img) => img.removeAttribute('src'));
+                modalThumbs.querySelectorAll('.modal-thumb').forEach((thumb, i) => {
+                    thumb.classList.toggle('is-active', i === index);
+                });
+            };
+
+            modalImg.alt = title;
+
+            // Galería: las cards dinámicas dejan la lista de fotos en data-photos;
+            // el HTML estático (una sola foto) sigue por el camino de siempre.
+            let photos = null;
+            const photosData = card.getAttribute('data-photos');
+            if (photosData) {
+                try { photos = JSON.parse(photosData); } catch (e) { photos = null; }
+            }
+            modalThumbs.innerHTML = '';
+            if (photos && photos.length) {
+                if (photos.length > 1) {
+                    photos.forEach((photo, index) => {
+                        const thumb = document.createElement('button');
+                        thumb.type = 'button';
+                        thumb.className = index === 0 ? 'modal-thumb is-active' : 'modal-thumb';
+                        thumb.setAttribute('aria-label', 'Ver foto ' + (index + 1) + ' de ' + photos.length);
+                        const thumbImg = document.createElement('img');
+                        thumbImg.alt = '';
+                        thumbImg.setAttribute('loading', 'lazy');
+                        thumbImg.decoding = 'async';
+                        applyChain(thumbImg, photo.candidates, () => { thumb.hidden = true; });
+                        thumb.appendChild(thumbImg);
+                        thumb.addEventListener('click', () => setModalPhoto(photo, index));
+                        modalThumbs.appendChild(thumb);
+                    });
+                }
+                setModalPhoto(photos[0], 0);
+                modalThumbs.hidden = photos.length < 2;
             } else {
-                modalImg.removeAttribute('src');
+                modalThumbs.hidden = true;
+                if (imgSrc) {
+                    modalImg.src = imgSrc;
+                } else {
+                    modalImg.removeAttribute('src');
+                }
             }
             document.getElementById('modal-title').textContent = title;
 
@@ -526,36 +659,77 @@
 
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
+            // Mover el foco al botón de cerrar: el modal queda operable por teclado.
+            // Diferido dos frames: .focus() en el mismo task se ignora porque
+            // el modal todavía computa visibility:hidden (sale con transición).
+            modalOpener = document.activeElement;
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    if (modal.classList.contains('active')) {
+                        modalClose.focus({ preventScroll: true });
+                    }
+                });
+            });
         }
 
-        productCards.forEach(card => {
-            // Botón "Ver detalles"
-            const btn = card.querySelector('.btn-ver-detalles');
-            if (btn) {
-                btn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    openModal(card);
-                });
-            }
-            // También al hacer click en la card completa
-            card.addEventListener('click', () => openModal(card));
+        // Delegación: las cards pueden renderizarse dinámicamente desde la planilla.
+        // Un único handler evita el doble disparo que antes se resolvía con stopPropagation.
+        document.addEventListener('click', (e) => {
+            const card = e.target.closest('.product-card');
+            if (card) openModal(card);
         });
 
         function closeModal() {
             modal.classList.remove('active');
             document.body.style.overflow = '';
+            // Devolver el foco a quien abrió el modal
+            if (modalOpener && document.contains(modalOpener)) {
+                modalOpener.focus({ preventScroll: true });
+            }
+            modalOpener = null;
         }
 
         modalClose.addEventListener('click', closeModal);
         modalOverlay.addEventListener('click', closeModal);
+
+        // Trampa de foco liviana: el Tab circula dentro del modal abierto
+        modal.addEventListener('keydown', (e) => {
+            if (e.key !== 'Tab') return;
+            const focusables = modal.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])');
+            if (!focusables.length) return;
+            const first = focusables[0];
+            const last = focusables[focusables.length - 1];
+            if (e.shiftKey && document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+            } else if (!e.shiftKey && document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+            }
+        });
         
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeModal();
         });
 
+        // Reveal al hacer scroll (con respeto a prefers-reduced-motion)
+        const revealEls = document.querySelectorAll('[data-reveal]');
+        if (revealEls.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                        revealObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.12 });
+            revealEls.forEach(el => revealObserver.observe(el));
+        }
+
     document.addEventListener("DOMContentLoaded", () => {
             const track = document.getElementById('track');
             const wrapper = document.querySelector('.infinite-wrapper');
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             
             // 1. Clonar elementos para garantizar el infinito visual
             // Necesitamos suficientes clones para llenar la pantalla y tener buffer a los lados
@@ -573,6 +747,7 @@
             let startX = 0;
             let lastX = 0;
             let animationID;
+            let velocity = 0; // Inercia al soltar: corre al instante
 
             // Calculamos el ancho de UN set de elementos (incluyendo el gap)
             // Necesitamos saber cuánto mide el grupo original para saber cuándo resetear
@@ -594,9 +769,16 @@
 
             // BUCLE PRINCIPAL DE ANIMACIÓN
             function animate() {
-                // Si no estamos arrastrando, se mueve solo
+                // Agarrado: manda el puntero, la animación no avanza sola.
+                // Al soltar, la inercia corre al instante y después retoma la base.
                 if (!isDragging) {
-                    position -= speed;
+                    if (Math.abs(velocity) > 0.05) {
+                        position += velocity;
+                        velocity *= 0.94;
+                    } else {
+                        velocity = 0;
+                        position -= speed;
+                    }
                 }
 
                 // LÓGICA INFINITA (El truco matemático)
@@ -615,6 +797,12 @@
                 animationID = requestAnimationFrame(animate);
             }
 
+            // Con movimiento reducido: el track queda estático (sin bucle)
+            if (reduceMotion) {
+                track.style.transform = 'translateX(0)';
+                return;
+            }
+
             // Iniciar animación
             animate();
 
@@ -622,6 +810,7 @@
 
             const startDrag = (x) => {
                 isDragging = true;
+                velocity = 0; // Agarrar frena la inercia previa
                 startX = x;
                 lastX = x;
                 wrapper.style.cursor = 'grabbing';
@@ -631,6 +820,7 @@
                 if (!isDragging) return;
                 const diff = x - lastX; // Cuánto movió el dedo desde el último frame
                 position += diff; // Sumamos directamente a la posición
+                velocity = velocity * 0.8 + diff * 0.2; // Velocidad suavizada para la inercia
                 lastX = x; // Actualizamos para el siguiente frame
             };
 
@@ -649,6 +839,55 @@
             wrapper.addEventListener('touchmove', e => moveDrag(e.touches[0].pageX));
             wrapper.addEventListener('touchend', endDrag);
         });
+
+        // "¿Cómo llegar?" con origen en la ubicación actual: si el navegador
+        // la comparte, la ruta sale de ahí; si no (o sin permiso), se usa el
+        // href con solo destino y Maps lo completa en el celu.
+        (function () {
+            var btn = document.querySelector('.nueva-tienda-actions .btn-goo');
+            if (!btn) return;
+            var label = btn.querySelector('span:last-child');
+            var original = label ? label.textContent : '';
+            function openMaps(tab, url) {
+                if (tab && !tab.closed) {
+                    tab.location.href = url;
+                    return;
+                }
+                var w = window.open(url, '_blank', 'noopener');
+                if (!w) window.location.href = url;
+            }
+            btn.addEventListener('click', function (e) {
+                if (!navigator.geolocation) return;
+                e.preventDefault();
+                // Se abre en el gesto (sincrónico) para que el navegador no
+                // lo bloquee como popup: la ubicación llega después.
+                var tab = null;
+                try { tab = window.open('about:blank', '_blank', 'noopener'); } catch (err) { tab = null; }
+                if (label) label.textContent = 'Ubicándote…';
+                btn.style.pointerEvents = 'none';
+                function done(url) {
+                    if (label) label.textContent = original;
+                    btn.style.pointerEvents = '';
+                    openMaps(tab, url);
+                }
+                navigator.geolocation.getCurrentPosition(
+                    function (pos) {
+                        var origin = pos.coords.latitude.toFixed(6) + ',' + pos.coords.longitude.toFixed(6);
+                        done('https://www.google.com/maps/dir/?api=1&origin=' + origin + '&destination=' + encodeURIComponent('Urquiza 319, Colón, Entre Ríos'));
+                    },
+                    function () { done(btn.getAttribute('href')); },
+                    { timeout: 8000, maximumAge: 300000 }
+                );
+            });
+        })();
     </script>
+
+    <!-- GSAP (CDN) + animación del hero -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script defer src="effects.js"></script>
+    <script defer src="contact-segment.js"></script>
+    <script defer src="sheets-catalog.js"></script>
+    <!-- Iconify: iconos SVG bajo demanda (set Lucide, v2.1.0 fijada) -->
+    <script defer src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
 </body>
 </html>

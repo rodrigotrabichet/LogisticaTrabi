@@ -78,11 +78,11 @@ main {
 }
 
 .hamburger-menu.active .bar:nth-child(1) {
-    transform: translateY(17px) rotate(45deg);
+    transform: translateY(12px) rotate(45deg);
 }
 
 .hamburger-menu.active .bar:nth-child(3) {
-    transform: translateY(-7px) rotate(-45deg);
+    transform: translateY(-12px) rotate(-45deg);
 }
 
 .navbar li a {
@@ -104,28 +104,6 @@ main {
     color:white;
 }
 
-/* Sección de Hero */
-.hero {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    padding: 20px;
-    height: 70vh;
-    text-align: center;
-    background-image: linear-gradient(
-        to bottom,
-        rgba(0,0,0,0.5) 20%,
-        rgba(0,0,0,0.8) 100%
-    ), url('assets/images/ImagenHero-desktop.webp');
-    background-size: cover;
-    background-position: center 20%;
-    background-repeat: no-repeat;
-    -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
-    mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
-    color: #fff;
-}
-
 span{
     color: rgb(247, 247, 247);
     font-weight: 700;
@@ -136,121 +114,6 @@ span{
 
 .navbar .logo {
     width: 30px;
-}
-
-.Sl {
-    font-family: 'Cal Sans', sans-serif;
-    font-style: italic;
-    font-size: clamp(3rem, 8vw, 9rem);
-    letter-spacing: 6px;
-    margin: 0;
-    color: #EEEEEE;
-    text-transform: uppercase;
-    line-height: 0.7em;
-    animation: fadeBlur 1.2s ease-out;
-    position: relative;
-}
-
-.Sl::after {
-    content: "";
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 4px;
-    background: linear-gradient(90deg, #ff8a00, hsl(36, 49%, 72%));
-    border-radius: 2px;
-    animation: underlineGrow 1s ease-out 0.8s forwards;
-}
-
-.Sl::before {
-    content: "";
-    position: absolute;
-    bottom: -5vw; 
-    left: calc(50% + 15vw); 
-    width: 10vw; 
-    height: 10vw; 
-    max-width: 80px; 
-    max-height: 80px;
-    min-width: 40px; 
-    min-height: 40px; 
-    background-image: url('assets/images/truck-svgrepo-com (2).svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0;
-    transform: translateX(-15vw); 
-    animation: truck-appear 0.9s ease 1.15s forwards;
-}
-
-.Sl span {
-    display: block;
-    font-size: 0.48em;
-    font-weight: 800;
-    letter-spacing: 0.15em;
-    color: #ca8536;
-    margin-top: 0.2em;
-    font-style: italic;
-    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
-    animation: fadeSlide 1.2s ease-out;
-}
-
-.hero p {
-    font-size: 1.2em;
-    max-width: 600px;
-    color: whitesmoke;
-}
-
-.main__action {
-    display: none;
-    margin: 0 auto;
-}
-
-.main__scroll {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.main__scroll-box {
-    width: 40px;
-    height: 40px;
-    background: rgba(255, 255, 255, 0.7);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    animation: bounce 2s infinite;
-    scale: 0.8;
-}
-
-.main__scroll-box svg {
-    width: 24px;
-    height: 24px;
-}
-
-.main__scroll-text {
-    color: rgba(255, 255, 255, 0.637);
-    font-size: 0.9rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0);
-    }
-    40% {
-        transform: translateY(-10px);
-    }
-    60% {
-        transform: translateY(-5px);
-    }
 }
 
 /* Sección de quienes somos */
@@ -453,6 +316,7 @@ span{
     justify-content: center;
     padding: 20px;
     min-height: 320px;
+    position: relative;
 }
 
 /* Estilos para la información de disponibilidad */
@@ -490,10 +354,126 @@ span{
     transform: scale(1.08);
 }
 
+/* Chip sobre la portada que avisa cuántas fotos tiene el producto. */
+.product-photo-count {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    background: rgba(24, 24, 26, 0.78);
+    color: #ffffff;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    pointer-events: none;
+}
+
 /* Logo pequeño de disponibilidad */
 .product-image-container img.availability-logo {
     max-height: 4rem;
     filter: none;
+}
+
+/* ---------- Franja de disponibilidad ----------
+   Tira superior del área de imagen, sobre el fondo claro y arriba de la foto.
+   Aloja la disponibilidad ("También disponible en" más el logo de Mordida
+   Pequeña). La oferta va en el ribbon de esquina sobre la card, no acá. */
+.special-strip {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 4px 8px;
+    max-width: 100%;
+    margin-bottom: 6px;
+}
+
+/* ---------- Ribbon de esquina "Oferta" ----------
+   Adaptación en CSS puro de la demo rib-01 de CodeFronts, sin Tailwind.
+   Caja de esquina sobre la card (que ya es relative con radius 18px y
+   overflow hidden: el recorte a la esquina redondeada sale solo, sin
+   clip-path extra). Banda sólida #d96a12 con texto #241408 (contraste 6:1,
+   sin neón). Sin sheen animado y sin animación de entrada: con
+   prefers-reduced-motion no hay nada que desactivar porque nada se anima. */
+.product-card {
+    /* Tamaño fijo en px a propósito: si fuera porcentaje, el 28% se
+       resolvería contra el ANCHO en `width` pero contra el ALTO en
+       `height`, y la caja dejaría de ser cuadrada. */
+    --offer-rib-size: 124px;
+    --offer-rib-band: 36px;
+}
+
+.offer-ribbon {
+    position: absolute;
+    top: -31px;
+    right: -31px;
+    width: var(--offer-rib-size);
+    height: var(--offer-rib-size);
+    aspect-ratio: 1;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.offer-ribbon-band {
+    position: absolute;
+    /* Banda a +45° centrada en la caja: cruza de borde a borde (del borde
+       superior al derecho) abrazando la esquina, como la demo de referencia. */
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    width: calc(var(--offer-rib-size) * 1.5);
+    height: var(--offer-rib-band);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #d96a12;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+.offer-ribbon-label {
+    color: #241408;
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 800;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transform: translateY(2px);
+}
+
+/* Card destacada por "Oferta": filo luminoso interior y sombra más cálida.
+   Sin animación permanente; el único movimiento es el que ya traía la card. */
+.product-card.is-offer {
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5), 0 2px 10px rgba(169, 78, 0, 0.32);
+}
+
+.product-card.is-offer::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+        160deg,
+        rgba(255, 157, 61, 0.55),
+        rgba(226, 123, 33, 0.18) 45%,
+        transparent 78%
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+/* Se repite el hover porque .product-card.is-offer y .product-card:hover empatan
+   en especificidad: sin esta regla el estado hover perdería el brillo de marca. */
+.product-card.is-offer:hover {
+    box-shadow: 0px 0px 20px rgba(236, 113, 31, 0.6), 0 14px 34px rgba(0, 0, 0, 0.45);
 }
 
 .product-info-container {
@@ -553,25 +533,27 @@ span{
 
 /* Botón Ver Detalles */
 .btn-ver-detalles {
-    background: linear-gradient(135deg, #C45D00 0%, #e27b21 100%);
-    color: white;
-    border: none;
+    background: #d96a12;
+    color: #241408;
+    border: 1px solid rgba(36, 20, 8, 0.2);
     padding: 10px 20px;
     border-radius: 25px;
     font-family: 'Roboto', sans-serif;
     font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    box-shadow: 0 5px 12px rgba(169, 78, 0, 0.22);
+    transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
     margin-top: auto;
     width: 100%;
     max-width: 180px;
 }
 
 .btn-ver-detalles:hover {
-    background: linear-gradient(135deg, #e27b21 0%, #ff9d3d 100%);
-    transform: scale(1.03);
-    box-shadow: 0 4px 15px rgba(196, 93, 0, 0.4);
+    background: #e27b21;
+    border-color: rgba(36, 20, 8, 0.28);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(169, 78, 0, 0.26);
 }
 
 /* Ocultar estilos antiguos que ya no se usan */
@@ -641,7 +623,6 @@ span{
     }
 
     .location-icon { 
-    font-size: 1.5rem; 
     margin-bottom: 0.5rem; 
     }
 
@@ -673,106 +654,93 @@ span{
 /* --- Configuración de la Sección General ---  */
 
 .contacto-section {
-    padding: 5vh 5%; 
-    background: linear-gradient(165deg, #75623d, #07152e);
+    --contact-accent: #d96a12;
+    --contact-accent-hover: #e27b21;
+    padding: 1.5rem 5% var(--section-pad);
+    background: transparent;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 40vh; 
-    border-radius: 1.5rem;
+    min-height: 40vh;
+    border-radius: 0;
+    overflow: visible;
+}
+
+.contact-title-container {
+    margin-bottom: 1.5rem;
 }
 
 .title-container h2 {
     color: white;
     text-align: center;
-    font-size: clamp(1.8rem, 4vw, 2.5rem); 
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
     text-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.2);
 }
 
-/* --- Contenedor Grid para las Tarjetas --- */
-.cards-container {
+/* --- Contact layout: segment (lead) + store visual --- */
+.contact-layout {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); 
-    gap: 3rem;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
     width: 100%;
-    max-width: 85rem; 
-    margin-bottom: var(--spacing-md);
+    max-width: 85rem;
+    align-items: stretch;
 }
 
-/* --- Estilo de cada Tarjeta (Card) --- */
-.card {
-    background-color: #ffffff;
-    border-radius: 0.75rem; 
-    padding: 2rem 1.5rem;   
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    box-shadow: 0 0.25rem 1rem rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
-    position: relative;
-    height: 80%;
-}
-
-.card:hover {
-    transform: translateY(-0.5rem);
-}
-
-
-/* --- Estilo de los Iconos --- */
-.icon-box {
-    background-color: var(--color-icon-bg);
-    width: 3.5rem;  
-    height: 3.5rem;
-    border-radius: 0.6rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1.2rem;
-}
-
-.icon-box svg {
-    width: 1.8rem;
-    height: 1.8rem;
-    stroke: white;
-    stroke-width: 2;
-}
-
-.card h3 {
-    font-size: clamp(1.1rem, 2.5vw, 1.3rem);
-    color: var(--color-text-dark);
-    margin-bottom: 1rem;
-    font-weight: 700;
-    line-height: 1.3;
-    text-wrap: pretty;
-}
-
-.card p {
-    font-size: 1rem; 
-    color: var(--color-text-gray);
-    line-height: 1.4;
+.contact-visual {
     margin: 0;
-    padding-bottom: 0.5rem; 
+    position: relative;
+    box-sizing: border-box;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--line-strong);
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.35);
+    min-height: 14rem;
 }
 
-/*  Sección Botón WhatsApp Inferior  */
-.cta-container {
-    text-align: center;
+.contact-visual img {
+    display: block;
     width: 100%;
-    padding: 0 1rem; 
+    height: 100%;
+    object-fit: cover;
 }
 
-.cta-text {
-    color: white;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    font-size: clamp(1rem, 3vw, 1.25rem);
-    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+/* ---------- Contact deck: two stacked photos swapped like cards ---------- */
+/* Signature moment: perspective lives on the stage (not the figure) so the
+   3D fold is isolated inside it; the figure stays the outer clip. */
+.contact-visual.contact-deck {
+    perspective: none;
+    min-width: 0;
 }
 
-.btn-contacto-link {
-    text-decoration: none;
-    display: inline-block;
+.contact-deck-stage {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    border-radius: inherit;
+    overflow: hidden;
+    perspective: 1200px;
+    transform-style: preserve-3d;
+    isolation: isolate;
+}
+
+.contact-deck-card {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    will-change: transform, opacity;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.contact-deck-card.is-active {
+    opacity: 1;
+    visibility: visible;
 }
 
 .btn-contacto {
@@ -800,29 +768,368 @@ span{
     transform: scale(1.05);
 }
 
+/* Liquid fill en los CTA minorista/comercio (adaptado de CodeFronts
+   "liquid fill & organic morphing" a la paleta del sitio): un blob
+   orgánico se hincha desde el centro e inunda el botón con el naranja
+   brillante en vez del cambio plano de fondo, con el icono y el texto
+   siempre por encima. Oscuro sobre naranja brillante: contraste ~7:1. */
+.btn-contacto.contact-seg-cta {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+}
+
+.btn-contacto.contact-seg-cta > :not(.btn-liquid) {
+    position: relative;
+    z-index: 1;
+}
+
+.btn-liquid {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 130%;
+    aspect-ratio: 1;
+    background: var(--accent-bright);
+    border-radius: 42% 58% 63% 37% / 45% 38% 62% 55%;
+    transform: translate(-50%, -50%) scale(0);
+    animation: btn-liquid-wobble 6s ease-in-out infinite;
+    transition: transform 1s cubic-bezier(0.2, 0.9, 0.2, 1), border-radius 0.7s;
+    pointer-events: none;
+}
+
+.btn-contacto.contact-seg-cta:hover .btn-liquid,
+.btn-contacto.contact-seg-cta:focus-visible .btn-liquid {
+    transform: translate(-50%, -50%) scale(1.2);
+    border-radius: 0.5rem;
+    animation-play-state: paused;
+}
+
+@keyframes btn-liquid-wobble {
+    0%,
+    100% {
+        border-radius: 42% 58% 63% 37% / 45% 38% 62% 55%;
+    }
+
+    50% {
+        border-radius: 60% 40% 38% 62% / 55% 62% 38% 45%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .btn-liquid {
+        animation: none;
+        transition: transform 0.2s;
+    }
+}
+
 .wsp-icon {
     width: 1.4rem;
     height: 1.4rem;
     fill: currentColor;
 }
 
-.cta-container {
-    padding: 0 2rem;
-}
-
-.cta-text {
-    font-size: 1.5rem; 
-    margin-bottom: 1.5rem;
-}
-
-
-.wsp-icon {
-    width: 1.8rem; 
-    height: 1.8rem;
-}
-
 .contacto-section {
     text-wrap: pretty;
+}
+
+/* ---------- Contact segment switcher (retail vs. store) ---------- */
+.contact-seg {
+    width: 100%;
+    max-width: 38rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+/* Section title for the contact segment switcher.
+   Full-width row above the toggle+panel / visual row on desktop, so the
+   toggle (left column) and the figure (right column) start at the same
+   height. Centered at every breakpoint. */
+.contact-seg-title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.15rem, 2.8vw, 1.6rem);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: 0.01em;
+    color: var(--text-hi);
+    text-align: center;
+    text-wrap: balance;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+/* Keep the WhatsApp label together when the heading wraps. */
+.contact-seg-title-accent {
+    color: inherit;
+    white-space: nowrap;
+}
+
+.contact-seg-toggle {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+    padding: 0.375rem;
+    border-radius: var(--radius-lg);
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid var(--line);
+    box-sizing: border-box;
+}
+
+.contact-seg-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    min-height: 48px;
+    padding: 0.8rem 1.1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--text-mid);
+    font-family: var(--font-body);
+    text-align: left;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.contact-seg-tab strong {
+    font-size: clamp(0.92rem, 1.4vw, 1rem);
+    font-weight: 700;
+    font-style: normal;
+    font-family: inherit;
+    color: inherit;
+    line-height: 1.25;
+}
+
+.contact-seg-tab small {
+    font-size: clamp(0.78rem, 1.2vw, 0.85rem);
+    font-weight: 400;
+    font-style: normal;
+    font-family: inherit;
+    color: inherit;
+    opacity: 0.9;
+    line-height: 1.4;
+}
+
+.contact-seg-tab:hover {
+    border-color: rgba(226, 123, 33, 0.35);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text-hi);
+}
+
+.contact-seg-tab.is-active {
+    background: var(--contact-accent);
+    color: #241408;
+    border-color: transparent;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+@media (hover: hover) {
+    .contact-seg-tab:hover {
+        transform: translateY(-1px);
+    }
+
+    .contact-seg-tab.is-active:hover {
+        background: var(--contact-accent-hover);
+    }
+}
+
+.contact-seg-tab.is-active small {
+    opacity: 0.9;
+}
+
+.contact-seg-tab:focus-visible,
+.contact-seg-cta:focus-visible {
+    outline: 3px solid var(--accent-bright);
+    outline-offset: 2px;
+}
+
+.contact-seg-panels {
+    margin-top: 0;
+}
+
+.contact-seg-panel {
+    position: relative;
+    background-color: var(--bg-1);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.35);
+    padding: 1.75rem 1.75rem 2rem;
+    text-align: center;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* Signature accent: slim brand-gradient hairline on top of the active panel. */
+.contact-seg-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent-deep) 0%, var(--accent) 45%, var(--accent-bright) 100%);
+}
+
+.contact-seg-panel[hidden] {
+    display: none;
+}
+
+.contact-seg-panel h3 {
+    margin: 0 0 1rem;
+    color: var(--text-hi);
+    font-size: clamp(1.15rem, 2.5vw, 1.4rem);
+    font-weight: 700;
+    line-height: 1.3;
+    max-width: 46rem;
+    text-align: left;
+}
+
+.contact-seg-panel ul {
+    margin: 0 0 1.5rem;
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    max-width: 46rem;
+    text-align: left;
+}
+
+.contact-seg-panel li {
+    color: var(--text-mid);
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.contact-seg-panel li::marker {
+    color: var(--accent-bright);
+}
+
+/* Brand-orange CTA inside the segment (sole contact action), centered. */
+.contact-seg-panel .contact-seg-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    width: auto;
+    box-sizing: border-box;
+    margin-inline: auto;
+    border: none;
+    background: var(--contact-accent);
+    color: #241408;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+    transition: transform 220ms ease, background 220ms ease, box-shadow 220ms ease;
+}
+
+@media (hover: hover) {
+    .contact-seg-panel .contact-seg-cta:hover {
+        background: var(--contact-accent-hover);
+        transform: translateY(-1px);
+        box-shadow: 0 8px 16px rgba(169, 78, 0, 0.24);
+    }
+}
+
+.contact-seg-panel .contact-seg-cta span {
+    color: inherit;
+}
+
+.contact-seg-cta {
+    text-decoration: none;
+}
+
+@media (max-width: 480px) {
+    .contact-seg-toggle {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-seg-tab {
+        width: 100%;
+    }
+
+    .contact-seg-panel {
+        padding: 1.5rem 1.25rem 1.75rem;
+    }
+
+    .contact-seg-panel .contact-seg-cta {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* ---------- Contact layout breakpoints ---------- */
+/* Tablet / small desktop: single column, compact visual on top. */
+@media (max-width: 1023px) {
+    .contact-layout {
+        max-width: 38rem;
+        margin: 0 auto;
+    }
+
+    .contact-visual {
+        order: -1;
+        max-height: 240px;
+        min-height: 0;
+    }
+
+    .contact-visual img {
+        height: 240px;
+    }
+
+    .contact-deck-stage {
+        aspect-ratio: 16 / 9;
+        max-height: 240px;
+    }
+
+    .contact-deck-stage .contact-deck-card {
+        height: 100%;
+    }
+}
+
+/* Desktop: title full-width on row 1; segment (toggle+panel) and store
+   visual side by side on row 2, both starting at the same height. */
+@media (min-width: 1024px) {
+    .contact-layout {
+        grid-template-columns: minmax(0, 34rem) minmax(0, 1fr);
+        gap: 2rem;
+        align-items: stretch;
+    }
+
+    .contact-seg-title {
+        grid-column: 1 / -1;
+        grid-row: 1;
+        text-align: center;
+    }
+
+    .contact-seg {
+        grid-column: 1;
+        grid-row: 2;
+        max-width: 38rem;
+        min-width: 0;
+    }
+
+    .contact-visual {
+        grid-column: 2;
+        grid-row: 2;
+        aspect-ratio: auto;
+        min-height: 0;
+        min-width: 0;
+        width: 100%;
+        align-self: start;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .contact-seg-tab,
+    .contact-seg-cta {
+        transition: none;
+    }
+
+    .contact-seg-panel .contact-seg-cta:hover,
+    .contact-seg-panel .contact-seg-cta:focus-visible {
+        transform: none;
+    }
+
+    .btn-contacto:hover {
+        transform: none;
+    }
 }
 
 /* footer */
@@ -1021,17 +1328,6 @@ footer {
     }
 }
 
-@keyframes underlineGrow {
-    to { width: 60%; }
-}
-
-@keyframes truck-appear {
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
 @keyframes flotar {
     0%, 100% {
         transform: translateY(0);
@@ -1069,14 +1365,6 @@ footer {
         transform: scale(1.15);
     }
 
-    .Sl::before {
-        bottom: -2vw;
-        left: calc(50% + 7vw);
-        width: 3vw;
-        height: 3vw;
-    }
-
-
 }
 
 /* Laptops (a partir de 1180px) */
@@ -1103,38 +1391,12 @@ footer {
         padding: 1rem;
     }
 
-    .Sl::before {
-        bottom: -3vw;
-        left: calc(50% + 7vw);
-        width: 4vw;
-        height: 4vw;
-    }
-
     .product-container {
         grid-template-columns: repeat(3, 1fr);
     }
 }
 
 @media screen and (min-width: 769px) and (max-width: 1179px) {
-    .hero {
-        height: 120vw; 
-    }
-
-    .Sl {
-        font-size: clamp(4rem, 12vw, 7rem);
-    }
-
-    .Sl span {
-        font-size: 0.55em;
-    }
-
-    .Sl::before {
-        left: calc(50% + 14vw); 
-        width: 70px;
-        height: 70px;
-        bottom: -6vw;
-    }
-
     .nav-links {
         width: 90%; 
         gap: 20px; 
@@ -1155,9 +1417,6 @@ footer {
         grid-template-columns: repeat(2, 1fr);
         gap: 20px;
     }
-    .cta-text {
-    font-size: 1.2rem;
-    }
 
 }
 
@@ -1168,48 +1427,138 @@ footer {
 
 /* TABLETS Y MÓVILES  */
 @media (max-width: 768px) {
-
-    .hero {
-        background-image: linear-gradient(
-            to bottom,
-            rgba(0,0,0,0.5) 20%,
-            rgba(0,0,0,0.8) 100%
-        ), url('assets/images/ImagenHero-mobile.webp');
-    }
-    
-
+    /* Menú móvil: expansión circular desde el botón (clip-path), CSS puro.
+       El estado abierto lo marca la clase .active que ya alterna el JS;
+       desktop queda intacto. */
     .nav-links {
-        font-size: small;
+        counter-reset: nav;
         position: fixed;
-        left: -100%;
+        left: 0;
         top: 0;
-        gap: 20px; 
+        width: 100vw;
+        height: 100vh;
+        /* dvh sigue al chrome del navegador mobile: con svh (el alto más
+           chico) el menú quedaba corto cuando al scrollear se esconde la
+           barra del navegador y el viewport crece. */
+        height: 100dvh;
+        max-width: none;
+        margin: 0;
+        padding: 6rem 2.5rem 2.5rem;
         flex-direction: column;
-        background-color: #1F1F20; 
-        width: 20%;
-        height: 30vh;
-        text-align: center;
-        transition: 0.3s;
-        justify-content: center; 
-        max-width: none;    
-        border: 2px #E27B21 solid;       
-        border-radius: 20px;   
-        box-shadow:#232325 ;          
-        z-index: 14;        
-        margin-left: 1rem;
+        justify-content: center;
+        align-items: stretch;
+        gap: 0.25rem;
+        text-align: left;
+        font-size: 1rem;
+        background: radial-gradient(120% 100% at 100% 0%, #2e2e31 0%, #1F1F20 60%);
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+        box-sizing: border-box;
+        z-index: 14;
+        translate: none;
+        clip-path: circle(0px at calc(100% - 44px) 39px);
+        visibility: hidden;
+        transition: clip-path 0.65s cubic-bezier(0.65, 0, 0.35, 1), visibility 0s 0.65s;
     }
 
     .nav-links.active {
-        left: 0;
+        translate: none;
+        clip-path: circle(150% at calc(100% - 44px) 39px);
+        visibility: visible;
+        transition: clip-path 0.65s cubic-bezier(0.65, 0, 0.35, 1), visibility 0s 0s;
     }
+
+    /* El backdrop-filter del header lo convierte en contexto de
+       posicionamiento y el menú fixed se anclaría al header (que vive en
+       flujo tras el hero) en vez del viewport: abría bajo el fold. Con el
+       menú abierto el header queda tapado por su fondo opaco, así que
+       apagar el blur no se nota. */
+    header:has(.nav-links.active) {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
+
+    /* El logo ya vive en el header; dentro del menú a pantalla completa sobra. */
+    .nav-links li:nth-child(3) {
+        display: none;
+    }
+
+    .nav-links li {
+        counter-increment: nav;
+        list-style: none;
+        opacity: 0;
+        translate: 0 18px;
+        transition: opacity 0.4s ease, translate 0.4s ease;
+    }
+
+    .nav-links.active li {
+        opacity: 1;
+        translate: 0 0;
+    }
+
+    .nav-links.active li:nth-child(1) { transition-delay: 180ms; }
+    .nav-links.active li:nth-child(2) { transition-delay: 240ms; }
+    .nav-links.active li:nth-child(4) { transition-delay: 300ms; }
+    .nav-links.active li:nth-child(5) { transition-delay: 360ms; }
 
     .hamburger-menu {
         display: flex;
-        z-index: 15; 
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
+        padding: 0;
+        border: none;
+        border-radius: 50%;
+        background: #2b2b2e;
+        cursor: pointer;
+        z-index: 15;
+        transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .hamburger-menu:hover {
+        transform: scale(1.06);
+    }
+
+    .hamburger-menu:active {
+        transform: scale(0.94);
+    }
+
+    .hamburger-menu.active {
+        background: #d96a12;
+    }
+
+    .hamburger-menu.active .bar {
+        background-color: #241408;
     }
 
     .navbar li a {
-        font-size: 1.5em; 
+        display: flex;
+        align-items: baseline;
+        gap: 0.9rem;
+        padding: 0.8rem 0.25rem;
+        font-size: clamp(1.7rem, 8vw, 2rem);
+        font-weight: 800;
+        letter-spacing: -0.01em;
+        color: #f5f5f4;
+    }
+
+    .navbar li a::before {
+        content: "0" counter(nav);
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        color: #e27b21;
+    }
+
+    .navbar li a:hover {
+        color: #e27b21;
+    }
+
+    .navbar li a:focus-visible {
+        outline: 2px solid #e27b21;
+        outline-offset: 4px;
     }
 
     /* Ajustes Quienes Somos y Producto (Sin cambios) */
@@ -1277,6 +1626,25 @@ footer {
         height: 2.4rem;
     }
 
+    .special-strip {
+        gap: 3px 10px;
+    }
+
+    .product-card {
+        --offer-rib-size: 104px;
+        --offer-rib-band: 30px;
+    }
+
+    .offer-ribbon {
+        top: -24px;
+        right: -24px;
+    }
+
+    .offer-ribbon-label {
+        font-size: 0.68rem;
+        letter-spacing: 0.12em;
+    }
+
     .product-info-container {
         padding: 12px;
         gap: 10px;
@@ -1313,40 +1681,16 @@ footer {
 
     
     .contacto-section {
-        padding: 4rem 1.5rem; 
+        padding: 1.5rem 1.5rem 4rem;
         min-height: auto;
     }
 
-.cards-container {
-        display: flex;            
-        flex-direction: column;    
-        gap: 3rem;                
+    /* Segment CTA: full-width tap target on touch devices. */
+    .contact-seg-panel .contact-seg-cta {
         width: 100%;
-        padding: 0 1rem;
-        box-sizing: border-box;   
-    }
-
-    .card {
-        align-items: center; 
-        text-align: center;
-        padding: 2.5rem 1.5rem;
-        width: 100%;               
-        box-sizing: border-box;   
-        height: auto;              
-        margin-bottom: 0;         
-    }
-
-    /* Botón ancho completo para facilitar el click */
-    .btn-contacto {
-        width: 100%; 
         justify-content: center;
-        padding: 1.2rem;
-    }
-    
-    .cta-container {
-        width: 100%;
-        max-width: 25rem; 
-        margin: 0 auto; /* Centrado */
+        min-height: 48px;
+        padding: 0.9rem 1rem;
     }
 
     .footer-content {
@@ -1359,65 +1703,44 @@ footer {
         text-align: center;
     }
 
-    .Sl {
-        margin-top: 1.3em;
-        font-size: clamp(3.5rem, 15vw, 6rem);
+    .contact-seg-panel .contact-seg-cta {
+        font-size: 1rem;
     }
 
-    .Sl span {
-        font-size: 0.6em;
-        margin-top: 0.2em;
+    .contact-seg-panel .contact-seg-cta .wsp-icon {
+        width: 1.5rem;
+        height: 1.5rem;
+        padding-left: 0;
     }
 
-    .hero {
-        height: 150vw;
+}
+
+/* Movimiento reducido: el menú móvil funde en vez de expandirse. */
+@media (max-width: 768px) and (prefers-reduced-motion: reduce) {
+    .nav-links {
+        clip-path: none;
+        opacity: 0;
+        transition: opacity 0.15s ease, visibility 0s 0.15s;
     }
 
-    .Sl::before {
-        bottom: -4vw;
-        left: calc(50% + 16vw);
-        width: 5vw;
-        height: 5vw;
+    .nav-links.active {
+        clip-path: none;
+        opacity: 1;
+        transition: opacity 0.15s ease, visibility 0s 0s;
     }
 
-    .cta-container {
-    width: 100%;
-    padding: 0 1.5rem; 
-    box-sizing: border-box;
-    max-width: 500px; 
-    margin: 0 auto; 
-}
+    .nav-links li {
+        translate: none;
+    }
 
-.cta-text {
-    font-size: 1.2rem;
-    margin-bottom: 1.2rem;
-}
+    .nav-links.active li:nth-child(n) {
+        transition-delay: 0s;
+    }
 
-/* Importante: El enlace debe ocupar todo el ancho para que el botón pueda expandirse */
-.btn-contacto-link {
-    width: 100%;
-    display: block; 
-}
-
-.btn-contacto {
-    scale: 0.8;
-    width: 100%;             
-    justify-content: center; 
-    padding: 1.2rem;         
-    font-size: 1rem;
-}
-
-.btn-contacto .wsp-icon {
-    width: 2.5rem;
-    height: 2.5rem;
-    padding-left: 0.5rem;
-}
-
-.main__action {
-    display: block;
-    margin-top: 8rem;
-}
-
+    .hamburger-menu:hover,
+    .hamburger-menu:active {
+        transform: none;
+    }
 }
 
 /* Mobile devices (hasta 480px) */
@@ -1426,35 +1749,8 @@ footer {
         padding: 5px 0;
     }
 
-    .Sl {
-        font-size: clamp(3rem, 19vw, 6rem);
-    }
-
-    .hero {
-        height: 80vh;
-        text-shadow: 0 3px 8px rgba(0,0,0,0.3);
-    }
-
-    .nav-links{
-        height: 32vh;
-        font-size: x-small;
-    }
-
-    .nav-links.active{
-        border: 1px #bd661a solid;
-        margin-left: 0.5rem;
-    }
-
-    .Sl span {
-        margin-top: 0.2em; 
-    }
-
-    .Sl::before {
-        bottom: -8vw;
-        left: calc(50% + 23vw);
-        width: 10vw;
-        height: 10vw;
-    }
+    /* El menú móvil ya es pantalla completa desde el bloque de 768px:
+       acá no se pisa layout, altura ni bordes. */
 
     .quienes-somos-section-container {
         font-size: 1em;
@@ -1515,6 +1811,7 @@ footer {
         width: 2.6rem;
         height: 2.6rem;
     }
+
 .stones-hero h3 {
         font-size: 1.5rem;
     }
@@ -1527,35 +1824,13 @@ footer {
     }
 
     .contacto-section {
-        padding: 3rem 1rem; 
-    }
-
-    .cards-container {
-        gap: 1.5rem; 
-    }
-
-    .card h3 {
-        font-size: 1.25rem;
-    }
-
-    .main__scroll {
-        margin-bottom: 3.5rem;
+        padding: 1.25rem 1rem 3rem;
     }
 }
 
 /* Small mobile devices (hasta 320px) */
 @media (max-width: 320px) {
-    .Sl {
-        font-size: clamp(3rem, 17vw, 4rem);
-    }
-
-    .hero {
-        height: 150vw;
-    }
-
-    .nav-links{
-        height: 25vh;
-    }
+    /* Sin overrides: el menú móvil hereda el layout de pantalla completa. */
 
     .quienes-somos-titulo-container h2 {
         font-size: 1.5em;
@@ -1565,25 +1840,9 @@ footer {
         font-size: 1.2rem;
     }
 
-    .Sl::before {
-        bottom: -10vw;
-        left: calc(50% + 19vw);
-        width: 10vw;
-        height: 10vw;
-    }
-
-    .cta-container {
-        padding: 0 0.5rem;
-    }
-
-    .cta-text {
-        font-size: 1rem;
-        margin-bottom: 0.8rem;
-    }
-
-    .btn-contacto {
-        padding: 0.8rem 0.5rem; 
-        font-size: 0.9rem;      
+    .contact-seg-panel .contact-seg-cta {
+        padding: 0.8rem 0.5rem;
+        font-size: 0.9rem;
         gap: 0.4rem;
         width: 100%;
     }
@@ -1715,6 +1974,55 @@ footer {
     max-height: 25rem;
     object-fit: contain;
     filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+}
+
+/* Galería del modal: miniaturas debajo de la imagen principal. */
+.modal-thumbs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 16px;
+    max-width: 100%;
+}
+
+/* `display: flex` le gana al display:none que trae [hidden] por defecto. */
+.modal-thumbs[hidden] {
+    display: none;
+}
+
+.modal-thumb {
+    width: 56px;
+    height: 56px;
+    padding: 0;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    overflow: hidden;
+    background: none;
+    cursor: pointer;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.modal-thumb img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    max-height: none;
+    filter: none;
+}
+
+.modal-thumb:hover {
+    transform: translateY(-2px);
+}
+
+.modal-thumb.is-active {
+    border-color: var(--color-primary);
+}
+
+.modal-thumb:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
 }
 
 .modal-info {
@@ -1927,6 +2235,17 @@ footer {
         padding-bottom: 80px;
     }
 
+    /* Miniaturas más chicas: le devuelven altura útil a la info del modal. */
+    .modal-thumbs {
+        gap: 6px;
+        margin-top: 10px;
+    }
+
+    .modal-thumb {
+        width: 48px;
+        height: 48px;
+    }
+
     .modal-info h2 {
         font-size: 1.2rem;
     }
@@ -1960,5 +2279,922 @@ footer {
     .modal-availability .availability-logo {
         width: 3.5rem;
         height: 3.5rem;
+    }
+}
+
+/* ============================================================
+   Hero nuevo, Nuevo local, botones y accesibilidad
+   (recorte del rediseño: solo estas piezas se suman al sitio)
+   ============================================================ */
+
+/* ---------- Tokens ---------- */
+:root {
+    /* Superficies (familia grafito, sin negro puro) */
+    --bg-0: #1f1f20;            /* fondo de página */
+    --bg-1: #232325;            /* superficie elevada */
+    --bg-2: #2a2a2c;            /* tarjetas */
+    --bg-3: #303034;            /* hover / mayor elevación */
+
+    /* Líneas y bordes */
+    --line: rgba(255, 255, 255, 0.08);
+    --line-strong: rgba(255, 255, 255, 0.16);
+
+    /* Acento de marca */
+    --accent-deep: #a94e00;
+    --accent: #e27b21;
+    --accent-bright: #ff9d3d;
+    --accent-tint: rgba(226, 123, 33, 0.14);
+    --accent-glow: rgba(226, 123, 33, 0.28);
+
+    /* Texto */
+    --text-hi: #f5f5f4;
+    --text-mid: #c9c9c9;
+    --text-low: #8a8a8a;
+
+    /* WhatsApp */
+    --whatsapp: #0f7a40;
+    --whatsapp-hover: #0c6333;
+
+    /* Radios — una sola escala */
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-pill: 999px;
+
+    /* Tipografía */
+    --font-display: 'Cal Sans', 'Overpass', sans-serif;
+    --font-body: 'Overpass', system-ui, -apple-system, sans-serif;
+
+    /* Layout */
+    --container: 1200px;
+    --section-pad: clamp(4rem, 9vw, 6.5rem);
+}
+
+/* ---------- Fuentes self-hosted ---------- */
+@font-face {
+    font-family: 'Cal Sans';
+    src: url('assets/fonts/Cal_Sans/CalSans-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Overpass';
+    src: url('assets/fonts/Overpass/Overpass-VariableFont_wght.ttf') format('truetype-variations');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Overpass';
+    src: url('assets/fonts/Overpass/Overpass-Italic-VariableFont_wght.ttf') format('truetype-variations');
+    font-weight: 100 900;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* ---------- Botones (Hero y Nuevo local) ---------- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 0.85rem 1.6rem;
+    border: none;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1;
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, color 0.25s ease;
+}
+
+.btn:active {
+    transform: translateY(1px) scale(0.98);
+}
+
+/* Primario: texto oscuro sobre naranja (contraste AA holgado) */
+.btn-primary {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-bright) 100%);
+    color: #1f1000;
+    box-shadow: 0 12px 24px rgba(196, 93, 0, 0.28);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 32px rgba(226, 123, 33, 0.35);
+}
+
+/* Gooey drip en el "¿Cómo llegar?" (adaptado de CodeFronts "gooey drip
+   button" a la paleta del sitio): una gota blanca con borde redondeado
+   baja desde arriba e inunda el botón en hover, con el icono y el texto
+   siempre por encima. Oscuro sobre blanco: contraste sobrado. */
+.btn.btn-primary.btn-goo {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+}
+
+.btn.btn-primary.btn-goo > :not(.btn-drip) {
+    position: relative;
+    z-index: 1;
+}
+
+.btn-drip {
+    position: absolute;
+    left: 0;
+    top: -100%;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border-radius: 0 0 46% 54% / 0 0 40% 40%;
+    transition: transform 0.55s cubic-bezier(0.5, 0, 0.2, 1);
+    pointer-events: none;
+}
+
+.btn.btn-primary.btn-goo:hover .btn-drip,
+.btn.btn-primary.btn-goo:focus-visible .btn-drip {
+    transform: translateY(100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .btn-drip {
+        transition: transform 0.25s;
+    }
+}
+
+/* Secundario: contorno */
+.btn-outline {
+    background: transparent;
+    color: var(--text-hi);
+    border: 1px solid var(--line-strong);
+}
+
+.btn-outline:hover {
+    border-color: var(--accent);
+    color: var(--accent-bright);
+    transform: translateY(-2px);
+}
+
+.btn svg {
+    width: 1.3em;
+    height: 1.3em;
+    flex: none;
+}
+
+/* La regla genérica de spans del sitio no debe pisar los botones */
+.btn span {
+    font-family: inherit;
+    font-size: inherit;
+    font-style: normal;
+    font-weight: inherit;
+    color: inherit;
+}
+
+/* ---------- Hero ---------- */
+.hero {
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 70vh;
+    padding: 7rem 1.5rem 5rem;
+    font-family: var(--font-body);
+    background-image: linear-gradient(
+        to bottom,
+        rgba(15, 15, 16, 0.62) 0%,
+        rgba(15, 15, 16, 0.55) 45%,
+        rgba(31, 31, 32, 0.97) 100%
+    ), url('assets/images/ImagenHero-desktop.webp');
+    background-size: cover;
+    background-position: center 22%;
+    background-repeat: no-repeat;
+}
+
+.hero-title {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: clamp(3rem, 8vw, 9rem);
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: #EEEEEE;
+    line-height: 0.7em;
+    margin: 0;
+    position: relative;
+    /* Tamaño de "Express" en em del título. El camión de la estela deriva su
+       altura de esta misma variable: si cambia un breakpoint, cambian los dos
+       juntos y nunca se desincronizan. */
+    --express-size: 0.54em;
+}
+
+/* "TR" entra primero y por separado: inline-block para que GSAP pueda
+   desplazarlo (los transforms no aplican a elementos inline puros).
+   Re-afirma el contexto tipográfico del hero: la regla genérica de `span`
+   (font-size 0.7em, family Segoe) pisaría al título. */
+.hero-title .hero-tr {
+    display: inline-block;
+    font-family: inherit;
+    font-size: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+    color: inherit;
+}
+
+.hero-title .hero-express {
+    display: block;
+    position: relative;
+    /* Por debajo del camión: cuando el camión cruza a la altura de la
+       palabra, las letras quedan tapadas hasta que la rueda trasera
+       las descubre (el clip lo sincroniza effects.js). */
+    z-index: 1;
+    font-family: var(--font-display);
+    font-size: var(--express-size);
+    font-weight: 800;
+    font-style: italic;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #ca8536;
+    margin-top: 0.2em;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+/* Subrayado + camión: la estela bajo "Express" */
+.hero-stroke {
+    display: block;
+    position: relative;
+    /* Por encima de "Express": el camión (hijo) cruza LITERALMENTE por
+       delante de las letras a la altura de la palabra y al final baja
+       a estacionar sobre la línea. */
+    z-index: 2;
+    width: min(74%, 38rem);
+    height: 5px;
+    /* Pegada a la palabra como un subrayado de verdad: el bloque del hero
+       queda compacto y centra prolijo en vertical (en móvil se mantiene
+       más aire porque ahí el camión baja a estacionar sobre la línea). */
+    margin: 0.6rem auto 0;
+    /* La regla genérica de `span` también pisa el font-size heredado acá;
+       se re-afirma el del título para que el em de --express-size (y la
+       altura del camión) se resuelvan contra la tipografía del hero. */
+    font-size: inherit;
+}
+
+/* La línea es la estela que el camión va dejando al avanzar. Necesita
+   margin 0 (una regla genérica de spans le ponía margin-top y colapsaba
+   su alto a 0, dejándola invisible) y transform-origin a la izquierda
+   para que dibuje de izquierda a derecha en sintonía con el camión */
+.hero-stroke-line {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    transform-origin: left center;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--accent-deep) 0%, var(--accent-bright) 100%);
+    box-shadow: 0 0 16px rgba(226, 123, 33, 0.35);
+}
+
+/* El camión viaja sobre la línea como si fuera la ruta, pero cruza a la
+   altura de "Express" (effects.js lo eleva con `y` durante el viaje):
+   su carrocería tapa las letras y la rueda trasera las va descubriendo.
+   Al terminar baja a estacionar con la base apoyada en la línea. */
+.hero-stroke-truck {
+    position: absolute;
+    right: -1.5rem;
+    top: 50%;
+    transform: translateY(-100%);
+    /* Alto ≈ altura de las mayúsculas de "Express" más un resto: el camión
+       tiene que tapar de verdad las letras al pasar por delante, en todos
+       los breakpoints (sigue a --express-size como la palabra). */
+    height: calc(var(--express-size) * 1.02);
+    width: auto;
+    filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.45));
+    pointer-events: none;
+}
+
+/* Estado inicial de la intro del hero (la clase la agrega un script inline
+   en el <head> antes del primer paint): el camión y la estela esperan fuera
+   de escena y "Express" queda oculto hasta que el camión lo descubre.
+   effects.js libera la clase cuando no hay animación (sin GSAP o con
+   movimiento reducido) y también al terminar el timeline. */
+.hero-anim .hero-express {
+    clip-path: inset(0 100% 0 0);
+}
+
+.hero-anim .hero-tr {
+    opacity: 0;
+}
+
+.hero-anim .hero-subtitle {
+    opacity: 0;
+}
+
+/* El cue entra después de la animación, junto con el subtítulo. */
+.hero-anim .hero-scroll-cue {
+    opacity: 0;
+}
+
+.hero-anim .hero-stroke-line {
+    transform: scaleX(0);
+}
+
+.hero-anim .hero-stroke-truck {
+    opacity: 0;
+}
+
+.hero-subtitle {
+    max-width: 52ch;
+    margin: 2rem auto 0;
+    color: var(--text-mid);
+    /* Secundario a propósito: la estrella es la animación del hero
+       (TR + Express + camión), esto acompaña chiquito y legible. */
+    font-size: clamp(0.85rem, 1.8vw, 1rem);
+    line-height: 1.65;
+    /* El navegador reparte las líneas parejas en cada ancho: sin palabras
+       sueltas al final ni líneas raquíticas en ningún dispositivo. */
+    text-wrap: balance;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
+}
+
+.hero-scroll-cue {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    min-height: 44px;
+    margin-top: 2.25rem;
+    padding: 0.5rem 0.75rem;
+    color: var(--text-mid);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.hero-scroll-cue:hover {
+    color: var(--accent-bright);
+    transform: translateY(2px);
+}
+
+.hero-scroll-cue:focus-visible {
+    outline: 2px solid var(--accent-bright);
+    outline-offset: 4px;
+    border-radius: var(--radius-sm);
+}
+
+/* La regla genérica de spans del sitio no debe pisar el texto del cue */
+.hero-scroll-cue span {
+    font-family: inherit;
+    font-size: inherit;
+    font-style: normal;
+    font-weight: inherit;
+    color: inherit;
+}
+
+/* Flechita minimalista: trazo fino que hereda el color del texto y flota
+   suave hacia abajo. Se enciende junto con el texto al hover. */
+.hero-scroll-indicator {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.hero-scroll-indicator span {
+    width: 0.55rem;
+    height: 0.55rem;
+    border: none;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    border-bottom-right-radius: 3px;
+    background: none;
+    transform: rotate(45deg);
+    animation: none;
+}
+
+@keyframes scrollCue {
+    0%, 100% {
+        opacity: 0.35;
+        transform: translateY(-2px) rotate(45deg);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateY(3px) rotate(45deg);
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .hero-scroll-indicator span {
+        animation: scrollCue 1.8s ease-in-out infinite;
+    }
+}
+
+/* ---------- Secciones (Nuevo local) ---------- */
+.section {
+    padding: var(--section-pad) 1.5rem;
+}
+
+.section-inner {
+    max-width: var(--container);
+    margin: 0 auto;
+}
+
+/* ---------- Nuevo local físico ---------- */
+.nueva-tienda {
+    --tienda-bg: #26262b;
+    --tienda-wave-h: clamp(64px, 10vw, 120px);
+    position: relative;
+    font-family: var(--font-body);
+    background-color: var(--tienda-bg);
+}
+
+/* Padding extra = tercio de ola por lado: los divisores quedan pegados al contenido.
+   Márgenes negativos: `main` trae 20px de padding lateral y dejaría dos
+   franjas del fondo de página a los costados de esta sección con fondo propio;
+   se compensan en el padding para no mover el contenido. */
+.section.nueva-tienda {
+    padding-top: calc(var(--section-pad) + var(--tienda-wave-h) * 0.35);
+    padding-bottom: calc(var(--section-pad) + var(--tienda-wave-h) * 0.35);
+    margin-inline: -20px;
+    padding-inline: calc(1.5rem + 20px);
+}
+
+/* ---------- Divisor de olas apiladas (solo #nueva-tienda) ----------
+   Adaptación en CSS puro de la demo wsd-04a de CodeFronts, sin Tailwind.
+   SVG estático, sin JS y sin animación. Full-bleed: la sección vive con
+   padding horizontal, así que el stack se centra con left 50% + 100vw. */
+.nueva-tienda .tienda-wave {
+    position: absolute;
+    left: 50%;
+    width: 100vw;
+    height: var(--tienda-wave-h);
+    transform: translateX(-50%);
+    pointer-events: none;
+}
+
+.nueva-tienda .tienda-wave--top {
+    top: 0;
+    transform: translateX(-50%) scaleY(-1);
+}
+
+.nueva-tienda .tienda-wave--bottom {
+    bottom: 0;
+}
+
+.nueva-tienda .tienda-wave__layer {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* Capas en colores sólidos con contraste: nada de transparencias ni brillos. */
+.nueva-tienda .tienda-wave__layer--1 path {
+    fill: #f4f1ea;
+}
+
+.nueva-tienda .tienda-wave__layer--2 path {
+    fill: #d96a12;
+}
+
+/* Capa frontal opaca: arriba funde con la PÁGINA (no con la sección: el
+   fondo de página #1f1f20 y el de la sección #26262b son dos oscuros
+   distintos y se notaba la costura justo arriba de las líneas), abajo con
+   la página también. */
+.nueva-tienda .tienda-wave--top .tienda-wave__layer--3 path {
+    fill: #1f1f20;
+}
+
+/* Sangrado anti-hairline (el caso de Agrimensura): el borde recto
+   antialiaseado de la capa frontal deja asomar 1px de la naranja de atrás
+   justo en el límite de la sección, arriba y abajo. La capa frontal se
+   estira 1px por fuera para que ese borde quede sobre fondo liso y no se
+   lea como línea finita. OJO el stack de arriba está espejado con
+   scaleY(-1): su borde recto es el de ABAJO del SVG, así que se estira
+   hacia abajo en coordenadas sin espejar (top: 0 + alto extra). El estirón
+   deforma la curva <2%: invisible. */
+.nueva-tienda .tienda-wave--top .tienda-wave__layer--3 {
+    top: 0;
+    height: calc(100% + 1px);
+}
+
+.nueva-tienda .tienda-wave--bottom .tienda-wave__layer--3 {
+    height: calc(100% + 1px);
+}
+
+.nueva-tienda .tienda-wave--bottom .tienda-wave__layer--3 path {
+    fill: #1f1f20;
+}
+
+.nueva-tienda .nueva-tienda-grid {
+    position: relative;
+    z-index: 1;
+}
+
+.nueva-tienda-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: clamp(2.5rem, 6vw, 5rem);
+    align-items: center;
+}
+
+.nueva-tienda-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    /* Centrado en todos los anchos: la dirección y el botón son angostos y
+       alineados a la izquierda dejaban un hueco largo al lado que desbalanceaba
+       la columna contra la foto. */
+    align-items: center;
+    text-align: center;
+}
+
+.nueva-tienda-copy h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.9rem, 4.5vw, 3rem);
+    letter-spacing: 0.01em;
+    line-height: 1.1;
+    color: var(--text-hi);
+    margin: 0;
+    /* Reparte las dos líneas del título en vez de dejar una corta colgando. */
+    text-wrap: balance;
+}
+
+.nueva-tienda-copy h2 span {
+    font-family: inherit;
+    font-size: 1em;
+    color: var(--accent-bright);
+    font-style: italic;
+    /* En bloque para que "nuevo local" no se parta en dos líneas y el subrayado
+       quede siempre debajo de la frase completa. */
+    display: inline-block;
+    position: relative;
+}
+
+/* Regla fina que se desvanece, en el mismo idioma que las líneas de sección. */
+.nueva-tienda-copy h2 span::after {
+    content: '';
+    position: absolute;
+    left: 0.08em;
+    right: -0.08em;
+    bottom: -0.05em;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--accent-bright), rgba(255, 157, 61, 0.12));
+}
+
+.nueva-tienda-copy p {
+    margin: 0;
+    color: var(--text-mid);
+    font-size: 1.1rem;
+    line-height: 1.7;
+    /* Más corto que el ancho de la columna: con el texto centrado, las líneas
+       largas obligan a barajar el ojo de un lado al otro para encontrar el
+       inicio de cada renglón. */
+    max-width: 42ch;
+    text-wrap: pretty;
+}
+
+.nueva-tienda-direccion {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--text-hi);
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 0.85rem 1.25rem;
+    background: var(--bg-2);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+}
+
+/* La regla genérica de spans del sitio no debe pisar la dirección */
+.nueva-tienda-direccion span {
+    font-family: inherit;
+    font-size: inherit;
+    font-style: normal;
+    font-weight: inherit;
+    color: inherit;
+}
+
+.nueva-tienda-direccion svg {
+    width: 1.4rem;
+    height: 1.4rem;
+    color: var(--accent-bright);
+    flex: none;
+}
+
+.nueva-tienda-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+/* La foto del local se trata como una ventana al local: sin marco interno con
+   relleno, esquinas muy redondeadas y una sombra cálida con filo ámbar que la
+   despega del fondo oscuro. */
+.nueva-tienda-visual {
+    position: relative;
+    border-radius: 2rem;
+    overflow: hidden;
+    box-shadow:
+        0 24px 60px -12px rgba(0, 0, 0, 0.8),
+        0 0 35px -5px rgba(221, 131, 13, 0.22),
+        0 0 0 1px rgba(255, 157, 61, 0.34);
+}
+
+.nueva-tienda-visual img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* ---------- Scroll reveal ---------- */
+.reveal {
+    opacity: 0;
+    transform: translateY(26px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.revealed {
+    opacity: 1;
+    transform: none;
+}
+
+/* ---------- Media queries de las piezas nuevas ---------- */
+
+/* Tablets */
+@media (max-width: 900px) {
+    .nueva-tienda-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* El centrado del texto ya viene de la regla base. Estos dos sí importan
+       acá: si la dirección o los botones envuelven, el contenido queda centrado
+       dentro de su propia caja. */
+    .nueva-tienda-direccion {
+        justify-content: center;
+    }
+
+    .nueva-tienda-actions {
+        justify-content: center;
+    }
+}
+
+/* Tablets horizontales: tamaño original del "Express" */
+@media (min-width: 769px) and (max-width: 1179px) {
+    .hero-title {
+        --express-size: 0.6em;
+    }
+}
+
+/* Móviles */
+@media (max-width: 768px) {
+    .hero {
+        padding: 6rem 1.25rem 4.5rem;
+        background-image: linear-gradient(
+            to bottom,
+            rgba(15, 15, 16, 0.6) 0%,
+            rgba(15, 15, 16, 0.55) 40%,
+            rgba(31, 31, 32, 0.97) 100%
+        ), url('assets/images/ImagenHero-mobile.webp');
+    }
+
+    .hero-stroke {
+        width: min(78%, 20rem);
+        /* Más aire que en desktop: acá abajo estaciona el camión después
+           de su vuelta por la derecha (modo loop). */
+        margin-top: 3rem;
+    }
+
+    /* En móvil no hay línea naranja: el camión cruza por delante de la
+       palabra, sale del plano y vuelve a estacionar debajo de ella. */
+    .hero-stroke-line {
+        display: none;
+    }
+
+    /* Camión con presencia a la altura de la palabra para taparla al cruzar
+       por delante; al estacionar queda con aire sobre las letras. */
+    .hero-stroke-truck {
+        height: calc(var(--express-size) * 0.95);
+        /* Sin drop-shadow: en la GPU del celu el filtro se desparrama en
+           movimiento y se lee como estela negra (probado: con filtro hay
+           manchón ancho en los frames, sin filtro va limpio). La wagon
+           trae faldón y ruedas oscuras que la definen sola. En desktop la
+           sombra dramática queda intacta. */
+        filter: none;
+    }
+
+    .hero-scroll-cue {
+        margin-top: 1.75rem;
+    }
+
+    .hero-title {
+        --express-size: 0.66em;
+    }
+
+    .section {
+        padding: 4rem 1.25rem;
+    }
+
+    /* Overlay oscuro del menú móvil (cierra tocando afuera). Queda por
+       debajo del header (z-index 20) y por encima del contenido. */
+    .nav-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(10, 10, 11, 0.55);
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+        z-index: 15;
+    }
+
+    .nav-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+/* Móviles chicos */
+@media (max-width: 480px) {
+    .hero {
+        min-height: 80vh;
+        text-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-title {
+        font-size: clamp(3rem, 19vw, 6rem);
+    }
+
+    .nueva-tienda-direccion {
+        font-size: 1rem;
+        text-align: center;
+    }
+}
+
+/* Móviles muy chicos */
+@media (max-width: 320px) {
+    .hero {
+        min-height: 150vw;
+    }
+
+    .hero-title {
+        font-size: clamp(3rem, 17vw, 4rem);
+    }
+}
+
+/* ---------- Accesibilidad: movimiento reducido ---------- */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .reveal,
+    .reveal.revealed {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* ============================================================
+   Microinteracciones (Tier A) + cards del carrusel
+   Todo usa transform/opacity (compositor, 60fps) y respeta
+   prefers-reduced-motion (ver bloque de accesibilidad al final).
+   ============================================================ */
+
+/* ---------- Foco visible consistente (teclado) ---------- */
+:focus-visible {
+    outline: 2px solid var(--accent-bright);
+    outline-offset: 3px;
+    border-radius: 6px;
+}
+
+/* ---------- Transición de paneles Alimentos/Piedras ---------- */
+.products-panel {
+    view-transition-name: products-panel;
+}
+
+::view-transition-old(products-panel) {
+    animation: panelOut 0.18s ease both;
+}
+
+::view-transition-new(products-panel) {
+    animation: panelIn 0.32s ease both;
+}
+
+@keyframes panelOut {
+    to {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+}
+
+@keyframes panelIn {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+}
+
+/* ---------- Cards del carrusel: icono Iconify (Lucide) ---------- */
+.location-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.25rem;
+    height: 3.25rem;
+    margin: 0 0 0.75rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(226, 123, 33, 0.18), rgba(226, 123, 33, 0.07));
+    border: 1px solid rgba(226, 123, 33, 0.4);
+    color: #C45D00;
+}
+
+/* El SVG interno de iconify-icon se dimensiona en 1em: el tamaño se controla
+   con font-size (acompañando al box), no con atributos width/height en el HTML. */
+.location-icon iconify-icon {
+    display: inline-flex;
+    width: 1.75rem;
+    height: 1.75rem;
+    font-size: 1.75rem;
+}
+
+.location-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.location-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(226, 123, 33, 0.35);
+}
+
+/* El carrusel conserva su escala en desktop; en mobile se compacta para
+   mostrar más contexto sin que cada ciudad se coma el viewport. */
+@media (max-width: 768px) {
+    .locations-section {
+        padding: 2.5rem 0;
+        margin-top: 3rem;
+    }
+
+    .infinite-track {
+        gap: 0.85rem;
+        padding: 0.65rem 0;
+    }
+
+    .location-card {
+        min-width: 132px;
+        padding: 0.85rem 1rem;
+        border-radius: 14px;
+    }
+
+    .location-icon {
+        width: 2.4rem;
+        height: 2.4rem;
+        margin-bottom: 0.35rem;
+    }
+
+    .location-icon iconify-icon {
+        width: 1.3rem;
+        height: 1.3rem;
+        font-size: 1.3rem;
+    }
+
+    .location-card h3 {
+        font-size: 0.9rem;
+        line-height: 1.15;
+    }
+
+    .location-card span {
+        font-size: 0.7rem;
+    }
+}
+
+/* ---------- View Transitions y movimiento reducido ---------- */
+@media (prefers-reduced-motion: reduce) {
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+        animation: none !important;
     }
 }
